@@ -11,7 +11,7 @@ namespace FileCabinetApp
         private const int DescriptionHelpIndex = 1;
         private const int ExplanationHelpIndex = 2;
 
-        private static readonly FileCabinetService fileCabinetService = new FileCabinetService();
+        private static readonly FileCabinetService FileCabinetService = new FileCabinetService();
 
         private static bool isRunning = true;
 
@@ -19,6 +19,7 @@ namespace FileCabinetApp
         {
             new Tuple<string, Action<string>>("help", PrintHelp),
             new Tuple<string, Action<string>>("create", Create),
+            new Tuple<string, Action<string>>("list", List),
             new Tuple<string, Action<string>>("stat", Stat),
             new Tuple<string, Action<string>>("exit", Exit),
         };
@@ -27,6 +28,7 @@ namespace FileCabinetApp
         {
             new string[] { "help", "prints the help screen", "The 'help' command prints the help screen." },
             new string[] { "create", "creates new record", "The 'help' command creates new record." },
+            new string[] { "list", "prints all records", "The 'help' command prints all records." },
             new string[] { "stat", "prints count of records", "The 'stat' command prints count of records." },
             new string[] { "exit", "exits the application", "The 'exit' command exits the application." },
         };
@@ -71,6 +73,15 @@ namespace FileCabinetApp
             Console.WriteLine();
         }
 
+        private static void List(string parameters)
+        {
+            var list = FileCabinetService.GetRecords();
+            foreach (FileCabinetRecord record in list)
+            {
+                Console.WriteLine($"#{record.Id}, {record.FirstName}, {record.LastName}, {record.DateOfBirth.ToString("yyyy-MMM-dd", new CultureInfo("us-US"))}");
+            }
+        }
+
         private static void Create(string parameters)
         {
             string firstName = null;
@@ -84,12 +95,12 @@ namespace FileCabinetApp
             Console.Write("Date of birth: ");
             dateOfBirth = DateTime.Parse(Console.ReadLine(), CultureInfo.InvariantCulture);
 
-            Console.WriteLine("Record #{0} is created.", fileCabinetService.CreateRecord(firstName, lastName, dateOfBirth));
+            Console.WriteLine("Record #{0} is created.", FileCabinetService.CreateRecord(firstName, lastName, dateOfBirth));
         }
 
         private static void Stat(string parameters)
         {
-            var recordsCount = Program.fileCabinetService.GetStat();
+            var recordsCount = Program.FileCabinetService.GetStat();
             Console.WriteLine($"{recordsCount} record(s).");
         }
 
