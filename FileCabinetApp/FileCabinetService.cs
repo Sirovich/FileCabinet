@@ -75,6 +75,34 @@ namespace FileCabinetApp
             throw new ArgumentException($"{id} record is not found.");
         }
 
+        public FileCabinetRecord[] FindByFirstName(string firstName)
+        {
+            var result = new List<FileCabinetRecord>();
+            foreach (FileCabinetRecord record in this.list)
+            {
+                if (record.FirstName.Equals(firstName, StringComparison.InvariantCultureIgnoreCase))
+                {
+                    result.Add(record);
+                }
+            }
+
+            return result.ToArray();
+        }
+
+        public FileCabinetRecord[] FindByLastName(string lastName)
+        {
+            var result = new List<FileCabinetRecord>();
+            foreach (FileCabinetRecord record in this.list)
+            {
+                if (record.FirstName.Equals(lastName, StringComparison.InvariantCultureIgnoreCase))
+                {
+                    result.Add(record);
+                }
+            }
+
+            return result.ToArray();
+        }
+
         public FileCabinetRecord[] GetRecords()
         {
             return this.list.ToArray();

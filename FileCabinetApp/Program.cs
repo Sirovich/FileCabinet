@@ -20,6 +20,7 @@ namespace FileCabinetApp
             new Tuple<string, Action<string>>("help", PrintHelp),
             new Tuple<string, Action<string>>("create", Create),
             new Tuple<string, Action<string>>("edit", Edit),
+            new Tuple<string, Action<string>>("find", Find),
             new Tuple<string, Action<string>>("list", List),
             new Tuple<string, Action<string>>("stat", Stat),
             new Tuple<string, Action<string>>("exit", Exit),
@@ -30,6 +31,7 @@ namespace FileCabinetApp
             new string[] { "help", "prints the help screen", "The 'help' command prints the help screen." },
             new string[] { "create", "creates new record", "The 'help' command creates new record." },
             new string[] { "edit", "updates record", "The 'help' command updates record." },
+            new string[] { "find", "finds records by parameter", "The 'help' command finds records by parameter." },
             new string[] { "list", "prints all records", "The 'help' command prints all records." },
             new string[] { "stat", "prints count of records", "The 'stat' command prints count of records." },
             new string[] { "exit", "exits the application", "The 'exit' command exits the application." },
@@ -164,6 +166,30 @@ namespace FileCabinetApp
             }
 
             Console.WriteLine($"#{id} record is not found.");
+        }
+
+        private static void Find(string parameters)
+        {
+            Tuple<string, Func<string, FileCabinetRecord[]>>[] methods = new Tuple<string, Func<string, FileCabinetRecord[]>>[]
+            {
+                 new Tuple<string, Func<string, FileCabinetRecord[]>>("firstname", FileCabinetService.FindByFirstName),
+                 new Tuple<string, Func<string, FileCabinetRecord[]>>("lastname", FileCabinetService.FindByLastName),
+            };
+
+            var arguments = parameters.Split(' ', 2);
+            var index = Array.FindIndex(methods, 0, methods.Length, i => i.Item1.Equals(arguments[0], StringComparison.InvariantCultureIgnoreCase));
+            if (index >= 0)
+            {
+                var records = methods[index].Item2(arguments[1]);
+                foreach (FileCabinetRecord record in records)
+                {
+                    Console.WriteLine($"#{record.Id}, {record.FirstName}, {record.LastName}, {record.Sex}, {record.Weight}, {record.Height}, {record.DateOfBirth.ToString("yyyy-MMM-dd", new CultureInfo("us-US"))}");
+                }
+            }
+            else
+            {
+                Console.WriteLine("No records with this parameters");
+            }
         }
 
         private static void Stat(string parameters)
