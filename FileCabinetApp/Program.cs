@@ -174,6 +174,7 @@ namespace FileCabinetApp
             {
                  new Tuple<string, Func<string, FileCabinetRecord[]>>("firstname", FileCabinetService.FindByFirstName),
                  new Tuple<string, Func<string, FileCabinetRecord[]>>("lastname", FileCabinetService.FindByLastName),
+                 new Tuple<string, Func<string, FileCabinetRecord[]>>("dateofbirth", FileCabinetService.FindByDateOfBirth),
             };
 
             var arguments = parameters.Split(' ', 2);
@@ -181,14 +182,17 @@ namespace FileCabinetApp
             if (index >= 0)
             {
                 var records = methods[index].Item2(arguments[1]);
-                foreach (FileCabinetRecord record in records)
+                if (records.Length == 0)
                 {
-                    Console.WriteLine($"#{record.Id}, {record.FirstName}, {record.LastName}, {record.Sex}, {record.Weight}, {record.Height}, {record.DateOfBirth.ToString("yyyy-MMM-dd", new CultureInfo("us-US"))}");
+                    Console.WriteLine("No records with this parameters");
                 }
-            }
-            else
-            {
-                Console.WriteLine("No records with this parameters");
+                else
+                {
+                    foreach (FileCabinetRecord record in records)
+                    {
+                        Console.WriteLine($"#{record.Id}, {record.FirstName}, {record.LastName}, {record.Sex}, {record.Weight}, {record.Height}, {record.DateOfBirth.ToString("yyyy-MMM-dd", new CultureInfo("us-US"))}");
+                    }
+                }
             }
         }
 
