@@ -8,6 +8,12 @@ namespace FileCabinetApp
     {
         public int Id { get; set; }
 
+        public decimal Weight { get; set; }
+
+        public short Height { get; set; }
+
+        public char Sex { get; set; }
+
         public string FirstName { get; set; }
 
         public string LastName { get; set; }

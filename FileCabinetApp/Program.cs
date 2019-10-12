@@ -78,24 +78,25 @@ namespace FileCabinetApp
             var list = FileCabinetService.GetRecords();
             foreach (FileCabinetRecord record in list)
             {
-                Console.WriteLine($"#{record.Id}, {record.FirstName}, {record.LastName}, {record.DateOfBirth.ToString("yyyy-MMM-dd", new CultureInfo("us-US"))}");
+                Console.WriteLine($"#{record.Id}, {record.FirstName}, {record.LastName}, {record.Sex}, {record.Weight}, {record.Height}, {record.DateOfBirth.ToString("yyyy-MMM-dd", new CultureInfo("us-US"))}");
             }
         }
 
         private static void Create(string parameters)
         {
-            string firstName = null;
-            string lastName = null;
-            DateTime dateOfBirth = default(DateTime);
-
             Console.Write("First name: ");
-            firstName = Console.ReadLine();
+            string firstName = Console.ReadLine();
             Console.Write("Last name: ");
-            lastName = Console.ReadLine();
+            string lastName = Console.ReadLine();
+            Console.Write("Sex: ");
+            char sex = Convert.ToChar(Console.ReadLine(), CultureInfo.InvariantCulture);
+            Console.Write("Weight: ");
+            decimal weight = Convert.ToDecimal(Console.ReadLine(), CultureInfo.InvariantCulture);
+            Console.Write("Height: ");
+            short height = Convert.ToInt16(Console.ReadLine(), CultureInfo.InvariantCulture);
             Console.Write("Date of birth: ");
-            dateOfBirth = DateTime.Parse(Console.ReadLine(), CultureInfo.InvariantCulture);
-
-            Console.WriteLine("Record #{0} is created.", FileCabinetService.CreateRecord(firstName, lastName, dateOfBirth));
+            DateTime dateOfBirth = DateTime.Parse(Console.ReadLine(), CultureInfo.InvariantCulture);
+            Console.WriteLine("Record #{0} is created.", FileCabinetService.CreateRecord(height, weight, sex, firstName, lastName, dateOfBirth));
         }
 
         private static void Stat(string parameters)
