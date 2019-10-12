@@ -56,6 +56,25 @@ namespace FileCabinetApp
             return record.Id;
         }
 
+        public void EditRecord(int id, string firstName, string lastName, DateTime dateOfBirth, char sex, short height, decimal weight)
+        {
+            var records = this.list;
+            foreach (FileCabinetRecord record in records)
+            {
+                if (record.Id == id)
+                {
+                    record.FirstName = firstName;
+                    record.LastName = lastName;
+                    record.Sex = sex;
+                    record.Weight = weight;
+                    record.Height = height;
+                    return;
+                }
+            }
+
+            throw new ArgumentException($"{id} record is not found.");
+        }
+
         public FileCabinetRecord[] GetRecords()
         {
             return this.list.ToArray();

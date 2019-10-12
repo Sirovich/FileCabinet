@@ -19,6 +19,7 @@ namespace FileCabinetApp
         {
             new Tuple<string, Action<string>>("help", PrintHelp),
             new Tuple<string, Action<string>>("create", Create),
+            new Tuple<string, Action<string>>("edit", Edit),
             new Tuple<string, Action<string>>("list", List),
             new Tuple<string, Action<string>>("stat", Stat),
             new Tuple<string, Action<string>>("exit", Exit),
@@ -28,6 +29,7 @@ namespace FileCabinetApp
         {
             new string[] { "help", "prints the help screen", "The 'help' command prints the help screen." },
             new string[] { "create", "creates new record", "The 'help' command creates new record." },
+            new string[] { "edit", "updates record", "The 'help' command updates record." },
             new string[] { "list", "prints all records", "The 'help' command prints all records." },
             new string[] { "stat", "prints count of records", "The 'stat' command prints count of records." },
             new string[] { "exit", "exits the application", "The 'exit' command exits the application." },
@@ -117,6 +119,51 @@ namespace FileCabinetApp
                     Console.WriteLine(ex.Message);
                 }
             }
+        }
+
+        private static void Edit(string parameters)
+        {
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
+
+            int id = Convert.ToInt32(parameters, CultureInfo.InvariantCulture);
+            var records = FileCabinetService.GetRecords();
+            foreach (FileCabinetRecord record in records)
+            {
+                if (record.Id == id)
+                {
+                    try
+                    {
+                        Console.Write("First name: ");
+                        string firstName = Console.ReadLine();
+                        Console.Write("Last name: ");
+                        string lastName = Console.ReadLine();
+                        Console.Write("Sex: ");
+                        char sex = Convert.ToChar(Console.ReadLine(), CultureInfo.InvariantCulture);
+                        Console.Write("Weight: ");
+                        decimal weight = Convert.ToDecimal(Console.ReadLine(), CultureInfo.InvariantCulture);
+                        Console.Write("Height: ");
+                        short height = Convert.ToInt16(Console.ReadLine(), CultureInfo.InvariantCulture);
+                        Console.Write("Date of birth: ");
+                        DateTime dateOfBirth = DateTime.Parse(Console.ReadLine(), CultureInfo.InvariantCulture);
+                        FileCabinetService.EditRecord(id, firstName, lastName, dateOfBirth, sex, height, weight);
+                        Console.WriteLine($"Record #{id} is updated.");
+                        return;
+                    }
+                    catch (FormatException ex)
+                    {
+                        Console.WriteLine(ex.Message);
+                    }
+                    catch (OverflowException ex)
+                    {
+                        Console.WriteLine(ex.Message);
+                    }
+                }
+            }
+
+            Console.WriteLine($"#{id} record is not found.");
         }
 
         private static void Stat(string parameters)
