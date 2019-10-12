@@ -25,19 +25,19 @@ namespace FileCabinetApp
                 throw new ArgumentException("Not valid sex");
             }
 
-            if (dateOfBirth < new DateTime(1950, 01, 01) || dateOfBirth > DateTime.Now)
+            if (dateOfBirth == null || dateOfBirth < new DateTime(1950, 01, 01) || dateOfBirth > DateTime.Now)
             {
                 throw new ArgumentException("Not valid date of birth");
             }
 
             if (firstName == null || firstName.Length < 2 || firstName.Length > 60 || firstName.Trim(' ').Length == 0)
             {
-                throw new ArgumentNullException(nameof(firstName));
+                throw new ArgumentException("Not valid first name");
             }
 
             if (lastName == null || lastName.Length < 2 || lastName.Length > 60 || lastName.Trim(' ').Length == 0)
             {
-                throw new ArgumentNullException(nameof(lastName));
+                throw new ArgumentException("Not valid last name");
             }
 
             var record = new FileCabinetRecord

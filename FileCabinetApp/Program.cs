@@ -84,19 +84,39 @@ namespace FileCabinetApp
 
         private static void Create(string parameters)
         {
-            Console.Write("First name: ");
-            string firstName = Console.ReadLine();
-            Console.Write("Last name: ");
-            string lastName = Console.ReadLine();
-            Console.Write("Sex: ");
-            char sex = Convert.ToChar(Console.ReadLine(), CultureInfo.InvariantCulture);
-            Console.Write("Weight: ");
-            decimal weight = Convert.ToDecimal(Console.ReadLine(), CultureInfo.InvariantCulture);
-            Console.Write("Height: ");
-            short height = Convert.ToInt16(Console.ReadLine(), CultureInfo.InvariantCulture);
-            Console.Write("Date of birth: ");
-            DateTime dateOfBirth = DateTime.Parse(Console.ReadLine(), CultureInfo.InvariantCulture);
-            Console.WriteLine("Record #{0} is created.", FileCabinetService.CreateRecord(height, weight, sex, firstName, lastName, dateOfBirth));
+            while (true)
+            {
+                try
+                {
+                    Console.Write("First name: ");
+                    string firstName = Console.ReadLine();
+                    Console.Write("Last name: ");
+                    string lastName = Console.ReadLine();
+                    Console.Write("Sex: ");
+                    char sex = Convert.ToChar(Console.ReadLine(), CultureInfo.InvariantCulture);
+                    Console.Write("Weight: ");
+                    decimal weight = Convert.ToDecimal(Console.ReadLine(), CultureInfo.InvariantCulture);
+                    Console.Write("Height: ");
+                    short height = Convert.ToInt16(Console.ReadLine(), CultureInfo.InvariantCulture);
+                    Console.Write("Date of birth: ");
+                    DateTime dateOfBirth = DateTime.Parse(Console.ReadLine(), CultureInfo.InvariantCulture);
+                    int record = FileCabinetService.CreateRecord(height, weight, sex, firstName, lastName, dateOfBirth);
+                    Console.WriteLine("Record #{0} is created.", record);
+                    break;
+                }
+                catch (ArgumentException ex)
+                {
+                    Console.WriteLine($"Invalid input: {ex.Message}.");
+                }
+                catch (FormatException ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+                catch (OverflowException ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+            }
         }
 
         private static void Stat(string parameters)
