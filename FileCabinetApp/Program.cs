@@ -4,6 +4,9 @@ using System.Resources;
 
 namespace FileCabinetApp
 {
+    /// <summary>
+    /// Main program class.
+    /// </summary>
     public static class Program
     {
         private const string DeveloperName = "Ivan Sarokvashin";
@@ -38,6 +41,10 @@ namespace FileCabinetApp
             new string[] { "exit", "exits the application", "The 'exit' command exits the application." },
         };
 
+        /// <summary>
+        /// Program entry point.
+        /// </summary>
+        /// <param name="args">Arguments of command line.</param>
         public static void Main(string[] args)
         {
             Console.WriteLine(Resource.GetString("developerNameMessage", CultureInfo.InvariantCulture), Program.DeveloperName);

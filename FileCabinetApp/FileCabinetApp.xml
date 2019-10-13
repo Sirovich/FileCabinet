@@ -4,6 +4,128 @@
         <name>FileCabinetApp</name>
     </assembly>
     <members>
+        <member name="T:FileCabinetApp.FileCabinetRecord">
+            <summary>
+            Class contains record fields.
+            </summary>
+        </member>
+        <member name="P:FileCabinetApp.FileCabinetRecord.Id">
+            <summary>
+            Gets or sets Id of record.
+            </summary>
+            <value>Id of record.</value>
+        </member>
+        <member name="P:FileCabinetApp.FileCabinetRecord.Weight">
+            <summary>
+            Gets or sets person weight.
+            </summary>
+            <value>Person weight.</value>
+        </member>
+        <member name="P:FileCabinetApp.FileCabinetRecord.Height">
+            <summary>
+            Gets or sets person height.
+            </summary>
+            <value>Person height.</value>
+        </member>
+        <member name="P:FileCabinetApp.FileCabinetRecord.Sex">
+            <summary>
+            Gets or sets sex of a person.
+            </summary>
+            <value>Sex of a person.</value>
+        </member>
+        <member name="P:FileCabinetApp.FileCabinetRecord.FirstName">
+            <summary>
+            Gets or sets person first name.
+            </summary>
+            <value>Person first name.</value>
+        </member>
+        <member name="P:FileCabinetApp.FileCabinetRecord.LastName">
+            <summary>
+            Gets or sets preson last name.
+            </summary>
+            <value>Person last name.</value>
+        </member>
+        <member name="P:FileCabinetApp.FileCabinetRecord.DateOfBirth">
+            <summary>
+            Gets or sets persong date of birth.
+            </summary>
+            <value>Person date of birth.</value>
+        </member>
+        <member name="T:FileCabinetApp.FileCabinetService">
+            <summary>
+            Class provides methods for working with records.
+            </summary>
+        </member>
+        <member name="M:FileCabinetApp.FileCabinetService.CreateRecord(System.Int16,System.Decimal,System.Char,System.String,System.String,System.DateTime)">
+            <summary>
+            Creates new record.
+            </summary>
+            <exception cref="T:System.ArgumentException">Throws when any value does not meet the requirements.</exception>
+            <param name="height">Persong height.</param>
+            <param name="weight">Person weight.</param>
+            <param name="sex">Sex of a person.</param>
+            <param name="firstName">Person first name.</param>
+            <param name="lastName">Person last name.</param>
+            <param name="dateOfBirth">Person date of birth.</param>
+            <returns>Id of created record.</returns>
+        </member>
+        <member name="M:FileCabinetApp.FileCabinetService.EditRecord(System.Int32,System.String,System.String,System.DateTime,System.Char,System.Int16,System.Decimal)">
+            <summary>
+            Edits an existing record.
+            </summary>
+            <exception cref="T:System.ArgumentException">Throws when record with this id does not exist.</exception>
+            <param name="id">Existing record id.</param>
+            <param name="firstName">New first name of person.</param>
+            <param name="lastName">New last name of person.</param>
+            <param name="dateOfBirth">New date of birth of person.</param>
+            <param name="sex">New sex of a person.</param>
+            <param name="height">New height of person.</param>
+            <param name="weight">New weight of person.</param>
+        </member>
+        <member name="M:FileCabinetApp.FileCabinetService.FindByFirstName(System.String)">
+            <summary>
+            Finds all records with this first name.
+            </summary>
+            <param name="firstName">First name to search.</param>
+            <returns>Array of records with this first name.</returns>
+        </member>
+        <member name="M:FileCabinetApp.FileCabinetService.FindByLastName(System.String)">
+            <summary>
+            Finds all records with this last name.
+            </summary>
+            <param name="lastName">Last name to search.</param>
+            <returns>Array of records with this last name.</returns>
+        </member>
+        <member name="M:FileCabinetApp.FileCabinetService.FindByDateOfBirth(System.String)">
+            <summary>
+            Finds all records with this date of birth.
+            </summary>
+            <param name="dateOfBirth">Date of birth to search.</param>
+            <returns>Array of records with this date of birth.</returns>
+        </member>
+        <member name="M:FileCabinetApp.FileCabinetService.GetRecords">
+            <summary>
+            Gets array of records.
+            </summary>
+            <returns>Array of records.</returns>
+        </member>
+        <member name="M:FileCabinetApp.FileCabinetService.GetStat">
+            <summary>
+            Gets count of records.
+            </summary>
+            <returns>Count of records.</returns>
+        </member>
+        <member name="T:FileCabinetApp.Program">
+            <summary>
+            Main program class.
+            </summary>
+        </member>
+        <member name="M:FileCabinetApp.Program.Main(System.String[])">
+            <summary>
+            Program entry point.
+            </summary>
+            <param name="args">Arguments of command line.</param>
+        </member>
         <member name="T:FileCabinetApp.res">
             <summary>
               Класс ресурса со строгой типизацией для поиска локализованных строк и т.д.
