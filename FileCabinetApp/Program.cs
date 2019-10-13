@@ -1,17 +1,18 @@
 ﻿using System;
 using System.Globalization;
+using System.Resources;
 
 namespace FileCabinetApp
 {
     public static class Program
     {
         private const string DeveloperName = "Ivan Sarokvashin";
-        private const string HintMessage = "Enter your command, or enter 'help' to get help.";
         private const int CommandHelpIndex = 0;
         private const int DescriptionHelpIndex = 1;
         private const int ExplanationHelpIndex = 2;
 
         private static readonly FileCabinetService FileCabinetService = new FileCabinetService();
+        private static readonly ResourceManager Resource = new ResourceManager("FileCabinetApp.res", typeof(Program).Assembly);
 
         private static bool isRunning = true;
 
@@ -39,20 +40,20 @@ namespace FileCabinetApp
 
         public static void Main(string[] args)
         {
-            Console.WriteLine($"File Cabinet Application, developed by {Program.DeveloperName}");
-            Console.WriteLine(Program.HintMessage);
+            Console.WriteLine(Resource.GetString("developerNameMessage", CultureInfo.InvariantCulture), Program.DeveloperName);
+            Console.WriteLine(Resource.GetString("hintMessage", CultureInfo.InvariantCulture));
             Console.WriteLine();
 
             do
             {
-                Console.Write("> ");
+                Console.Write(Resource.GetString("pointer", CultureInfo.InvariantCulture));
                 var inputs = Console.ReadLine().Split(' ', 2);
                 const int commandIndex = 0;
                 var command = inputs[commandIndex];
 
                 if (string.IsNullOrEmpty(command))
                 {
-                    Console.WriteLine(Program.HintMessage);
+                    Console.WriteLine(Resource.GetString("hintMessage", CultureInfo.InvariantCulture));
                     continue;
                 }
 
@@ -92,25 +93,25 @@ namespace FileCabinetApp
             {
                 try
                 {
-                    Console.Write("First name: ");
+                    Console.Write(Resource.GetString("firstNameInputMessage", CultureInfo.InvariantCulture));
                     string firstName = Console.ReadLine();
-                    Console.Write("Last name: ");
+                    Console.Write(Resource.GetString("lastNameInputMessage", CultureInfo.InvariantCulture));
                     string lastName = Console.ReadLine();
-                    Console.Write("Sex: ");
+                    Console.Write(Resource.GetString("sexInputMessage", CultureInfo.InvariantCulture));
                     char sex = Convert.ToChar(Console.ReadLine(), CultureInfo.InvariantCulture);
-                    Console.Write("Weight: ");
+                    Console.Write(Resource.GetString("weightInputMessage", CultureInfo.InvariantCulture));
                     decimal weight = Convert.ToDecimal(Console.ReadLine(), CultureInfo.InvariantCulture);
-                    Console.Write("Height: ");
+                    Console.Write(Resource.GetString("heightInputMessage", CultureInfo.InvariantCulture));
                     short height = Convert.ToInt16(Console.ReadLine(), CultureInfo.InvariantCulture);
-                    Console.Write("Date of birth: ");
+                    Console.Write(Resource.GetString("dateOfBirthInputMessage", CultureInfo.InvariantCulture));
                     DateTime dateOfBirth = DateTime.Parse(Console.ReadLine(), CultureInfo.InvariantCulture);
                     int record = FileCabinetService.CreateRecord(height, weight, sex, firstName, lastName, dateOfBirth);
-                    Console.WriteLine("Record #{0} is created.", record);
+                    Console.WriteLine(Resource.GetString("recordCreateMessage", CultureInfo.InvariantCulture), record);
                     break;
                 }
                 catch (ArgumentException ex)
                 {
-                    Console.WriteLine($"Invalid input: {ex.Message}.");
+                    Console.WriteLine(Resource.GetString("invalidInputMessage", CultureInfo.InvariantCulture), ex.Message);
                 }
                 catch (FormatException ex)
                 {
@@ -130,7 +131,18 @@ namespace FileCabinetApp
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            int id = Convert.ToInt32(parameters, CultureInfo.InvariantCulture);
+            int id = 0;
+            try
+            {
+                int input = Convert.ToInt32(parameters, CultureInfo.InvariantCulture);
+                id = input;
+            }
+            catch (FormatException ex)
+            {
+                Console.WriteLine(ex.Message);
+                return;
+            }
+
             var records = FileCabinetService.GetRecords();
             foreach (FileCabinetRecord record in records)
             {
@@ -138,20 +150,20 @@ namespace FileCabinetApp
                 {
                     try
                     {
-                        Console.Write("First name: ");
+                        Console.Write(Resource.GetString("firstNameInputMessage", CultureInfo.InvariantCulture));
                         string firstName = Console.ReadLine();
-                        Console.Write("Last name: ");
+                        Console.Write(Resource.GetString("lastNameInputMessage", CultureInfo.InvariantCulture));
                         string lastName = Console.ReadLine();
-                        Console.Write("Sex: ");
+                        Console.Write(Resource.GetString("sexInputMessage", CultureInfo.InvariantCulture));
                         char sex = Convert.ToChar(Console.ReadLine(), CultureInfo.InvariantCulture);
-                        Console.Write("Weight: ");
+                        Console.Write(Resource.GetString("weightInputMessage", CultureInfo.InvariantCulture));
                         decimal weight = Convert.ToDecimal(Console.ReadLine(), CultureInfo.InvariantCulture);
-                        Console.Write("Height: ");
+                        Console.Write(Resource.GetString("heightInputMessage", CultureInfo.InvariantCulture));
                         short height = Convert.ToInt16(Console.ReadLine(), CultureInfo.InvariantCulture);
-                        Console.Write("Date of birth: ");
+                        Console.Write(Resource.GetString("dateOfBirthInputMessage", CultureInfo.InvariantCulture));
                         DateTime dateOfBirth = DateTime.Parse(Console.ReadLine(), CultureInfo.InvariantCulture);
                         FileCabinetService.EditRecord(id, firstName, lastName, dateOfBirth, sex, height, weight);
-                        Console.WriteLine($"Record #{id} is updated.");
+                        Console.WriteLine(Resource.GetString("recordUpdateMessage", CultureInfo.InvariantCulture), record.Id);
                         return;
                     }
                     catch (FormatException ex)
@@ -179,12 +191,13 @@ namespace FileCabinetApp
 
             var arguments = parameters.Split(' ', 2);
             var index = Array.FindIndex(methods, 0, methods.Length, i => i.Item1.Equals(arguments[0], StringComparison.InvariantCultureIgnoreCase));
+            const int argumentIndex = 1;
             if (index >= 0)
             {
-                var records = methods[index].Item2(arguments[1]);
+                var records = methods[index].Item2(arguments[argumentIndex]);
                 if (records.Length == 0)
                 {
-                    Console.WriteLine("No records with this parameters");
+                    Console.WriteLine(Resource.GetString("noRecordsMessage", CultureInfo.InvariantCulture));
                 }
                 else
                 {
@@ -213,16 +226,16 @@ namespace FileCabinetApp
                 }
                 else
                 {
-                    Console.WriteLine($"There is no explanation for '{parameters}' command.");
+                    Console.WriteLine(Resource.GetString("noExplanationMessage", CultureInfo.InvariantCulture), parameters);
                 }
             }
             else
             {
-                Console.WriteLine("Available commands:");
+                Console.WriteLine(Resource.GetString("availableMessage", CultureInfo.InvariantCulture));
 
                 foreach (var helpMessage in helpMessages)
                 {
-                    Console.WriteLine("\t{0}\t- {1}", helpMessage[Program.CommandHelpIndex], helpMessage[Program.DescriptionHelpIndex]);
+                    Console.WriteLine(Resource.GetString("helpMessage", CultureInfo.InvariantCulture), helpMessage[Program.CommandHelpIndex], helpMessage[Program.DescriptionHelpIndex]);
                 }
             }
 
@@ -231,7 +244,7 @@ namespace FileCabinetApp
 
         private static void Exit(string parameters)
         {
-            Console.WriteLine("Exiting an application...");
+            Console.WriteLine(Resource.GetString("exitMessage", CultureInfo.InvariantCulture));
             isRunning = false;
         }
     }

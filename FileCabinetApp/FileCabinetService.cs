@@ -1,12 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Resources;
 using System.Text;
 
 namespace FileCabinetApp
 {
     public class FileCabinetService
     {
+        private static readonly ResourceManager Resource = new ResourceManager("FileCabinetApp.res", typeof(Program).Assembly);
+
         private readonly List<FileCabinetRecord> list = new List<FileCabinetRecord>();
 
         private readonly Dictionary<string, List<FileCabinetRecord>> firstNameDictionary = new Dictionary<string, List<FileCabinetRecord>>();
@@ -19,32 +22,32 @@ namespace FileCabinetApp
         {
             if (weight < 0)
             {
-                throw new ArgumentException("Not valid weight");
+                throw new ArgumentException(Resource.GetString("weightException", CultureInfo.InvariantCulture));
             }
 
             if (height < 0)
             {
-                throw new ArgumentException("Not valid height");
+                throw new ArgumentException(Resource.GetString("heightException", CultureInfo.InvariantCulture));
             }
 
             if (sex == ' ')
             {
-                throw new ArgumentException("Not valid sex");
+                throw new ArgumentException(Resource.GetString("sexException", CultureInfo.InvariantCulture));
             }
 
             if (dateOfBirth == null || dateOfBirth < new DateTime(1950, 01, 01) || dateOfBirth > DateTime.Now)
             {
-                throw new ArgumentException("Not valid date of birth");
+                throw new ArgumentException(Resource.GetString("dateOfBirthException", CultureInfo.InvariantCulture));
             }
 
             if (firstName == null || firstName.Length < 2 || firstName.Length > 60 || firstName.Trim(' ').Length == 0)
             {
-                throw new ArgumentException("Not valid first name");
+                throw new ArgumentException(Resource.GetString("firstNameException", CultureInfo.InvariantCulture));
             }
 
             if (lastName == null || lastName.Length < 2 || lastName.Length > 60 || lastName.Trim(' ').Length == 0)
             {
-                throw new ArgumentException("Not valid last name");
+                throw new ArgumentException(Resource.GetString("lastNameException", CultureInfo.InvariantCulture));
             }
 
             var record = new FileCabinetRecord
@@ -90,11 +93,14 @@ namespace FileCabinetApp
                 {
                     this.firstNameDictionary[record.FirstName].Remove(record);
                     this.lastNameDictionary[record.LastName].Remove(record);
+                    this.dateOfBirthDictionary[record.DateOfBirth].Remove(record);
                     record.FirstName = firstName;
                     record.LastName = lastName;
                     record.Sex = sex;
                     record.Weight = weight;
                     record.Height = height;
+                    record.DateOfBirth = dateOfBirth;
+
                     if (!this.firstNameDictionary.ContainsKey(record.FirstName))
                     {
                         this.firstNameDictionary.Add(record.FirstName, new List<FileCabinetRecord>());

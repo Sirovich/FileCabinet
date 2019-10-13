@@ -4,5 +4,136 @@
         <name>FileCabinetApp</name>
     </assembly>
     <members>
+        <member name="T:FileCabinetApp.res">
+            <summary>
+              Класс ресурса со строгой типизацией для поиска локализованных строк и т.д.
+            </summary>
+        </member>
+        <member name="P:FileCabinetApp.res.ResourceManager">
+            <summary>
+              Возвращает кэшированный экземпляр ResourceManager, использованный этим классом.
+            </summary>
+        </member>
+        <member name="P:FileCabinetApp.res.Culture">
+            <summary>
+              Перезаписывает свойство CurrentUICulture текущего потока для всех
+              обращений к ресурсу с помощью этого класса ресурса со строгой типизацией.
+            </summary>
+        </member>
+        <member name="P:FileCabinetApp.res.availableMessage">
+            <summary>
+              Ищет локализованную строку, похожую на Available commands:.
+            </summary>
+        </member>
+        <member name="P:FileCabinetApp.res.dateOfBirthException">
+            <summary>
+              Ищет локализованную строку, похожую на Not valid date of birth.
+            </summary>
+        </member>
+        <member name="P:FileCabinetApp.res.dateOfBirthInputMessage">
+            <summary>
+              Ищет локализованную строку, похожую на Date of birth: .
+            </summary>
+        </member>
+        <member name="P:FileCabinetApp.res.developerNameMessage">
+            <summary>
+              Ищет локализованную строку, похожую на File Cabinet Application, developed by {0}.
+            </summary>
+        </member>
+        <member name="P:FileCabinetApp.res.exitMessage">
+            <summary>
+              Ищет локализованную строку, похожую на Exiting an application....
+            </summary>
+        </member>
+        <member name="P:FileCabinetApp.res.firstNameException">
+            <summary>
+              Ищет локализованную строку, похожую на Not valid first name.
+            </summary>
+        </member>
+        <member name="P:FileCabinetApp.res.firstNameInputMessage">
+            <summary>
+              Ищет локализованную строку, похожую на First name: .
+            </summary>
+        </member>
+        <member name="P:FileCabinetApp.res.heightException">
+            <summary>
+              Ищет локализованную строку, похожую на Not valid height.
+            </summary>
+        </member>
+        <member name="P:FileCabinetApp.res.heightInputMessage">
+            <summary>
+              Ищет локализованную строку, похожую на Height: .
+            </summary>
+        </member>
+        <member name="P:FileCabinetApp.res.helpMessage">
+            <summary>
+              Ищет локализованную строку, похожую на \t{0}\t- {1}.
+            </summary>
+        </member>
+        <member name="P:FileCabinetApp.res.hintMessage">
+            <summary>
+              Ищет локализованную строку, похожую на Enter your command, or enter &apos;help&apos; to get help..
+            </summary>
+        </member>
+        <member name="P:FileCabinetApp.res.invalidInputMessage">
+            <summary>
+              Ищет локализованную строку, похожую на Invalid input: {0}..
+            </summary>
+        </member>
+        <member name="P:FileCabinetApp.res.lastNameException">
+            <summary>
+              Ищет локализованную строку, похожую на Not valid last name.
+            </summary>
+        </member>
+        <member name="P:FileCabinetApp.res.lastNameInputMessage">
+            <summary>
+              Ищет локализованную строку, похожую на Last name: .
+            </summary>
+        </member>
+        <member name="P:FileCabinetApp.res.noExplanationMessage">
+            <summary>
+              Ищет локализованную строку, похожую на There is no explanation for &apos;{0}&apos; command..
+            </summary>
+        </member>
+        <member name="P:FileCabinetApp.res.noRecordsMessage">
+            <summary>
+              Ищет локализованную строку, похожую на No records with this parameters.
+            </summary>
+        </member>
+        <member name="P:FileCabinetApp.res.pointer">
+            <summary>
+              Ищет локализованную строку, похожую на &gt; .
+            </summary>
+        </member>
+        <member name="P:FileCabinetApp.res.recordCreateMessage">
+            <summary>
+              Ищет локализованную строку, похожую на Record #{0} is created..
+            </summary>
+        </member>
+        <member name="P:FileCabinetApp.res.recordUpdateMessage">
+            <summary>
+              Ищет локализованную строку, похожую на Record #{0} is updated..
+            </summary>
+        </member>
+        <member name="P:FileCabinetApp.res.sexException">
+            <summary>
+              Ищет локализованную строку, похожую на Not valid sex.
+            </summary>
+        </member>
+        <member name="P:FileCabinetApp.res.sexInputMessage">
+            <summary>
+              Ищет локализованную строку, похожую на Sex: .
+            </summary>
+        </member>
+        <member name="P:FileCabinetApp.res.weightException">
+            <summary>
+              Ищет локализованную строку, похожую на Not valid weight.
+            </summary>
+        </member>
+        <member name="P:FileCabinetApp.res.weightInputMessage">
+            <summary>
+              Ищет локализованную строку, похожую на Weight: .
+            </summary>
+        </member>
     </members>
 </doc>
