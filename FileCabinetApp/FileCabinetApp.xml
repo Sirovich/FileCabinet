@@ -127,6 +127,17 @@
             <param name="weight">Person weight.</param>
             <param name="resource">Source resource manager.</param>
         </member>
+        <member name="T:FileCabinetApp.Options">
+            <summary>
+            Options for command line parser.
+            </summary>
+        </member>
+        <member name="P:FileCabinetApp.Options.Rule">
+            <summary>
+            Gets or sets property contains command line argument for rule.
+            </summary>
+            <value>Command line argument.</value>
+        </member>
         <member name="T:FileCabinetApp.Program">
             <summary>
             Main program class.
@@ -159,6 +170,11 @@
               Ищет локализованную строку, похожую на Available commands:.
             </summary>
         </member>
+        <member name="P:FileCabinetApp.res.customRule">
+            <summary>
+              Ищет локализованную строку, похожую на Using custom validation rules..
+            </summary>
+        </member>
         <member name="P:FileCabinetApp.res.dateOfBirthException">
             <summary>
               Ищет локализованную строку, похожую на Not valid date of birth.
@@ -167,6 +183,11 @@
         <member name="P:FileCabinetApp.res.dateOfBirthInputMessage">
             <summary>
               Ищет локализованную строку, похожую на Date of birth: .
+            </summary>
+        </member>
+        <member name="P:FileCabinetApp.res.defaultRule">
+            <summary>
+              Ищет локализованную строку, похожую на Using default validation rules..
             </summary>
         </member>
         <member name="P:FileCabinetApp.res.developerNameMessage">
@@ -207,6 +228,11 @@
         <member name="P:FileCabinetApp.res.invalidInputMessage">
             <summary>
               Ищет локализованную строку, похожую на Invalid input: {0}..
+            </summary>
+        </member>
+        <member name="P:FileCabinetApp.res.invalidRule">
+            <summary>
+              Ищет локализованную строку, похожую на Not valid rule.
             </summary>
         </member>
         <member name="P:FileCabinetApp.res.lastNameException">

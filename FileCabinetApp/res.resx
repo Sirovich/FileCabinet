@@ -120,11 +120,17 @@
   <data name="availableMessage" xml:space="preserve">
     <value>Available commands:</value>
   </data>
+  <data name="customRule" xml:space="preserve">
+    <value>Using custom validation rules.</value>
+  </data>
   <data name="dateOfBirthException" xml:space="preserve">
     <value>Not valid date of birth</value>
   </data>
   <data name="dateOfBirthInputMessage" xml:space="preserve">
     <value>Date of birth: </value>
+  </data>
+  <data name="defaultRule" xml:space="preserve">
+    <value>Using default validation rules.</value>
   </data>
   <data name="developerNameMessage" xml:space="preserve">
     <value>File Cabinet Application, developed by {0}</value>
@@ -149,6 +155,9 @@
   </data>
   <data name="invalidInputMessage" xml:space="preserve">
     <value>Invalid input: {0}.</value>
+  </data>
+  <data name="invalidRule" xml:space="preserve">
+    <value>Not valid rule</value>
   </data>
   <data name="lastNameException" xml:space="preserve">
     <value>Not valid last name</value>

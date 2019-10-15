@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Globalization;
 using System.Resources;
+using CommandLine;
 using FileCabinetApp.Services;
 
 namespace FileCabinetApp
@@ -15,9 +16,9 @@ namespace FileCabinetApp
         private const int DescriptionHelpIndex = 1;
         private const int ExplanationHelpIndex = 2;
 
-        private static readonly FileCabinetService FileCabinetService = new FileCabinetCustomService();
         private static readonly ResourceManager Resource = new ResourceManager("FileCabinetApp.res", typeof(Program).Assembly);
 
+        private static FileCabinetService fileCabinetService;
         private static bool isRunning = true;
 
         private static Tuple<string, Action<string>>[] commands = new Tuple<string, Action<string>>[]
@@ -49,6 +50,7 @@ namespace FileCabinetApp
         public static void Main(string[] args)
         {
             Console.WriteLine(Resource.GetString("developerNameMessage", CultureInfo.InvariantCulture), Program.DeveloperName);
+            GetCommandLineArguments(args);
             Console.WriteLine(Resource.GetString("hintMessage", CultureInfo.InvariantCulture));
             Console.WriteLine();
 
@@ -80,6 +82,33 @@ namespace FileCabinetApp
             while (isRunning);
         }
 
+        private static void GetCommandLineArguments(string[] args)
+        {
+            if (args is null)
+            {
+                fileCabinetService = new FileCabinetDefaultService();
+                return;
+            }
+
+            var opts = new Options();
+            var result = Parser.Default.ParseArguments<Options>(args).WithParsed(parsed => opts = parsed);
+
+            if (opts.Rule.Equals("Default", StringComparison.InvariantCultureIgnoreCase))
+            {
+                fileCabinetService = new FileCabinetDefaultService();
+                Console.WriteLine(Resource.GetString("defaultRule", CultureInfo.InvariantCulture));
+            }
+            else if (opts.Rule.Equals("Custom", StringComparison.InvariantCultureIgnoreCase))
+            {
+                fileCabinetService = new FileCabinetCustomService();
+                Console.WriteLine(Resource.GetString("customRule", CultureInfo.InvariantCulture));
+            }
+            else
+            {
+                throw new ArgumentException(Resource.GetString("invalidRule", CultureInfo.InvariantCulture));
+            }
+        }
+
         private static void PrintMissedCommandInfo(string command)
         {
             Console.WriteLine($"There is no '{command}' command.");
@@ -88,7 +117,7 @@ namespace FileCabinetApp
 
         private static void List(string parameters)
         {
-            var list = FileCabinetService.GetRecords();
+            var list = fileCabinetService.GetRecords();
             foreach (FileCabinetRecord record in list)
             {
                 Console.WriteLine($"#{record.Id}, {record.FirstName}, {record.LastName}, {record.Sex}, {record.Weight}, {record.Height}, {record.DateOfBirth.ToString("yyyy-MMM-dd", new CultureInfo("us-US"))}");
@@ -113,7 +142,7 @@ namespace FileCabinetApp
                     short height = Convert.ToInt16(Console.ReadLine(), CultureInfo.InvariantCulture);
                     Console.Write(Resource.GetString("dateOfBirthInputMessage", CultureInfo.InvariantCulture));
                     DateTime dateOfBirth = DateTime.Parse(Console.ReadLine(), CultureInfo.InvariantCulture);
-                    int record = FileCabinetService.CreateRecord(height, weight, sex, firstName, lastName, dateOfBirth);
+                    int record = fileCabinetService.CreateRecord(height, weight, sex, firstName, lastName, dateOfBirth);
                     Console.WriteLine(Resource.GetString("recordCreateMessage", CultureInfo.InvariantCulture), record);
                     break;
                 }
@@ -151,7 +180,7 @@ namespace FileCabinetApp
                 return;
             }
 
-            var records = FileCabinetService.GetRecords();
+            var records = fileCabinetService.GetRecords();
             foreach (FileCabinetRecord record in records)
             {
                 if (record.Id == id)
@@ -170,7 +199,7 @@ namespace FileCabinetApp
                         short height = Convert.ToInt16(Console.ReadLine(), CultureInfo.InvariantCulture);
                         Console.Write(Resource.GetString("dateOfBirthInputMessage", CultureInfo.InvariantCulture));
                         DateTime dateOfBirth = DateTime.Parse(Console.ReadLine(), CultureInfo.InvariantCulture);
-                        FileCabinetService.EditRecord(id, firstName, lastName, dateOfBirth, sex, height, weight);
+                        fileCabinetService.EditRecord(id, firstName, lastName, dateOfBirth, sex, height, weight);
                         Console.WriteLine(Resource.GetString("recordUpdateMessage", CultureInfo.InvariantCulture), record.Id);
                         return;
                     }
@@ -192,9 +221,9 @@ namespace FileCabinetApp
         {
             Tuple<string, Func<string, FileCabinetRecord[]>>[] methods = new Tuple<string, Func<string, FileCabinetRecord[]>>[]
             {
-                 new Tuple<string, Func<string, FileCabinetRecord[]>>("firstname", FileCabinetService.FindByFirstName),
-                 new Tuple<string, Func<string, FileCabinetRecord[]>>("lastname", FileCabinetService.FindByLastName),
-                 new Tuple<string, Func<string, FileCabinetRecord[]>>("dateofbirth", FileCabinetService.FindByDateOfBirth),
+                 new Tuple<string, Func<string, FileCabinetRecord[]>>("firstname", fileCabinetService.FindByFirstName),
+                 new Tuple<string, Func<string, FileCabinetRecord[]>>("lastname", fileCabinetService.FindByLastName),
+                 new Tuple<string, Func<string, FileCabinetRecord[]>>("dateofbirth", fileCabinetService.FindByDateOfBirth),
             };
 
             var arguments = parameters.Split(' ', 2);
@@ -219,7 +248,7 @@ namespace FileCabinetApp
 
         private static void Stat(string parameters)
         {
-            var recordsCount = Program.FileCabinetService.GetStat();
+            var recordsCount = Program.fileCabinetService.GetStat();
             Console.WriteLine($"{recordsCount} record(s).");
         }
 

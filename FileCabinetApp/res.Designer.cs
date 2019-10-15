@@ -70,6 +70,15 @@ namespace FileCabinetApp {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Using custom validation rules..
+        /// </summary>
+        internal static string customRule {
+            get {
+                return ResourceManager.GetString("customRule", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Not valid date of birth.
         /// </summary>
         internal static string dateOfBirthException {
@@ -84,6 +93,15 @@ namespace FileCabinetApp {
         internal static string dateOfBirthInputMessage {
             get {
                 return ResourceManager.GetString("dateOfBirthInputMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Using default validation rules..
+        /// </summary>
+        internal static string defaultRule {
+            get {
+                return ResourceManager.GetString("defaultRule", resourceCulture);
             }
         }
         
@@ -156,6 +174,15 @@ namespace FileCabinetApp {
         internal static string invalidInputMessage {
             get {
                 return ResourceManager.GetString("invalidInputMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Not valid rule.
+        /// </summary>
+        internal static string invalidRule {
+            get {
+                return ResourceManager.GetString("invalidRule", resourceCulture);
             }
         }
         
