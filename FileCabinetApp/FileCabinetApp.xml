@@ -115,17 +115,11 @@
             </summary>
             <returns>Count of records.</returns>
         </member>
-        <member name="M:FileCabinetApp.FileCabinetService.ValidateParameters(System.String,System.String,System.DateTime,System.Char,System.Int16,System.Decimal,System.Resources.ResourceManager)">
+        <member name="M:FileCabinetApp.FileCabinetService.CreateValidator">
             <summary>
-            Checks input parameters according to certain rules.
+            Creates IRecordValidator object.
             </summary>
-            <param name="firstName">Person first name.</param>
-            <param name="lastName">Person last name.</param>
-            <param name="dateOfBirth">Person date of birth.</param>
-            <param name="sex">Sex of a person.</param>
-            <param name="height">Person height.</param>
-            <param name="weight">Person weight.</param>
-            <param name="resource">Source resource manager.</param>
+            <returns>New IRecordValidator.</returns>
         </member>
         <member name="T:FileCabinetApp.Options">
             <summary>
@@ -292,29 +286,27 @@
         </member>
         <member name="T:FileCabinetApp.Services.FileCabinetCustomService">
             <summary>
-            File cabinet service with custom validation.
+            Service with custom rules.
             </summary>
         </member>
-        <member name="M:FileCabinetApp.Services.FileCabinetCustomService.ValidateParameters(System.String,System.String,System.DateTime,System.Char,System.Int16,System.Decimal,System.Resources.ResourceManager)">
+        <member name="M:FileCabinetApp.Services.FileCabinetCustomService.CreateValidator">
             <summary>
-            Checks input parameters according to custom rules.
+            Creates new validator with custom rules.
             </summary>
-            <exception cref="T:System.ArgumentException">Throws when any parameter is not valid.</exception>
-            <exception cref="T:System.ArgumentNullException">Throws when resource manager is null.</exception>
-            <param name="firstName">Person first name.</param>
-            <param name="lastName">Person last name.</param>
-            <param name="dateOfBirth">Person date of birth.</param>
-            <param name="sex">Sex of a person.</param>
-            <param name="height">Person height.</param>
-            <param name="weight">Person weight.</param>
-            <param name="resource">Source resource manager.</param>
+            <returns>New custom validator.</returns>
         </member>
         <member name="T:FileCabinetApp.Services.FileCabinetDefaultService">
             <summary>
-            File cabinet service with default validation.
+            Service with default rules.
             </summary>
         </member>
-        <member name="M:FileCabinetApp.Services.FileCabinetDefaultService.ValidateParameters(System.String,System.String,System.DateTime,System.Char,System.Int16,System.Decimal,System.Resources.ResourceManager)">
+        <member name="M:FileCabinetApp.Services.FileCabinetDefaultService.CreateValidator">
+            <summary>
+            Creates new validator with default rules.
+            </summary>
+            <returns>New default validator.</returns>
+        </member>
+        <member name="M:FileCabinetApp.Validators.DefaultValidator.ValidateParameters(System.String,System.String,System.DateTime,System.Char,System.Int16,System.Decimal,System.Resources.ResourceManager)">
             <summary>
             Checks input parameters according to default rules.
             </summary>

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Resources;
 using System.Text;
+using FileCabinetApp.Validators;
 
 namespace FileCabinetApp
 {
@@ -34,7 +35,7 @@ namespace FileCabinetApp
         /// <returns>Id of created record.</returns>
         public int CreateRecord(short height, decimal weight, char sex, string firstName, string lastName, DateTime dateOfBirth)
         {
-            this.ValidateParameters(firstName, lastName, dateOfBirth, sex, height, weight, Resource);
+            this.CreateValidator().ValidateParameters(firstName, lastName, dateOfBirth, sex, height, weight, Resource);
             var record = new FileCabinetRecord
             {
                 Id = this.list.Count + 1,
@@ -82,7 +83,7 @@ namespace FileCabinetApp
         /// <param name="weight">New weight of person.</param>
         public void EditRecord(int id, string firstName, string lastName, DateTime dateOfBirth, char sex, short height, decimal weight)
         {
-            this.ValidateParameters(firstName, lastName, dateOfBirth, sex, height, weight, Resource);
+            this.CreateValidator().ValidateParameters(firstName, lastName, dateOfBirth, sex, height, weight, Resource);
             var records = this.list;
             foreach (FileCabinetRecord record in records)
             {
@@ -191,15 +192,9 @@ namespace FileCabinetApp
         }
 
         /// <summary>
-        /// Checks input parameters according to certain rules.
+        /// Creates IRecordValidator object.
         /// </summary>
-        /// <param name="firstName">Person first name.</param>
-        /// <param name="lastName">Person last name.</param>
-        /// <param name="dateOfBirth">Person date of birth.</param>
-        /// <param name="sex">Sex of a person.</param>
-        /// <param name="height">Person height.</param>
-        /// <param name="weight">Person weight.</param>
-        /// <param name="resource">Source resource manager.</param>
-        protected abstract void ValidateParameters(string firstName, string lastName, DateTime dateOfBirth, char sex, short height, decimal weight, ResourceManager resource);
+        /// <returns>New IRecordValidator.</returns>
+        protected abstract IRecordValidator CreateValidator();
     }
 }
