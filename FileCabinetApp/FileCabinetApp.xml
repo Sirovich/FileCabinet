@@ -115,6 +115,18 @@
             </summary>
             <returns>Count of records.</returns>
         </member>
+        <member name="M:FileCabinetApp.FileCabinetService.ValidateParameters(System.String,System.String,System.DateTime,System.Char,System.Int16,System.Decimal,System.Resources.ResourceManager)">
+            <summary>
+            Checks input parameters according to certain rules.
+            </summary>
+            <param name="firstName">Person first name.</param>
+            <param name="lastName">Person last name.</param>
+            <param name="dateOfBirth">Person date of birth.</param>
+            <param name="sex">Sex of a person.</param>
+            <param name="height">Person height.</param>
+            <param name="weight">Person weight.</param>
+            <param name="resource">Source resource manager.</param>
+        </member>
         <member name="T:FileCabinetApp.Program">
             <summary>
             Main program class.
@@ -187,11 +199,6 @@
               Ищет локализованную строку, похожую на Height: .
             </summary>
         </member>
-        <member name="P:FileCabinetApp.res.helpMessage">
-            <summary>
-              Ищет локализованную строку, похожую на \t{0}\t- {1}.
-            </summary>
-        </member>
         <member name="P:FileCabinetApp.res.hintMessage">
             <summary>
               Ищет локализованную строку, похожую на Enter your command, or enter &apos;help&apos; to get help..
@@ -256,6 +263,44 @@
             <summary>
               Ищет локализованную строку, похожую на Weight: .
             </summary>
+        </member>
+        <member name="T:FileCabinetApp.Services.FileCabinetCustomService">
+            <summary>
+            File cabinet service with custom validation.
+            </summary>
+        </member>
+        <member name="M:FileCabinetApp.Services.FileCabinetCustomService.ValidateParameters(System.String,System.String,System.DateTime,System.Char,System.Int16,System.Decimal,System.Resources.ResourceManager)">
+            <summary>
+            Checks input parameters according to custom rules.
+            </summary>
+            <exception cref="T:System.ArgumentException">Throws when any parameter is not valid.</exception>
+            <exception cref="T:System.ArgumentNullException">Throws when resource manager is null.</exception>
+            <param name="firstName">Person first name.</param>
+            <param name="lastName">Person last name.</param>
+            <param name="dateOfBirth">Person date of birth.</param>
+            <param name="sex">Sex of a person.</param>
+            <param name="height">Person height.</param>
+            <param name="weight">Person weight.</param>
+            <param name="resource">Source resource manager.</param>
+        </member>
+        <member name="T:FileCabinetApp.Services.FileCabinetDefaultService">
+            <summary>
+            File cabinet service with default validation.
+            </summary>
+        </member>
+        <member name="M:FileCabinetApp.Services.FileCabinetDefaultService.ValidateParameters(System.String,System.String,System.DateTime,System.Char,System.Int16,System.Decimal,System.Resources.ResourceManager)">
+            <summary>
+            Checks input parameters according to default rules.
+            </summary>
+            <exception cref="T:System.ArgumentException">Throws when any parameter is not valid.</exception>
+            <exception cref="T:System.ArgumentNullException">Throws when resource manager is null.</exception>
+            <param name="firstName">Person first name.</param>
+            <param name="lastName">Person last name.</param>
+            <param name="dateOfBirth">Person date of birth.</param>
+            <param name="sex">Sex of a person.</param>
+            <param name="height">Person height.</param>
+            <param name="weight">Person weight.</param>
+            <param name="resource">Source resource manager.</param>
         </member>
     </members>
 </doc>

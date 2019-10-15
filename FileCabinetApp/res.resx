@@ -144,9 +144,6 @@
   <data name="heightInputMessage" xml:space="preserve">
     <value>Height: </value>
   </data>
-  <data name="helpMessage" xml:space="preserve">
-    <value>\t{0}\t- {1}</value>
-  </data>
   <data name="hintMessage" xml:space="preserve">
     <value>Enter your command, or enter 'help' to get help.</value>
   </data>

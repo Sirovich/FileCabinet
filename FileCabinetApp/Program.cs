@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Globalization;
 using System.Resources;
+using FileCabinetApp.Services;
 
 namespace FileCabinetApp
 {
@@ -14,7 +15,7 @@ namespace FileCabinetApp
         private const int DescriptionHelpIndex = 1;
         private const int ExplanationHelpIndex = 2;
 
-        private static readonly FileCabinetService FileCabinetService = new FileCabinetService();
+        private static readonly FileCabinetService FileCabinetService = new FileCabinetCustomService();
         private static readonly ResourceManager Resource = new ResourceManager("FileCabinetApp.res", typeof(Program).Assembly);
 
         private static bool isRunning = true;
@@ -242,7 +243,7 @@ namespace FileCabinetApp
 
                 foreach (var helpMessage in helpMessages)
                 {
-                    Console.WriteLine(Resource.GetString("helpMessage", CultureInfo.InvariantCulture), helpMessage[Program.CommandHelpIndex], helpMessage[Program.DescriptionHelpIndex]);
+                    Console.WriteLine($"\t{helpMessage[Program.CommandHelpIndex]}\t- {helpMessage[Program.DescriptionHelpIndex]}");
                 }
             }
 

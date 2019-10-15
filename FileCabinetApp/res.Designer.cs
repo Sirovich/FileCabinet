@@ -142,15 +142,6 @@ namespace FileCabinetApp {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на \t{0}\t- {1}.
-        /// </summary>
-        internal static string helpMessage {
-            get {
-                return ResourceManager.GetString("helpMessage", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Ищет локализованную строку, похожую на Enter your command, or enter &apos;help&apos; to get help..
         /// </summary>
         internal static string hintMessage {

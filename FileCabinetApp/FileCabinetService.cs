@@ -9,7 +9,7 @@ namespace FileCabinetApp
     /// <summary>
     /// Class provides methods for working with records.
     /// </summary>
-    public class FileCabinetService
+    public abstract class FileCabinetService
     {
         private static readonly ResourceManager Resource = new ResourceManager("FileCabinetApp.res", typeof(Program).Assembly);
 
@@ -34,36 +34,7 @@ namespace FileCabinetApp
         /// <returns>Id of created record.</returns>
         public int CreateRecord(short height, decimal weight, char sex, string firstName, string lastName, DateTime dateOfBirth)
         {
-            if (weight < 0)
-            {
-                throw new ArgumentException(Resource.GetString("weightException", CultureInfo.InvariantCulture));
-            }
-
-            if (height < 0)
-            {
-                throw new ArgumentException(Resource.GetString("heightException", CultureInfo.InvariantCulture));
-            }
-
-            if (sex == ' ')
-            {
-                throw new ArgumentException(Resource.GetString("sexException", CultureInfo.InvariantCulture));
-            }
-
-            if (dateOfBirth == null || dateOfBirth < new DateTime(1950, 01, 01) || dateOfBirth > DateTime.Now)
-            {
-                throw new ArgumentException(Resource.GetString("dateOfBirthException", CultureInfo.InvariantCulture));
-            }
-
-            if (firstName == null || firstName.Length < 2 || firstName.Length > 60 || firstName.Trim(' ').Length == 0)
-            {
-                throw new ArgumentException(Resource.GetString("firstNameException", CultureInfo.InvariantCulture));
-            }
-
-            if (lastName == null || lastName.Length < 2 || lastName.Length > 60 || lastName.Trim(' ').Length == 0)
-            {
-                throw new ArgumentException(Resource.GetString("lastNameException", CultureInfo.InvariantCulture));
-            }
-
+            this.ValidateParameters(firstName, lastName, dateOfBirth, sex, height, weight, Resource);
             var record = new FileCabinetRecord
             {
                 Id = this.list.Count + 1,
@@ -111,6 +82,7 @@ namespace FileCabinetApp
         /// <param name="weight">New weight of person.</param>
         public void EditRecord(int id, string firstName, string lastName, DateTime dateOfBirth, char sex, short height, decimal weight)
         {
+            this.ValidateParameters(firstName, lastName, dateOfBirth, sex, height, weight, Resource);
             var records = this.list;
             foreach (FileCabinetRecord record in records)
             {
@@ -217,5 +189,17 @@ namespace FileCabinetApp
         {
             return this.list.Count;
         }
+
+        /// <summary>
+        /// Checks input parameters according to certain rules.
+        /// </summary>
+        /// <param name="firstName">Person first name.</param>
+        /// <param name="lastName">Person last name.</param>
+        /// <param name="dateOfBirth">Person date of birth.</param>
+        /// <param name="sex">Sex of a person.</param>
+        /// <param name="height">Person height.</param>
+        /// <param name="weight">Person weight.</param>
+        /// <param name="resource">Source resource manager.</param>
+        protected abstract void ValidateParameters(string firstName, string lastName, DateTime dateOfBirth, char sex, short height, decimal weight, ResourceManager resource);
     }
 }
