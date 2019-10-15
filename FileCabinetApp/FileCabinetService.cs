@@ -10,7 +10,7 @@ namespace FileCabinetApp
     /// <summary>
     /// Class provides methods for working with records.
     /// </summary>
-    public abstract class FileCabinetService
+    public class FileCabinetService
     {
         private static readonly ResourceManager Resource = new ResourceManager("FileCabinetApp.res", typeof(Program).Assembly);
 

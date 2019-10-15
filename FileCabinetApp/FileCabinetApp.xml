@@ -284,26 +284,6 @@
               Ищет локализованную строку, похожую на Weight: .
             </summary>
         </member>
-        <member name="T:FileCabinetApp.Services.FileCabinetCustomService">
-            <summary>
-            Service with custom rules.
-            </summary>
-        </member>
-        <member name="M:FileCabinetApp.Services.FileCabinetCustomService.#ctor">
-            <summary>
-            Initializes a new instance of the <see cref="T:FileCabinetApp.Services.FileCabinetCustomService"/> class.
-            </summary>
-        </member>
-        <member name="T:FileCabinetApp.Services.FileCabinetDefaultService">
-            <summary>
-            Service with default rules.
-            </summary>
-        </member>
-        <member name="M:FileCabinetApp.Services.FileCabinetDefaultService.#ctor">
-            <summary>
-            Initializes a new instance of the <see cref="T:FileCabinetApp.Services.FileCabinetDefaultService"/> class.
-            </summary>
-        </member>
         <member name="T:FileCabinetApp.Validators.CustomValidator">
             <summary>
             Validator with custom rules.

@@ -2,7 +2,7 @@
 using System.Globalization;
 using System.Resources;
 using CommandLine;
-using FileCabinetApp.Services;
+using FileCabinetApp.Validators;
 
 namespace FileCabinetApp
 {
@@ -86,7 +86,7 @@ namespace FileCabinetApp
         {
             if (args is null)
             {
-                fileCabinetService = new FileCabinetDefaultService();
+                fileCabinetService = new FileCabinetService(new DefaultValidator());
                 return;
             }
 
@@ -95,12 +95,12 @@ namespace FileCabinetApp
 
             if (opts.Rule.Equals("Default", StringComparison.InvariantCultureIgnoreCase))
             {
-                fileCabinetService = new FileCabinetDefaultService();
+                fileCabinetService = new FileCabinetService(new DefaultValidator());
                 Console.WriteLine(Resource.GetString("defaultRule", CultureInfo.InvariantCulture));
             }
             else if (opts.Rule.Equals("Custom", StringComparison.InvariantCultureIgnoreCase))
             {
-                fileCabinetService = new FileCabinetCustomService();
+                fileCabinetService = new FileCabinetService(new CustomValidator());
                 Console.WriteLine(Resource.GetString("customRule", CultureInfo.InvariantCulture));
             }
             else
