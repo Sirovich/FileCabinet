@@ -14,6 +14,8 @@ namespace FileCabinetApp
     {
         private static readonly ResourceManager Resource = new ResourceManager("FileCabinetApp.res", typeof(Program).Assembly);
 
+        private readonly IRecordValidator recordValidator;
+
         private readonly List<FileCabinetRecord> list = new List<FileCabinetRecord>();
 
         private readonly Dictionary<string, List<FileCabinetRecord>> firstNameDictionary = new Dictionary<string, List<FileCabinetRecord>>();
@@ -21,6 +23,15 @@ namespace FileCabinetApp
         private readonly Dictionary<string, List<FileCabinetRecord>> lastNameDictionary = new Dictionary<string, List<FileCabinetRecord>>();
 
         private readonly Dictionary<DateTime, List<FileCabinetRecord>> dateOfBirthDictionary = new Dictionary<DateTime, List<FileCabinetRecord>>();
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="FileCabinetService"/> class.
+        /// </summary>
+        /// <param name="recordValidator">Source validator.</param>
+        public FileCabinetService(IRecordValidator recordValidator)
+        {
+            this.recordValidator = recordValidator;
+        }
 
         /// <summary>
         /// Creates new record.
@@ -35,7 +46,7 @@ namespace FileCabinetApp
         /// <returns>Id of created record.</returns>
         public int CreateRecord(short height, decimal weight, char sex, string firstName, string lastName, DateTime dateOfBirth)
         {
-            this.CreateValidator().ValidateParameters(firstName, lastName, dateOfBirth, sex, height, weight, Resource);
+            this.recordValidator.ValidateParameters(firstName, lastName, dateOfBirth, sex, height, weight, Resource);
             var record = new FileCabinetRecord
             {
                 Id = this.list.Count + 1,
@@ -83,7 +94,7 @@ namespace FileCabinetApp
         /// <param name="weight">New weight of person.</param>
         public void EditRecord(int id, string firstName, string lastName, DateTime dateOfBirth, char sex, short height, decimal weight)
         {
-            this.CreateValidator().ValidateParameters(firstName, lastName, dateOfBirth, sex, height, weight, Resource);
+            this.recordValidator.ValidateParameters(firstName, lastName, dateOfBirth, sex, height, weight, Resource);
             var records = this.list;
             foreach (FileCabinetRecord record in records)
             {
@@ -190,11 +201,5 @@ namespace FileCabinetApp
         {
             return this.list.Count;
         }
-
-        /// <summary>
-        /// Creates IRecordValidator object.
-        /// </summary>
-        /// <returns>New IRecordValidator.</returns>
-        protected abstract IRecordValidator CreateValidator();
     }
 }
