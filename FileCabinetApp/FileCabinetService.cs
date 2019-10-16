@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Globalization;
 using System.Resources;
-using System.Text;
+using FileCabinetApp.Services;
 using FileCabinetApp.Validators;
 
 namespace FileCabinetApp
@@ -11,7 +10,7 @@ namespace FileCabinetApp
     /// <summary>
     /// Class provides methods for working with records.
     /// </summary>
-    public class FileCabinetService
+    public class FileCabinetService : IFileCabinetService
     {
         private static readonly ResourceManager Resource = new ResourceManager("FileCabinetApp.res", typeof(Program).Assembly);
 
@@ -171,7 +170,7 @@ namespace FileCabinetApp
         /// </summary>
         /// <param name="dateOfBirth">Date of birth to search.</param>
         /// <returns>Array of records with this date of birth.</returns>
-        public ReadOnlyCollection<FileCabinetRecord>FindByDateOfBirth(string dateOfBirth)
+        public ReadOnlyCollection<FileCabinetRecord> FindByDateOfBirth(string dateOfBirth)
         {
             DateTime date = default;
             if (DateTime.TryParse(dateOfBirth, out date))

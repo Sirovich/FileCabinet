@@ -3,6 +3,7 @@ using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Resources;
 using CommandLine;
+using FileCabinetApp.Services;
 using FileCabinetApp.Validators;
 
 namespace FileCabinetApp
@@ -19,7 +20,7 @@ namespace FileCabinetApp
 
         private static readonly ResourceManager Resource = new ResourceManager("FileCabinetApp.res", typeof(Program).Assembly);
 
-        private static FileCabinetService fileCabinetService;
+        private static IFileCabinetService fileCabinetService;
         private static bool isRunning = true;
 
         private static Tuple<string, Action<string>>[] commands = new Tuple<string, Action<string>>[]
