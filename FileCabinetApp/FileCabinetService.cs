@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Resources;
 using System.Text;
@@ -140,11 +141,11 @@ namespace FileCabinetApp
         /// </summary>
         /// <param name="firstName">First name to search.</param>
         /// <returns>Array of records with this first name.</returns>
-        public FileCabinetRecord[] FindByFirstName(string firstName)
+        public ReadOnlyCollection<FileCabinetRecord> FindByFirstName(string firstName)
         {
             if (this.firstNameDictionary.ContainsKey(firstName))
             {
-                return this.firstNameDictionary[firstName].ToArray();
+                return new ReadOnlyCollection<FileCabinetRecord>(this.firstNameDictionary[firstName]);
             }
 
             return null;
@@ -155,11 +156,11 @@ namespace FileCabinetApp
         /// </summary>
         /// <param name="lastName">Last name to search.</param>
         /// <returns>Array of records with this last name.</returns>
-        public FileCabinetRecord[] FindByLastName(string lastName)
+        public ReadOnlyCollection<FileCabinetRecord> FindByLastName(string lastName)
         {
             if (this.lastNameDictionary.ContainsKey(lastName))
             {
-                return this.lastNameDictionary[lastName].ToArray();
+                return new ReadOnlyCollection<FileCabinetRecord>(this.lastNameDictionary[lastName]);
             }
 
             return null;
@@ -170,14 +171,14 @@ namespace FileCabinetApp
         /// </summary>
         /// <param name="dateOfBirth">Date of birth to search.</param>
         /// <returns>Array of records with this date of birth.</returns>
-        public FileCabinetRecord[] FindByDateOfBirth(string dateOfBirth)
+        public ReadOnlyCollection<FileCabinetRecord>FindByDateOfBirth(string dateOfBirth)
         {
             DateTime date = default;
             if (DateTime.TryParse(dateOfBirth, out date))
             {
                 if (this.dateOfBirthDictionary.ContainsKey(date))
                 {
-                    return this.dateOfBirthDictionary[date].ToArray();
+                    return new ReadOnlyCollection<FileCabinetRecord>(this.dateOfBirthDictionary[date]);
                 }
             }
 
@@ -188,9 +189,9 @@ namespace FileCabinetApp
         /// Gets array of records.
         /// </summary>
         /// <returns>Array of records.</returns>
-        public FileCabinetRecord[] GetRecords()
+        public ReadOnlyCollection<FileCabinetRecord> GetRecords()
         {
-            return this.list.ToArray();
+            return new ReadOnlyCollection<FileCabinetRecord>(this.list);
         }
 
         /// <summary>

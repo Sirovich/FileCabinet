@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Resources;
 using CommandLine;
@@ -219,11 +220,11 @@ namespace FileCabinetApp
 
         private static void Find(string parameters)
         {
-            Tuple<string, Func<string, FileCabinetRecord[]>>[] methods = new Tuple<string, Func<string, FileCabinetRecord[]>>[]
+            var methods = new Tuple<string, Func<string, ReadOnlyCollection<FileCabinetRecord>>>[]
             {
-                 new Tuple<string, Func<string, FileCabinetRecord[]>>("firstname", fileCabinetService.FindByFirstName),
-                 new Tuple<string, Func<string, FileCabinetRecord[]>>("lastname", fileCabinetService.FindByLastName),
-                 new Tuple<string, Func<string, FileCabinetRecord[]>>("dateofbirth", fileCabinetService.FindByDateOfBirth),
+                 new Tuple<string, Func<string, ReadOnlyCollection<FileCabinetRecord>>>("firstname", fileCabinetService.FindByFirstName),
+                 new Tuple<string, Func<string, ReadOnlyCollection<FileCabinetRecord>>>("lastname", fileCabinetService.FindByLastName),
+                 new Tuple<string, Func<string, ReadOnlyCollection<FileCabinetRecord>>>("dateofbirth", fileCabinetService.FindByDateOfBirth),
             };
 
             var arguments = parameters.Split(' ', 2);
@@ -232,7 +233,7 @@ namespace FileCabinetApp
             if (index >= 0)
             {
                 var records = methods[index].Item2(arguments[argumentIndex]);
-                if (records.Length == 0)
+                if (records.Count == 0)
                 {
                     Console.WriteLine(Resource.GetString("noRecordsMessage", CultureInfo.InvariantCulture));
                 }
