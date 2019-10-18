@@ -124,6 +124,60 @@ namespace FileCabinetApp {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Invalid parameters.
+        /// </summary>
+        internal static string exportArgumentsException {
+            get {
+                return ResourceManager.GetString("exportArgumentsException", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на All records are exported to file {0}.
+        /// </summary>
+        internal static string exportFileComplete {
+            get {
+                return ResourceManager.GetString("exportFileComplete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Use export *type of result file* *file name*.
+        /// </summary>
+        internal static string exportFormat {
+            get {
+                return ResourceManager.GetString("exportFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Unknow argument {0}.
+        /// </summary>
+        internal static string exportUnknownArgument {
+            get {
+                return ResourceManager.GetString("exportUnknownArgument", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на File is exist - rewrite {0}? [Y/n].
+        /// </summary>
+        internal static string fileExistMessage {
+            get {
+                return ResourceManager.GetString("fileExistMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Id,First Name,Last Name,Date of Birth,Sex,Weight,Height.
+        /// </summary>
+        internal static string fileHeader {
+            get {
+                return ResourceManager.GetString("fileHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Not valid first name.
         /// </summary>
         internal static string firstNameException {

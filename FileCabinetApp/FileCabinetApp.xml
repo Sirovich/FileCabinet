@@ -96,6 +96,12 @@
             Class provides methods for working with records.
             </summary>
         </member>
+        <member name="M:FileCabinetApp.FileCabinetService.MakeSnapshot">
+            <summary>
+            Captures the status of the service.
+            </summary>
+            <returns>Returns snapshot.</returns>
+        </member>
         <member name="M:FileCabinetApp.FileCabinetService.CreateRecord(System.Int16,System.Decimal,System.Char,System.String,System.String,System.DateTime)">
             <summary>
             Creates new record.
@@ -228,6 +234,36 @@
               Ищет локализованную строку, похожую на Exiting an application....
             </summary>
         </member>
+        <member name="P:FileCabinetApp.res.exportArgumentsException">
+            <summary>
+              Ищет локализованную строку, похожую на Invalid parameters.
+            </summary>
+        </member>
+        <member name="P:FileCabinetApp.res.exportFileComplete">
+            <summary>
+              Ищет локализованную строку, похожую на All records are exported to file {0}.
+            </summary>
+        </member>
+        <member name="P:FileCabinetApp.res.exportFormat">
+            <summary>
+              Ищет локализованную строку, похожую на Use export *type of result file* *file name*.
+            </summary>
+        </member>
+        <member name="P:FileCabinetApp.res.exportUnknownArgument">
+            <summary>
+              Ищет локализованную строку, похожую на Unknow argument {0}.
+            </summary>
+        </member>
+        <member name="P:FileCabinetApp.res.fileExistMessage">
+            <summary>
+              Ищет локализованную строку, похожую на File is exist - rewrite {0}? [Y/n].
+            </summary>
+        </member>
+        <member name="P:FileCabinetApp.res.fileHeader">
+            <summary>
+              Ищет локализованную строку, похожую на Id,First Name,Last Name,Date of Birth,Sex,Weight,Height.
+            </summary>
+        </member>
         <member name="P:FileCabinetApp.res.firstNameException">
             <summary>
               Ищет локализованную строку, похожую на Not valid first name.
@@ -323,6 +359,12 @@
             Contains basic functionality for service.
             </summary>
         </member>
+        <member name="M:FileCabinetApp.Services.IFileCabinetService.MakeSnapshot">
+            <summary>
+            Captures the status of the service.
+            </summary>
+            <returns>Returns snapshot.</returns>
+        </member>
         <member name="M:FileCabinetApp.Services.IFileCabinetService.CreateRecord(System.Int16,System.Decimal,System.Char,System.String,System.String,System.DateTime)">
             <summary>
             Creates new record.
@@ -381,6 +423,23 @@
             Gets count of records.
             </summary>
             <returns>Count of records.</returns>
+        </member>
+        <member name="T:FileCabinetApp.Snapshots.FileCabinetServiceSnapshot">
+            <summary>
+            Class to work with service status.
+            </summary>
+        </member>
+        <member name="M:FileCabinetApp.Snapshots.FileCabinetServiceSnapshot.#ctor(FileCabinetApp.FileCabinetRecord[])">
+            <summary>
+            Initializes a new instance of the <see cref="T:FileCabinetApp.Snapshots.FileCabinetServiceSnapshot"/> class.
+            </summary>
+            <param name="records">Array of records.</param>
+        </member>
+        <member name="M:FileCabinetApp.Snapshots.FileCabinetServiceSnapshot.SaveToCsv(System.IO.StreamWriter)">
+            <summary>
+            Write records in csv file.
+            </summary>
+            <param name="writer">Source stream.</param>
         </member>
         <member name="T:FileCabinetApp.Validators.CustomValidator">
             <summary>
@@ -564,6 +623,39 @@
             </summary>
             <param name="height">Person height.</param>
             <returns>True if compliant with the rules and exception message.</returns>
+        </member>
+        <member name="T:FileCabinetApp.Writers.FileCabinetRecordCsvWriter">
+            <summary>
+            Class for write to csv file.
+            </summary>
+        </member>
+        <member name="M:FileCabinetApp.Writers.FileCabinetRecordCsvWriter.#ctor(System.IO.StreamWriter)">
+            <summary>
+            Initializes a new instance of the <see cref="T:FileCabinetApp.Writers.FileCabinetRecordCsvWriter"/> class.
+            </summary>
+            <param name="writer">Source stream.</param>
+        </member>
+        <member name="M:FileCabinetApp.Writers.FileCabinetRecordCsvWriter.Dispose">
+            <summary>
+            Implementation of <see cref="T:System.IDisposable"/>.
+            </summary>
+        </member>
+        <member name="M:FileCabinetApp.Writers.FileCabinetRecordCsvWriter.Write(FileCabinetApp.FileCabinetRecord)">
+            <summary>
+            Write record to csv file.
+            </summary>
+            <param name="record">Source record.</param>
+        </member>
+        <member name="T:FileCabinetApp.Writers.IWriter">
+            <summary>
+            Provides method for writing record to file.
+            </summary>
+        </member>
+        <member name="M:FileCabinetApp.Writers.IWriter.Write(FileCabinetApp.FileCabinetRecord)">
+            <summary>
+            Writes record to file.
+            </summary>
+            <param name="record">Source record.</param>
         </member>
     </members>
 </doc>
