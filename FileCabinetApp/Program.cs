@@ -3,6 +3,7 @@ using System.Collections.ObjectModel;
 using System.Globalization;
 using System.IO;
 using System.Resources;
+using System.Xml;
 using CommandLine;
 using FileCabinetApp.Converters;
 using FileCabinetApp.Services;
@@ -321,13 +322,26 @@ namespace FileCabinetApp
                     }
                 }
 
-                using (var fileStream = new StreamWriter(arguments[pathIndex]))
+                var snapshot = fileCabinetService.MakeSnapshot();
+
+                if (arguments[typeIndex].Equals("csv", StringComparison.InvariantCultureIgnoreCase))
                 {
-                    var snapshot = fileCabinetService.MakeSnapshot();
-                    if (arguments[typeIndex].Equals("csv", StringComparison.InvariantCultureIgnoreCase))
+                    using (var fileStream = new StreamWriter(arguments[pathIndex]))
                     {
                         fileStream.WriteLine(Resource.GetString("fileHeader", CultureInfo.InvariantCulture));
                         snapshot.SaveToCsv(fileStream);
+                        Console.WriteLine(Resource.GetString("exportFileComplete", CultureInfo.InvariantCulture), arguments[pathIndex]);
+                    }
+                }
+                else if (arguments[typeIndex].Equals("xml", StringComparison.InvariantCultureIgnoreCase))
+                {
+                    XmlWriterSettings settings = new XmlWriterSettings();
+                    settings.Indent = true;
+                    settings.IndentChars = "\t";
+
+                    using (var fileStream = XmlWriter.Create(arguments[pathIndex], settings))
+                    {
+                        snapshot.SaveToXml(fileStream);
                         Console.WriteLine(Resource.GetString("exportFileComplete", CultureInfo.InvariantCulture), arguments[pathIndex]);
                     }
                 }

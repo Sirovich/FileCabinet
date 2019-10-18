@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using System.Xml;
 using FileCabinetApp.Writers;
 
 namespace FileCabinetApp.Snapshots
@@ -35,6 +36,29 @@ namespace FileCabinetApp.Snapshots
                     csvWriter.Write(record);
                 }
             }
+        }
+
+        /// <summary>
+        /// Write records in xml file.
+        /// </summary>
+        /// <param name="writer">Source stream.</param>
+        public void SaveToXml(XmlWriter writer)
+        {
+            if (writer is null)
+            {
+                throw new ArgumentNullException(nameof(writer));
+            }
+
+            writer.WriteStartElement("records");
+            using (var xmlWriter = new FileCabinetRecordXmlWriter(writer))
+            {
+                foreach (var record in this.records)
+                {
+                    xmlWriter.Write(record);
+                }
+            }
+
+            writer.WriteEndElement();
         }
     }
 }
