@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Resources;
 using FileCabinetApp.Services;
+using FileCabinetApp.Snapshots;
 using FileCabinetApp.Validators;
 
 namespace FileCabinetApp
@@ -19,6 +20,15 @@ namespace FileCabinetApp
         private readonly Dictionary<string, List<FileCabinetRecord>> lastNameDictionary = new Dictionary<string, List<FileCabinetRecord>>();
 
         private readonly Dictionary<DateTime, List<FileCabinetRecord>> dateOfBirthDictionary = new Dictionary<DateTime, List<FileCabinetRecord>>();
+
+        /// <summary>
+        /// Captures the status of the service.
+        /// </summary>
+        /// <returns>Returns snapshot.</returns>
+        public FileCabinetServiceSnapshot MakeSnapshot()
+        {
+            return new FileCabinetServiceSnapshot(this.list.ToArray());
+        }
 
         /// <summary>
         /// Creates new record.

@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Globalization;
+using System.IO;
 using System.Resources;
+using System.Xml;
 using CommandLine;
 using FileCabinetApp.Converters;
 using FileCabinetApp.Services;
+using FileCabinetApp.Snapshots;
 using FileCabinetApp.Validators;
 
 namespace FileCabinetApp
@@ -32,17 +35,19 @@ namespace FileCabinetApp
             new Tuple<string, Action<string>>("find", Find),
             new Tuple<string, Action<string>>("list", List),
             new Tuple<string, Action<string>>("stat", Stat),
+            new Tuple<string, Action<string>>("export", Export),
             new Tuple<string, Action<string>>("exit", Exit),
         };
 
         private static string[][] helpMessages = new string[][]
         {
             new string[] { "help", "prints the help screen", "The 'help' command prints the help screen." },
-            new string[] { "create", "creates new record", "The 'help' command creates new record." },
-            new string[] { "edit", "updates record", "The 'help' command updates record." },
-            new string[] { "find", "finds records by parameter", "The 'help' command finds records by parameter." },
-            new string[] { "list", "prints all records", "The 'help' command prints all records." },
+            new string[] { "create", "creates new record", "The 'create' command creates new record." },
+            new string[] { "edit", "updates record", "The 'edit' command updates record." },
+            new string[] { "find", "finds records by parameter", "The 'find' command finds records by parameter." },
+            new string[] { "list", "prints all records", "The 'list' command prints all records." },
             new string[] { "stat", "prints count of records", "The 'stat' command prints count of records." },
+            new string[] { "export", "saves records in file", "The 'export' command saves records in file." },
             new string[] { "exit", "exits the application", "The 'exit' command exits the application." },
         };
 
@@ -280,6 +285,71 @@ namespace FileCabinetApp
             }
 
             Console.WriteLine();
+        }
+
+        private static void Export(string parameters)
+        {
+            if (parameters == null)
+            {
+                Console.WriteLine(Resource.GetString("exportArgumentsException", CultureInfo.InvariantCulture));
+                Console.WriteLine(Resource.GetString("exportFormat", CultureInfo.InvariantCulture));
+                return;
+            }
+
+            var arguments = parameters.Split(' ');
+
+            if (arguments.Length == 1)
+            {
+                Console.WriteLine(Resource.GetString("exportArgumentsException", CultureInfo.InvariantCulture));
+                Console.WriteLine(Resource.GetString("exportFormat", CultureInfo.InvariantCulture));
+                return;
+            }
+            else if (arguments.Length == 2)
+            {
+                const int pathIndex = 1;
+                const int typeIndex = 0;
+                if (File.Exists(arguments[pathIndex]))
+                {
+                    Console.WriteLine(Resource.GetString("fileExistMessage", CultureInfo.InvariantCulture), arguments[pathIndex]);
+                    var answer = Console.ReadLine();
+                    if (answer.Equals("y", StringComparison.InvariantCultureIgnoreCase))
+                    {
+                        File.Delete(arguments[pathIndex]);
+                    }
+                    else
+                    {
+                        return;
+                    }
+                }
+
+                var snapshot = fileCabinetService.MakeSnapshot();
+
+                if (arguments[typeIndex].Equals("csv", StringComparison.InvariantCultureIgnoreCase))
+                {
+                    using (var fileStream = new StreamWriter(arguments[pathIndex]))
+                    {
+                        fileStream.WriteLine(Resource.GetString("fileHeader", CultureInfo.InvariantCulture));
+                        snapshot.SaveToCsv(fileStream);
+                        Console.WriteLine(Resource.GetString("exportFileComplete", CultureInfo.InvariantCulture), arguments[pathIndex]);
+                    }
+                }
+                else if (arguments[typeIndex].Equals("xml", StringComparison.InvariantCultureIgnoreCase))
+                {
+                    XmlWriterSettings settings = new XmlWriterSettings();
+                    settings.Indent = true;
+                    settings.IndentChars = "\t";
+
+                    using (var fileStream = XmlWriter.Create(arguments[pathIndex], settings))
+                    {
+                        snapshot.SaveToXml(fileStream);
+                        Console.WriteLine(Resource.GetString("exportFileComplete", CultureInfo.InvariantCulture), arguments[pathIndex]);
+                    }
+                }
+            }
+            else
+            {
+                Console.WriteLine(Resource.GetString("exportUnknownArgument", CultureInfo.InvariantCulture), arguments[2]);
+            }
         }
 
         private static void Exit(string parameters)

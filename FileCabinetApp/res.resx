@@ -138,6 +138,24 @@
   <data name="exitMessage" xml:space="preserve">
     <value>Exiting an application...</value>
   </data>
+  <data name="exportArgumentsException" xml:space="preserve">
+    <value>Invalid parameters</value>
+  </data>
+  <data name="exportFileComplete" xml:space="preserve">
+    <value>All records are exported to file {0}</value>
+  </data>
+  <data name="exportFormat" xml:space="preserve">
+    <value>Use export *type of result file* *file name*</value>
+  </data>
+  <data name="exportUnknownArgument" xml:space="preserve">
+    <value>Unknow argument {0}</value>
+  </data>
+  <data name="fileExistMessage" xml:space="preserve">
+    <value>File is exist - rewrite {0}? [Y/n]</value>
+  </data>
+  <data name="fileHeader" xml:space="preserve">
+    <value>Id,First Name,Last Name,Date of Birth,Sex,Weight,Height</value>
+  </data>
   <data name="firstNameException" xml:space="preserve">
     <value>Not valid first name</value>
   </data>

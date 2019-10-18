@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using FileCabinetApp.Snapshots;
 
 namespace FileCabinetApp.Services
 {
@@ -8,6 +9,12 @@ namespace FileCabinetApp.Services
     /// </summary>
     public interface IFileCabinetService
     {
+        /// <summary>
+        /// Captures the status of the service.
+        /// </summary>
+        /// <returns>Returns snapshot.</returns>
+        FileCabinetServiceSnapshot MakeSnapshot();
+
         /// <summary>
         /// Creates new record.
         /// </summary>
