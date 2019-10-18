@@ -24,7 +24,7 @@ namespace FileCabinetApp
 
         private static readonly ResourceManager Resource = new ResourceManager("FileCabinetApp.res", typeof(Program).Assembly);
         private static IRecordValidator recordValidator;
-        private static IFileCabinetService fileCabinetService = new FileCabinetMemoryService();
+        private static IFileCabinetService fileCabinetService;
         private static bool isRunning = true;
 
         private static Tuple<string, Action<string>>[] commands = new Tuple<string, Action<string>>[]
@@ -114,6 +114,26 @@ namespace FileCabinetApp
             else
             {
                 throw new ArgumentException(Resource.GetString("invalidRule", CultureInfo.InvariantCulture));
+            }
+
+            if (opts.Storage.Equals("memory", StringComparison.InvariantCultureIgnoreCase))
+            {
+                fileCabinetService = new FileCabinetMemoryService();
+                Console.WriteLine(Resource.GetString("memoryStorage", CultureInfo.InvariantCulture));
+            }
+            else if (opts.Storage.Equals("file", StringComparison.InvariantCultureIgnoreCase))
+            {
+                if (File.Exists("cabinet-records.db"))
+                {
+                    File.Delete("cabinet-records.db");
+                }
+
+                var fileStream = File.Create("cabinet-records.db");
+                fileCabinetService = new FileCabinetFilesystemService(fileStream);
+            }
+            else
+            {
+                throw new ArgumentException(Resource.GetString("invalidStorage", CultureInfo.InvariantCulture));
             }
         }
 

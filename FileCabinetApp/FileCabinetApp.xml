@@ -102,6 +102,12 @@
             </summary>
             <value>Command line argument.</value>
         </member>
+        <member name="P:FileCabinetApp.Options.Storage">
+            <summary>
+            Gets or sets property contains command line argument for storage.
+            </summary>
+            <value>Command line argument.</value>
+        </member>
         <member name="T:FileCabinetApp.Program">
             <summary>
             Main program class.
@@ -229,6 +235,11 @@
               Ищет локализованную строку, похожую на Not valid rule.
             </summary>
         </member>
+        <member name="P:FileCabinetApp.res.invalidStorage">
+            <summary>
+              Ищет локализованную строку, похожую на Invalid storage.
+            </summary>
+        </member>
         <member name="P:FileCabinetApp.res.lastNameException">
             <summary>
               Ищет локализованную строку, похожую на Not valid last name.
@@ -237,6 +248,11 @@
         <member name="P:FileCabinetApp.res.lastNameInputMessage">
             <summary>
               Ищет локализованную строку, похожую на Last name: .
+            </summary>
+        </member>
+        <member name="P:FileCabinetApp.res.memoryStorage">
+            <summary>
+              Ищет локализованную строку, похожую на Using memory storage.
             </summary>
         </member>
         <member name="P:FileCabinetApp.res.noExplanationMessage">

@@ -177,11 +177,17 @@
   <data name="invalidRule" xml:space="preserve">
     <value>Not valid rule</value>
   </data>
+  <data name="invalidStorage" xml:space="preserve">
+    <value>Invalid storage</value>
+  </data>
   <data name="lastNameException" xml:space="preserve">
     <value>Not valid last name</value>
   </data>
   <data name="lastNameInputMessage" xml:space="preserve">
     <value>Last name: </value>
+  </data>
+  <data name="memoryStorage" xml:space="preserve">
+    <value>Using memory storage</value>
   </data>
   <data name="noExplanationMessage" xml:space="preserve">
     <value>There is no explanation for '{0}' command.</value>
