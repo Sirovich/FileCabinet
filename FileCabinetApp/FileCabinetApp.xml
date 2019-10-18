@@ -4,5 +4,566 @@
         <name>FileCabinetApp</name>
     </assembly>
     <members>
+        <member name="T:FileCabinetApp.Converters.Converter">
+            <summary>
+            Provides methods to converte input from console.
+            </summary>
+        </member>
+        <member name="M:FileCabinetApp.Converters.Converter.StringConverter(System.String)">
+            <summary>
+            Converte string to string.
+            </summary>
+            <param name="source">Source string.</param>
+            <returns>True if posible to converte and result string.</returns>
+        </member>
+        <member name="M:FileCabinetApp.Converters.Converter.DateOfBirthConverter(System.String)">
+            <summary>
+            Converte string to DateTime.
+            </summary>
+            <param name="source">Source string.</param>
+            <returns>True if posible to converte and result date.</returns>
+        </member>
+        <member name="M:FileCabinetApp.Converters.Converter.SexConverter(System.String)">
+            <summary>
+            Converte string to char.
+            </summary>
+            <param name="source">Source string.</param>
+            <returns>True if posible to converte and result char.</returns>
+        </member>
+        <member name="M:FileCabinetApp.Converters.Converter.WeightConverter(System.String)">
+            <summary>
+            Converte string to decimal.
+            </summary>
+            <param name="source">Source string.</param>
+            <returns>True if posible to converte and result decimal.</returns>
+        </member>
+        <member name="M:FileCabinetApp.Converters.Converter.HeightConverter(System.String)">
+            <summary>
+            Converte string to short.
+            </summary>
+            <param name="source">Source string.</param>
+            <returns>True if posible to converte and result short.</returns>
+        </member>
+        <member name="T:FileCabinetApp.FileCabinetRecord">
+            <summary>
+            Class contains record fields.
+            </summary>
+        </member>
+        <member name="P:FileCabinetApp.FileCabinetRecord.Id">
+            <summary>
+            Gets or sets Id of record.
+            </summary>
+            <value>Id of record.</value>
+        </member>
+        <member name="P:FileCabinetApp.FileCabinetRecord.Weight">
+            <summary>
+            Gets or sets person weight.
+            </summary>
+            <value>Person weight.</value>
+        </member>
+        <member name="P:FileCabinetApp.FileCabinetRecord.Height">
+            <summary>
+            Gets or sets person height.
+            </summary>
+            <value>Person height.</value>
+        </member>
+        <member name="P:FileCabinetApp.FileCabinetRecord.Sex">
+            <summary>
+            Gets or sets sex of a person.
+            </summary>
+            <value>Sex of a person.</value>
+        </member>
+        <member name="P:FileCabinetApp.FileCabinetRecord.FirstName">
+            <summary>
+            Gets or sets person first name.
+            </summary>
+            <value>Person first name.</value>
+        </member>
+        <member name="P:FileCabinetApp.FileCabinetRecord.LastName">
+            <summary>
+            Gets or sets preson last name.
+            </summary>
+            <value>Person last name.</value>
+        </member>
+        <member name="P:FileCabinetApp.FileCabinetRecord.DateOfBirth">
+            <summary>
+            Gets or sets persong date of birth.
+            </summary>
+            <value>Person date of birth.</value>
+        </member>
+        <member name="T:FileCabinetApp.FileCabinetService">
+            <summary>
+            Class provides methods for working with records.
+            </summary>
+        </member>
+        <member name="M:FileCabinetApp.FileCabinetService.CreateRecord(System.Int16,System.Decimal,System.Char,System.String,System.String,System.DateTime)">
+            <summary>
+            Creates new record.
+            </summary>
+            <exception cref="T:System.ArgumentException">Throws when any value does not meet the requirements.</exception>
+            <param name="height">Persong height.</param>
+            <param name="weight">Person weight.</param>
+            <param name="sex">Sex of a person.</param>
+            <param name="firstName">Person first name.</param>
+            <param name="lastName">Person last name.</param>
+            <param name="dateOfBirth">Person date of birth.</param>
+            <returns>Id of created record.</returns>
+        </member>
+        <member name="M:FileCabinetApp.FileCabinetService.EditRecord(System.Int32,System.String,System.String,System.DateTime,System.Char,System.Int16,System.Decimal)">
+            <summary>
+            Edits an existing record.
+            </summary>
+            <exception cref="T:System.ArgumentException">Throws when record with this id does not exist.</exception>
+            <param name="id">Existing record id.</param>
+            <param name="firstName">New first name of person.</param>
+            <param name="lastName">New last name of person.</param>
+            <param name="dateOfBirth">New date of birth of person.</param>
+            <param name="sex">New sex of a person.</param>
+            <param name="height">New height of person.</param>
+            <param name="weight">New weight of person.</param>
+        </member>
+        <member name="M:FileCabinetApp.FileCabinetService.FindByFirstName(System.String)">
+            <summary>
+            Finds all records with this first name.
+            </summary>
+            <param name="firstName">First name to search.</param>
+            <returns>Array of records with this first name.</returns>
+        </member>
+        <member name="M:FileCabinetApp.FileCabinetService.FindByLastName(System.String)">
+            <summary>
+            Finds all records with this last name.
+            </summary>
+            <param name="lastName">Last name to search.</param>
+            <returns>Array of records with this last name.</returns>
+        </member>
+        <member name="M:FileCabinetApp.FileCabinetService.FindByDateOfBirth(System.String)">
+            <summary>
+            Finds all records with this date of birth.
+            </summary>
+            <param name="dateOfBirth">Date of birth to search.</param>
+            <returns>Array of records with this date of birth.</returns>
+        </member>
+        <member name="M:FileCabinetApp.FileCabinetService.GetRecords">
+            <summary>
+            Gets array of records.
+            </summary>
+            <returns>Array of records.</returns>
+        </member>
+        <member name="M:FileCabinetApp.FileCabinetService.GetStat">
+            <summary>
+            Gets count of records.
+            </summary>
+            <returns>Count of records.</returns>
+        </member>
+        <member name="T:FileCabinetApp.Options">
+            <summary>
+            Options for command line parser.
+            </summary>
+        </member>
+        <member name="P:FileCabinetApp.Options.Rule">
+            <summary>
+            Gets or sets property contains command line argument for rule.
+            </summary>
+            <value>Command line argument.</value>
+        </member>
+        <member name="T:FileCabinetApp.Program">
+            <summary>
+            Main program class.
+            </summary>
+        </member>
+        <member name="M:FileCabinetApp.Program.Main(System.String[])">
+            <summary>
+            Program entry point.
+            </summary>
+            <param name="args">Arguments of command line.</param>
+        </member>
+        <member name="T:FileCabinetApp.res">
+            <summary>
+              Класс ресурса со строгой типизацией для поиска локализованных строк и т.д.
+            </summary>
+        </member>
+        <member name="P:FileCabinetApp.res.ResourceManager">
+            <summary>
+              Возвращает кэшированный экземпляр ResourceManager, использованный этим классом.
+            </summary>
+        </member>
+        <member name="P:FileCabinetApp.res.Culture">
+            <summary>
+              Перезаписывает свойство CurrentUICulture текущего потока для всех
+              обращений к ресурсу с помощью этого класса ресурса со строгой типизацией.
+            </summary>
+        </member>
+        <member name="P:FileCabinetApp.res.availableMessage">
+            <summary>
+              Ищет локализованную строку, похожую на Available commands:.
+            </summary>
+        </member>
+        <member name="P:FileCabinetApp.res.customRule">
+            <summary>
+              Ищет локализованную строку, похожую на Using custom validation rules..
+            </summary>
+        </member>
+        <member name="P:FileCabinetApp.res.dateOfBirthException">
+            <summary>
+              Ищет локализованную строку, похожую на Not valid date of birth.
+            </summary>
+        </member>
+        <member name="P:FileCabinetApp.res.dateOfBirthInputMessage">
+            <summary>
+              Ищет локализованную строку, похожую на Date of birth: .
+            </summary>
+        </member>
+        <member name="P:FileCabinetApp.res.defaultRule">
+            <summary>
+              Ищет локализованную строку, похожую на Using default validation rules..
+            </summary>
+        </member>
+        <member name="P:FileCabinetApp.res.developerNameMessage">
+            <summary>
+              Ищет локализованную строку, похожую на File Cabinet Application, developed by {0}.
+            </summary>
+        </member>
+        <member name="P:FileCabinetApp.res.exitMessage">
+            <summary>
+              Ищет локализованную строку, похожую на Exiting an application....
+            </summary>
+        </member>
+        <member name="P:FileCabinetApp.res.firstNameException">
+            <summary>
+              Ищет локализованную строку, похожую на Not valid first name.
+            </summary>
+        </member>
+        <member name="P:FileCabinetApp.res.firstNameInputMessage">
+            <summary>
+              Ищет локализованную строку, похожую на First name: .
+            </summary>
+        </member>
+        <member name="P:FileCabinetApp.res.heightException">
+            <summary>
+              Ищет локализованную строку, похожую на Not valid height.
+            </summary>
+        </member>
+        <member name="P:FileCabinetApp.res.heightInputMessage">
+            <summary>
+              Ищет локализованную строку, похожую на Height: .
+            </summary>
+        </member>
+        <member name="P:FileCabinetApp.res.hintMessage">
+            <summary>
+              Ищет локализованную строку, похожую на Enter your command, or enter &apos;help&apos; to get help..
+            </summary>
+        </member>
+        <member name="P:FileCabinetApp.res.invalidInputMessage">
+            <summary>
+              Ищет локализованную строку, похожую на Invalid input: {0}..
+            </summary>
+        </member>
+        <member name="P:FileCabinetApp.res.invalidRule">
+            <summary>
+              Ищет локализованную строку, похожую на Not valid rule.
+            </summary>
+        </member>
+        <member name="P:FileCabinetApp.res.lastNameException">
+            <summary>
+              Ищет локализованную строку, похожую на Not valid last name.
+            </summary>
+        </member>
+        <member name="P:FileCabinetApp.res.lastNameInputMessage">
+            <summary>
+              Ищет локализованную строку, похожую на Last name: .
+            </summary>
+        </member>
+        <member name="P:FileCabinetApp.res.noExplanationMessage">
+            <summary>
+              Ищет локализованную строку, похожую на There is no explanation for &apos;{0}&apos; command..
+            </summary>
+        </member>
+        <member name="P:FileCabinetApp.res.noRecordsMessage">
+            <summary>
+              Ищет локализованную строку, похожую на No records with this parameters.
+            </summary>
+        </member>
+        <member name="P:FileCabinetApp.res.pointer">
+            <summary>
+              Ищет локализованную строку, похожую на &gt; .
+            </summary>
+        </member>
+        <member name="P:FileCabinetApp.res.recordCreateMessage">
+            <summary>
+              Ищет локализованную строку, похожую на Record #{0} is created..
+            </summary>
+        </member>
+        <member name="P:FileCabinetApp.res.recordUpdateMessage">
+            <summary>
+              Ищет локализованную строку, похожую на Record #{0} is updated..
+            </summary>
+        </member>
+        <member name="P:FileCabinetApp.res.sexException">
+            <summary>
+              Ищет локализованную строку, похожую на Not valid sex.
+            </summary>
+        </member>
+        <member name="P:FileCabinetApp.res.sexInputMessage">
+            <summary>
+              Ищет локализованную строку, похожую на Sex: .
+            </summary>
+        </member>
+        <member name="P:FileCabinetApp.res.weightException">
+            <summary>
+              Ищет локализованную строку, похожую на Not valid weight.
+            </summary>
+        </member>
+        <member name="P:FileCabinetApp.res.weightInputMessage">
+            <summary>
+              Ищет локализованную строку, похожую на Weight: .
+            </summary>
+        </member>
+        <member name="T:FileCabinetApp.Services.IFileCabinetService">
+            <summary>
+            Contains basic functionality for service.
+            </summary>
+        </member>
+        <member name="M:FileCabinetApp.Services.IFileCabinetService.CreateRecord(System.Int16,System.Decimal,System.Char,System.String,System.String,System.DateTime)">
+            <summary>
+            Creates new record.
+            </summary>
+            <exception cref="T:System.ArgumentException">Throws when any value does not meet the requirements.</exception>
+            <param name="height">Persong height.</param>
+            <param name="weight">Person weight.</param>
+            <param name="sex">Sex of a person.</param>
+            <param name="firstName">Person first name.</param>
+            <param name="lastName">Person last name.</param>
+            <param name="dateOfBirth">Person date of birth.</param>
+            <returns>Id of created record.</returns>
+        </member>
+        <member name="M:FileCabinetApp.Services.IFileCabinetService.EditRecord(System.Int32,System.String,System.String,System.DateTime,System.Char,System.Int16,System.Decimal)">
+            <summary>
+            Edits an existing record.
+            </summary>
+            <exception cref="T:System.ArgumentException">Throws when record with this id does not exist.</exception>
+            <param name="id">Existing record id.</param>
+            <param name="firstName">New first name of person.</param>
+            <param name="lastName">New last name of person.</param>
+            <param name="dateOfBirth">New date of birth of person.</param>
+            <param name="sex">New sex of a person.</param>
+            <param name="height">New height of person.</param>
+            <param name="weight">New weight of person.</param>
+        </member>
+        <member name="M:FileCabinetApp.Services.IFileCabinetService.FindByFirstName(System.String)">
+            <summary>
+            Finds all records with this first name.
+            </summary>
+            <param name="firstName">First name to search.</param>
+            <returns>Array of records with this first name.</returns>
+        </member>
+        <member name="M:FileCabinetApp.Services.IFileCabinetService.FindByLastName(System.String)">
+            <summary>
+            Finds all records with this last name.
+            </summary>
+            <param name="lastName">Last name to search.</param>
+            <returns>Array of records with this last name.</returns>
+        </member>
+        <member name="M:FileCabinetApp.Services.IFileCabinetService.FindByDateOfBirth(System.String)">
+            <summary>
+            Finds all records with this date of birth.
+            </summary>
+            <param name="dateOfBirth">Date of birth to search.</param>
+            <returns>Array of records with this date of birth.</returns>
+        </member>
+        <member name="M:FileCabinetApp.Services.IFileCabinetService.GetRecords">
+            <summary>
+            Gets array of records.
+            </summary>
+            <returns>Array of records.</returns>
+        </member>
+        <member name="M:FileCabinetApp.Services.IFileCabinetService.GetStat">
+            <summary>
+            Gets count of records.
+            </summary>
+            <returns>Count of records.</returns>
+        </member>
+        <member name="T:FileCabinetApp.Validators.CustomValidator">
+            <summary>
+            Validator with custom rules.
+            </summary>
+        </member>
+        <member name="M:FileCabinetApp.Validators.CustomValidator.ValidateFirstName(System.String)">
+            <summary>
+            Checks input parameter according to custom rule.
+            </summary>
+            <param name="firstName">Person first name.</param>
+            <returns>True if first name complies with the rules, false if not.</returns>
+        </member>
+        <member name="M:FileCabinetApp.Validators.CustomValidator.ValidateLastName(System.String)">
+            <summary>
+            Checks input parameter according to custom rule.
+            </summary>
+            <param name="lastName">Person last name.</param>
+            <returns>True if first name complies with the rules, false if not.</returns>
+        </member>
+        <member name="M:FileCabinetApp.Validators.CustomValidator.ValidateDateOfBirth(System.DateTime)">
+            <summary>
+            Checks input parameter according to custom rule.
+            </summary>
+            <param name="dateOfBirth">Person date of birth.</param>
+            <returns>True if first name complies with the rules, false if not.</returns>
+        </member>
+        <member name="M:FileCabinetApp.Validators.CustomValidator.ValidateSex(System.Char)">
+            <summary>
+            Checks input parameter according to custom rule.
+            </summary>
+            <param name="sex">Person sex.</param>
+            <returns>True if first name complies with the rules, false if not.</returns>
+        </member>
+        <member name="M:FileCabinetApp.Validators.CustomValidator.ValidateWeight(System.Decimal)">
+            <summary>
+            Checks input parameter according to custom rule.
+            </summary>
+            <param name="weight">Person weight.</param>
+            <returns>True if first name complies with the rules, false if not.</returns>
+        </member>
+        <member name="M:FileCabinetApp.Validators.CustomValidator.ValidateHeight(System.Int16)">
+            <summary>
+            Checks input parameter according to custom rule.
+            </summary>
+            <param name="height">Person height.</param>
+            <returns>True if first name complies with the rules, false if not.</returns>
+        </member>
+        <member name="M:FileCabinetApp.Validators.CustomValidator.ValidateParameters(System.String,System.String,System.DateTime,System.Char,System.Int16,System.Decimal,System.Resources.ResourceManager)">
+            <summary>
+            Checks input parameters according to custom rules.
+            </summary>
+            <exception cref="T:System.ArgumentException">Throws when any parameter is not valid.</exception>
+            <exception cref="T:System.ArgumentNullException">Throws when resource manager is null.</exception>
+            <param name="firstName">Person first name.</param>
+            <param name="lastName">Person last name.</param>
+            <param name="dateOfBirth">Person date of birth.</param>
+            <param name="sex">Sex of a person.</param>
+            <param name="height">Person height.</param>
+            <param name="weight">Person weight.</param>
+            <param name="resource">Source resource manager.</param>
+        </member>
+        <member name="T:FileCabinetApp.Validators.DefaultValidator">
+            <summary>
+            Validator with default rules.
+            </summary>
+        </member>
+        <member name="M:FileCabinetApp.Validators.DefaultValidator.ValidateFirstName(System.String)">
+            <summary>
+            Checks input parameter according to default rule.
+            </summary>
+            <param name="firstName">Person first name.</param>
+            <returns>True if first name complies with the rules, false if not.</returns>
+        </member>
+        <member name="M:FileCabinetApp.Validators.DefaultValidator.ValidateLastName(System.String)">
+            <summary>
+            Checks input parameter according to default rule.
+            </summary>
+            <param name="lastName">Person last name.</param>
+            <returns>True if first name complies with the rules, false if not.</returns>
+        </member>
+        <member name="M:FileCabinetApp.Validators.DefaultValidator.ValidateDateOfBirth(System.DateTime)">
+            <summary>
+            Checks input parameter according to default rule.
+            </summary>
+            <param name="dateOfBirth">Person date of birth.</param>
+            <returns>True if first name complies with the rules, false if not.</returns>
+        </member>
+        <member name="M:FileCabinetApp.Validators.DefaultValidator.ValidateSex(System.Char)">
+            <summary>
+            Checks input parameter according to default rule.
+            </summary>
+            <param name="sex">Person sex.</param>
+            <returns>True if first name complies with the rules, false if not.</returns>
+        </member>
+        <member name="M:FileCabinetApp.Validators.DefaultValidator.ValidateWeight(System.Decimal)">
+            <summary>
+            Checks input parameter according to default rule.
+            </summary>
+            <param name="weight">Person weight.</param>
+            <returns>True if first name complies with the rules, false if not.</returns>
+        </member>
+        <member name="M:FileCabinetApp.Validators.DefaultValidator.ValidateHeight(System.Int16)">
+            <summary>
+            Checks input parameter according to default rule.
+            </summary>
+            <param name="height">Person height.</param>
+            <returns>True if first name complies with the rules, false if not.</returns>
+        </member>
+        <member name="M:FileCabinetApp.Validators.DefaultValidator.ValidateParameters(System.String,System.String,System.DateTime,System.Char,System.Int16,System.Decimal,System.Resources.ResourceManager)">
+            <summary>
+            Checks input parameters according to default rules.
+            </summary>
+            <exception cref="T:System.ArgumentException">Throws when any parameter is not valid.</exception>
+            <exception cref="T:System.ArgumentNullException">Throws when resource manager is null.</exception>
+            <param name="firstName">Person first name.</param>
+            <param name="lastName">Person last name.</param>
+            <param name="dateOfBirth">Person date of birth.</param>
+            <param name="sex">Sex of a person.</param>
+            <param name="height">Person height.</param>
+            <param name="weight">Person weight.</param>
+            <param name="resource">Source resource manager.</param>
+        </member>
+        <member name="T:FileCabinetApp.Validators.IRecordValidator">
+            <summary>
+            Interface for validators.
+            </summary>
+        </member>
+        <member name="M:FileCabinetApp.Validators.IRecordValidator.ValidateParameters(System.String,System.String,System.DateTime,System.Char,System.Int16,System.Decimal,System.Resources.ResourceManager)">
+            <summary>
+            Checks input parameters according to any rules.
+            </summary>
+            <exception cref="T:System.ArgumentException">Throws when any parameter is not valid.</exception>
+            <exception cref="T:System.ArgumentNullException">Throws when resource manager is null.</exception>
+            <param name="firstName">Person first name.</param>
+            <param name="lastName">Person last name.</param>
+            <param name="dateOfBirth">Person date of birth.</param>
+            <param name="sex">Sex of a person.</param>
+            <param name="height">Person height.</param>
+            <param name="weight">Person weight.</param>
+            <param name="resource">Source resource manager.</param>
+        </member>
+        <member name="M:FileCabinetApp.Validators.IRecordValidator.ValidateFirstName(System.String)">
+            <summary>
+            Validates input string with any rule.
+            </summary>
+            <param name="firstName">Person first name.</param>
+            <returns>True if compliant with the rules and exception message.</returns>
+        </member>
+        <member name="M:FileCabinetApp.Validators.IRecordValidator.ValidateLastName(System.String)">
+            <summary>
+            Validates input string with any rule.
+            </summary>
+            <param name="lastName">Person last name.</param>
+            <returns>True if compliant with the rules and exception message.</returns>
+        </member>
+        <member name="M:FileCabinetApp.Validators.IRecordValidator.ValidateDateOfBirth(System.DateTime)">
+            <summary>
+            Validates input string with any rule.
+            </summary>
+            <param name="dateOfBirth">Person date of birth.</param>
+            <returns>True if compliant with the rules and exception message.</returns>
+        </member>
+        <member name="M:FileCabinetApp.Validators.IRecordValidator.ValidateSex(System.Char)">
+            <summary>
+            Validates input string with any rule.
+            </summary>
+            <param name="sex">Person sex.</param>
+            <returns>True if compliant with the rules and exception message.</returns>
+        </member>
+        <member name="M:FileCabinetApp.Validators.IRecordValidator.ValidateWeight(System.Decimal)">
+            <summary>
+            Validates input string with any rule.
+            </summary>
+            <param name="weight">Person weight.</param>
+            <returns>True if compliant with the rules and exception message.</returns>
+        </member>
+        <member name="M:FileCabinetApp.Validators.IRecordValidator.ValidateHeight(System.Int16)">
+            <summary>
+            Validates input string with any rule.
+            </summary>
+            <param name="height">Person height.</param>
+            <returns>True if compliant with the rules and exception message.</returns>
+        </member>
     </members>
 </doc>
