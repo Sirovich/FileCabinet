@@ -4,6 +4,46 @@
         <name>FileCabinetApp</name>
     </assembly>
     <members>
+        <member name="T:FileCabinetApp.Converters.Converter">
+            <summary>
+            Provides methods to converte input from console.
+            </summary>
+        </member>
+        <member name="M:FileCabinetApp.Converters.Converter.StringConverter(System.String)">
+            <summary>
+            Converte string to string.
+            </summary>
+            <param name="source">Source string.</param>
+            <returns>True if posible to converte and result string.</returns>
+        </member>
+        <member name="M:FileCabinetApp.Converters.Converter.DateOfBirthConverter(System.String)">
+            <summary>
+            Converte string to DateTime.
+            </summary>
+            <param name="source">Source string.</param>
+            <returns>True if posible to converte and result date.</returns>
+        </member>
+        <member name="M:FileCabinetApp.Converters.Converter.SexConverter(System.String)">
+            <summary>
+            Converte string to char.
+            </summary>
+            <param name="source">Source string.</param>
+            <returns>True if posible to converte and result char.</returns>
+        </member>
+        <member name="M:FileCabinetApp.Converters.Converter.WeightConverter(System.String)">
+            <summary>
+            Converte string to decimal.
+            </summary>
+            <param name="source">Source string.</param>
+            <returns>True if posible to converte and result decimal.</returns>
+        </member>
+        <member name="M:FileCabinetApp.Converters.Converter.HeightConverter(System.String)">
+            <summary>
+            Converte string to short.
+            </summary>
+            <param name="source">Source string.</param>
+            <returns>True if posible to converte and result short.</returns>
+        </member>
         <member name="T:FileCabinetApp.FileCabinetRecord">
             <summary>
             Class contains record fields.
@@ -55,12 +95,6 @@
             <summary>
             Class provides methods for working with records.
             </summary>
-        </member>
-        <member name="M:FileCabinetApp.FileCabinetService.#ctor(FileCabinetApp.Validators.IRecordValidator)">
-            <summary>
-            Initializes a new instance of the <see cref="T:FileCabinetApp.FileCabinetService"/> class.
-            </summary>
-            <param name="recordValidator">Source validator.</param>
         </member>
         <member name="M:FileCabinetApp.FileCabinetService.CreateRecord(System.Int16,System.Decimal,System.Char,System.String,System.String,System.DateTime)">
             <summary>
@@ -353,6 +387,48 @@
             Validator with custom rules.
             </summary>
         </member>
+        <member name="M:FileCabinetApp.Validators.CustomValidator.ValidateFirstName(System.String)">
+            <summary>
+            Checks input parameter according to custom rule.
+            </summary>
+            <param name="firstName">Person first name.</param>
+            <returns>True if first name complies with the rules, false if not.</returns>
+        </member>
+        <member name="M:FileCabinetApp.Validators.CustomValidator.ValidateLastName(System.String)">
+            <summary>
+            Checks input parameter according to custom rule.
+            </summary>
+            <param name="lastName">Person last name.</param>
+            <returns>True if first name complies with the rules, false if not.</returns>
+        </member>
+        <member name="M:FileCabinetApp.Validators.CustomValidator.ValidateDateOfBirth(System.DateTime)">
+            <summary>
+            Checks input parameter according to custom rule.
+            </summary>
+            <param name="dateOfBirth">Person date of birth.</param>
+            <returns>True if first name complies with the rules, false if not.</returns>
+        </member>
+        <member name="M:FileCabinetApp.Validators.CustomValidator.ValidateSex(System.Char)">
+            <summary>
+            Checks input parameter according to custom rule.
+            </summary>
+            <param name="sex">Person sex.</param>
+            <returns>True if first name complies with the rules, false if not.</returns>
+        </member>
+        <member name="M:FileCabinetApp.Validators.CustomValidator.ValidateWeight(System.Decimal)">
+            <summary>
+            Checks input parameter according to custom rule.
+            </summary>
+            <param name="weight">Person weight.</param>
+            <returns>True if first name complies with the rules, false if not.</returns>
+        </member>
+        <member name="M:FileCabinetApp.Validators.CustomValidator.ValidateHeight(System.Int16)">
+            <summary>
+            Checks input parameter according to custom rule.
+            </summary>
+            <param name="height">Person height.</param>
+            <returns>True if first name complies with the rules, false if not.</returns>
+        </member>
         <member name="M:FileCabinetApp.Validators.CustomValidator.ValidateParameters(System.String,System.String,System.DateTime,System.Char,System.Int16,System.Decimal,System.Resources.ResourceManager)">
             <summary>
             Checks input parameters according to custom rules.
@@ -371,6 +447,48 @@
             <summary>
             Validator with default rules.
             </summary>
+        </member>
+        <member name="M:FileCabinetApp.Validators.DefaultValidator.ValidateFirstName(System.String)">
+            <summary>
+            Checks input parameter according to default rule.
+            </summary>
+            <param name="firstName">Person first name.</param>
+            <returns>True if first name complies with the rules, false if not.</returns>
+        </member>
+        <member name="M:FileCabinetApp.Validators.DefaultValidator.ValidateLastName(System.String)">
+            <summary>
+            Checks input parameter according to default rule.
+            </summary>
+            <param name="lastName">Person last name.</param>
+            <returns>True if first name complies with the rules, false if not.</returns>
+        </member>
+        <member name="M:FileCabinetApp.Validators.DefaultValidator.ValidateDateOfBirth(System.DateTime)">
+            <summary>
+            Checks input parameter according to default rule.
+            </summary>
+            <param name="dateOfBirth">Person date of birth.</param>
+            <returns>True if first name complies with the rules, false if not.</returns>
+        </member>
+        <member name="M:FileCabinetApp.Validators.DefaultValidator.ValidateSex(System.Char)">
+            <summary>
+            Checks input parameter according to default rule.
+            </summary>
+            <param name="sex">Person sex.</param>
+            <returns>True if first name complies with the rules, false if not.</returns>
+        </member>
+        <member name="M:FileCabinetApp.Validators.DefaultValidator.ValidateWeight(System.Decimal)">
+            <summary>
+            Checks input parameter according to default rule.
+            </summary>
+            <param name="weight">Person weight.</param>
+            <returns>True if first name complies with the rules, false if not.</returns>
+        </member>
+        <member name="M:FileCabinetApp.Validators.DefaultValidator.ValidateHeight(System.Int16)">
+            <summary>
+            Checks input parameter according to default rule.
+            </summary>
+            <param name="height">Person height.</param>
+            <returns>True if first name complies with the rules, false if not.</returns>
         </member>
         <member name="M:FileCabinetApp.Validators.DefaultValidator.ValidateParameters(System.String,System.String,System.DateTime,System.Char,System.Int16,System.Decimal,System.Resources.ResourceManager)">
             <summary>
@@ -404,6 +522,48 @@
             <param name="height">Person height.</param>
             <param name="weight">Person weight.</param>
             <param name="resource">Source resource manager.</param>
+        </member>
+        <member name="M:FileCabinetApp.Validators.IRecordValidator.ValidateFirstName(System.String)">
+            <summary>
+            Validates input string with any rule.
+            </summary>
+            <param name="firstName">Person first name.</param>
+            <returns>True if compliant with the rules and exception message.</returns>
+        </member>
+        <member name="M:FileCabinetApp.Validators.IRecordValidator.ValidateLastName(System.String)">
+            <summary>
+            Validates input string with any rule.
+            </summary>
+            <param name="lastName">Person last name.</param>
+            <returns>True if compliant with the rules and exception message.</returns>
+        </member>
+        <member name="M:FileCabinetApp.Validators.IRecordValidator.ValidateDateOfBirth(System.DateTime)">
+            <summary>
+            Validates input string with any rule.
+            </summary>
+            <param name="dateOfBirth">Person date of birth.</param>
+            <returns>True if compliant with the rules and exception message.</returns>
+        </member>
+        <member name="M:FileCabinetApp.Validators.IRecordValidator.ValidateSex(System.Char)">
+            <summary>
+            Validates input string with any rule.
+            </summary>
+            <param name="sex">Person sex.</param>
+            <returns>True if compliant with the rules and exception message.</returns>
+        </member>
+        <member name="M:FileCabinetApp.Validators.IRecordValidator.ValidateWeight(System.Decimal)">
+            <summary>
+            Validates input string with any rule.
+            </summary>
+            <param name="weight">Person weight.</param>
+            <returns>True if compliant with the rules and exception message.</returns>
+        </member>
+        <member name="M:FileCabinetApp.Validators.IRecordValidator.ValidateHeight(System.Int16)">
+            <summary>
+            Validates input string with any rule.
+            </summary>
+            <param name="height">Person height.</param>
+            <returns>True if compliant with the rules and exception message.</returns>
         </member>
     </members>
 </doc>

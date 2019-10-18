@@ -3,6 +3,7 @@ using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Resources;
 using CommandLine;
+using FileCabinetApp.Converters;
 using FileCabinetApp.Services;
 using FileCabinetApp.Validators;
 
@@ -19,8 +20,8 @@ namespace FileCabinetApp
         private const int ExplanationHelpIndex = 2;
 
         private static readonly ResourceManager Resource = new ResourceManager("FileCabinetApp.res", typeof(Program).Assembly);
-
-        private static IFileCabinetService fileCabinetService;
+        private static IRecordValidator recordValidator;
+        private static IFileCabinetService fileCabinetService = new FileCabinetService();
         private static bool isRunning = true;
 
         private static Tuple<string, Action<string>>[] commands = new Tuple<string, Action<string>>[]
@@ -88,7 +89,7 @@ namespace FileCabinetApp
         {
             if (args is null)
             {
-                fileCabinetService = new FileCabinetService(new DefaultValidator());
+                recordValidator = new DefaultValidator();
                 return;
             }
 
@@ -97,12 +98,12 @@ namespace FileCabinetApp
 
             if (opts.Rule.Equals("Default", StringComparison.InvariantCultureIgnoreCase))
             {
-                fileCabinetService = new FileCabinetService(new DefaultValidator());
+                recordValidator = new DefaultValidator();
                 Console.WriteLine(Resource.GetString("defaultRule", CultureInfo.InvariantCulture));
             }
             else if (opts.Rule.Equals("Custom", StringComparison.InvariantCultureIgnoreCase))
             {
-                fileCabinetService = new FileCabinetService(new CustomValidator());
+                recordValidator = new CustomValidator();
                 Console.WriteLine(Resource.GetString("customRule", CultureInfo.InvariantCulture));
             }
             else
@@ -133,17 +134,17 @@ namespace FileCabinetApp
                 try
                 {
                     Console.Write(Resource.GetString("firstNameInputMessage", CultureInfo.InvariantCulture));
-                    string firstName = Console.ReadLine();
+                    var firstName = ReadInput(Converter.StringConverter, recordValidator.ValidateFirstName);
                     Console.Write(Resource.GetString("lastNameInputMessage", CultureInfo.InvariantCulture));
-                    string lastName = Console.ReadLine();
+                    var lastName = ReadInput(Converter.StringConverter, recordValidator.ValidateLastName);
                     Console.Write(Resource.GetString("sexInputMessage", CultureInfo.InvariantCulture));
-                    char sex = Convert.ToChar(Console.ReadLine(), CultureInfo.InvariantCulture);
+                    var sex = ReadInput(Converter.SexConverter, recordValidator.ValidateSex);
                     Console.Write(Resource.GetString("weightInputMessage", CultureInfo.InvariantCulture));
-                    decimal weight = Convert.ToDecimal(Console.ReadLine(), CultureInfo.InvariantCulture);
+                    var weight = ReadInput(Converter.WeightConverter, recordValidator.ValidateWeight);
                     Console.Write(Resource.GetString("heightInputMessage", CultureInfo.InvariantCulture));
-                    short height = Convert.ToInt16(Console.ReadLine(), CultureInfo.InvariantCulture);
+                    var height = ReadInput(Converter.HeightConverter, recordValidator.ValidateHeight);
                     Console.Write(Resource.GetString("dateOfBirthInputMessage", CultureInfo.InvariantCulture));
-                    DateTime dateOfBirth = DateTime.Parse(Console.ReadLine(), CultureInfo.InvariantCulture);
+                    DateTime dateOfBirth = ReadInput(Converter.DateOfBirthConverter, recordValidator.ValidateDateOfBirth);
                     int record = fileCabinetService.CreateRecord(height, weight, sex, firstName, lastName, dateOfBirth);
                     Console.WriteLine(Resource.GetString("recordCreateMessage", CultureInfo.InvariantCulture), record);
                     break;
@@ -190,18 +191,18 @@ namespace FileCabinetApp
                     try
                     {
                         Console.Write(Resource.GetString("firstNameInputMessage", CultureInfo.InvariantCulture));
-                        string firstName = Console.ReadLine();
+                        var firstName = ReadInput(Converter.StringConverter, recordValidator.ValidateFirstName);
                         Console.Write(Resource.GetString("lastNameInputMessage", CultureInfo.InvariantCulture));
-                        string lastName = Console.ReadLine();
+                        var lastName = ReadInput(Converter.StringConverter, recordValidator.ValidateLastName);
                         Console.Write(Resource.GetString("sexInputMessage", CultureInfo.InvariantCulture));
-                        char sex = Convert.ToChar(Console.ReadLine(), CultureInfo.InvariantCulture);
+                        var sex = ReadInput(Converter.SexConverter, recordValidator.ValidateSex);
                         Console.Write(Resource.GetString("weightInputMessage", CultureInfo.InvariantCulture));
-                        decimal weight = Convert.ToDecimal(Console.ReadLine(), CultureInfo.InvariantCulture);
+                        var weight = ReadInput(Converter.WeightConverter, recordValidator.ValidateWeight);
                         Console.Write(Resource.GetString("heightInputMessage", CultureInfo.InvariantCulture));
-                        short height = Convert.ToInt16(Console.ReadLine(), CultureInfo.InvariantCulture);
+                        var height = ReadInput(Converter.HeightConverter, recordValidator.ValidateHeight);
                         Console.Write(Resource.GetString("dateOfBirthInputMessage", CultureInfo.InvariantCulture));
-                        DateTime dateOfBirth = DateTime.Parse(Console.ReadLine(), CultureInfo.InvariantCulture);
-                        fileCabinetService.EditRecord(id, firstName, lastName, dateOfBirth, sex, height, weight);
+                        DateTime dateOfBirth = ReadInput(Converter.DateOfBirthConverter, recordValidator.ValidateDateOfBirth);
+                        fileCabinetService.EditRecord(id, firstName as string, lastName as string, dateOfBirth, sex, height, weight);
                         Console.WriteLine(Resource.GetString("recordUpdateMessage", CultureInfo.InvariantCulture), record.Id);
                         return;
                     }
@@ -285,6 +286,35 @@ namespace FileCabinetApp
         {
             Console.WriteLine(Resource.GetString("exitMessage", CultureInfo.InvariantCulture));
             isRunning = false;
+        }
+
+        private static T ReadInput<T>(Func<string, Tuple<bool, string, T>> converter, Func<T, Tuple<bool, string>> validator)
+        {
+            do
+            {
+                T value;
+
+                var input = Console.ReadLine();
+                var conversionResult = converter(input);
+
+                if (!conversionResult.Item1)
+                {
+                    Console.WriteLine($"Conversion failed: {conversionResult.Item2}. Please, correct your input.");
+                    continue;
+                }
+
+                value = conversionResult.Item3;
+
+                var validationResult = validator(value);
+                if (!validationResult.Item1)
+                {
+                    Console.WriteLine($"Validation failed: {validationResult.Item2}. Please, correct your input.");
+                    continue;
+                }
+
+                return value;
+            }
+            while (true);
         }
     }
 }
