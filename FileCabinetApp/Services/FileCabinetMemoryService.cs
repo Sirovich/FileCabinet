@@ -2,16 +2,15 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Resources;
-using FileCabinetApp.Services;
 using FileCabinetApp.Snapshots;
 using FileCabinetApp.Validators;
 
-namespace FileCabinetApp
+namespace FileCabinetApp.Services
 {
     /// <summary>
     /// Class provides methods for working with records.
     /// </summary>
-    public class FileCabinetService : IFileCabinetService
+    public class FileCabinetMemoryService : IFileCabinetService
     {
         private readonly List<FileCabinetRecord> list = new List<FileCabinetRecord>();
 

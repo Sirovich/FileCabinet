@@ -29,12 +29,10 @@ namespace FileCabinetApp.Snapshots
         /// <param name="writer">Source stream.</param>
         public void SaveToCsv(StreamWriter writer)
         {
-            using (var csvWriter = new FileCabinetRecordCsvWriter(writer))
+            var csvWriter = new FileCabinetRecordCsvWriter(writer);
+            foreach (var record in this.records)
             {
-                foreach (var record in this.records)
-                {
-                    csvWriter.Write(record);
-                }
+                csvWriter.Write(record);
             }
         }
 
@@ -50,12 +48,11 @@ namespace FileCabinetApp.Snapshots
             }
 
             writer.WriteStartElement("records");
-            using (var xmlWriter = new FileCabinetRecordXmlWriter(writer))
+
+            var xmlWriter = new FileCabinetRecordXmlWriter(writer);
+            foreach (var record in this.records)
             {
-                foreach (var record in this.records)
-                {
-                    xmlWriter.Write(record);
-                }
+                xmlWriter.Write(record);
             }
 
             writer.WriteEndElement();

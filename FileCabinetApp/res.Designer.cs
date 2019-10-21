@@ -241,6 +241,15 @@ namespace FileCabinetApp {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Invalid storage.
+        /// </summary>
+        internal static string invalidStorage {
+            get {
+                return ResourceManager.GetString("invalidStorage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Not valid last name.
         /// </summary>
         internal static string lastNameException {
@@ -255,6 +264,15 @@ namespace FileCabinetApp {
         internal static string lastNameInputMessage {
             get {
                 return ResourceManager.GetString("lastNameInputMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Using memory storage.
+        /// </summary>
+        internal static string memoryStorage {
+            get {
+                return ResourceManager.GetString("memoryStorage", resourceCulture);
             }
         }
         

@@ -24,7 +24,7 @@ namespace FileCabinetApp
 
         private static readonly ResourceManager Resource = new ResourceManager("FileCabinetApp.res", typeof(Program).Assembly);
         private static IRecordValidator recordValidator;
-        private static IFileCabinetService fileCabinetService = new FileCabinetService();
+        private static IFileCabinetService fileCabinetService;
         private static bool isRunning = true;
 
         private static Tuple<string, Action<string>>[] commands = new Tuple<string, Action<string>>[]
@@ -114,6 +114,22 @@ namespace FileCabinetApp
             else
             {
                 throw new ArgumentException(Resource.GetString("invalidRule", CultureInfo.InvariantCulture));
+            }
+
+            if (opts.Storage.Equals("memory", StringComparison.InvariantCultureIgnoreCase))
+            {
+                fileCabinetService = new FileCabinetMemoryService();
+                Console.WriteLine(Resource.GetString("memoryStorage", CultureInfo.InvariantCulture));
+            }
+            else if (opts.Storage.Equals("file", StringComparison.InvariantCultureIgnoreCase))
+            {
+                FileStream fileStream;
+                fileStream = new FileStream(@"cabinet-records.db", FileMode.Create, FileAccess.ReadWrite);
+                fileCabinetService = new FileCabinetFilesystemService(fileStream);
+            }
+            else
+            {
+                throw new ArgumentException(Resource.GetString("invalidStorage", CultureInfo.InvariantCulture));
             }
         }
 
@@ -235,12 +251,19 @@ namespace FileCabinetApp
             };
 
             var arguments = parameters.Split(' ', 2);
+
+            if (arguments.Length < 2)
+            {
+                Console.WriteLine(Resource.GetString("noRecordsMessage", CultureInfo.InvariantCulture));
+                return;
+            }
+
             var index = Array.FindIndex(methods, 0, methods.Length, i => i.Item1.Equals(arguments[0], StringComparison.InvariantCultureIgnoreCase));
             const int argumentIndex = 1;
             if (index >= 0)
             {
                 var records = methods[index].Item2(arguments[argumentIndex]);
-                if (records.Count == 0)
+                if (records is null || records.Count == 0)
                 {
                     Console.WriteLine(Resource.GetString("noRecordsMessage", CultureInfo.InvariantCulture));
                 }
