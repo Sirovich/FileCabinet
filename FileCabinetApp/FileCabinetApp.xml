@@ -376,6 +376,17 @@
             </summary>
             <returns>Returns snapshot.</returns>
         </member>
+        <member name="M:FileCabinetApp.Services.FileCabinetFilesystemService.Dispose">
+            <summary>
+            Implementation of IDisposable interface.
+            </summary>
+        </member>
+        <member name="M:FileCabinetApp.Services.FileCabinetFilesystemService.Dispose(System.Boolean)">
+            <summary>
+            Performs the actual work of releasing resources.
+            </summary>
+            <param name="disposing">Bool parameter.</param>
+        </member>
         <member name="T:FileCabinetApp.Services.FileCabinetMemoryService">
             <summary>
             Class provides methods for working with records.
@@ -733,11 +744,6 @@
             </summary>
             <param name="writer">Source stream.</param>
         </member>
-        <member name="M:FileCabinetApp.Writers.FileCabinetRecordCsvWriter.Dispose">
-            <summary>
-            Implementation of <see cref="T:System.IDisposable"/>.
-            </summary>
-        </member>
         <member name="M:FileCabinetApp.Writers.FileCabinetRecordCsvWriter.Write(FileCabinetApp.FileCabinetRecord)">
             <summary>
             Write record to csv file.
@@ -754,11 +760,6 @@
             Initializes a new instance of the <see cref="T:FileCabinetApp.Writers.FileCabinetRecordXmlWriter"/> class.
             </summary>
             <param name="writer">Source stream.</param>
-        </member>
-        <member name="M:FileCabinetApp.Writers.FileCabinetRecordXmlWriter.Dispose">
-            <summary>
-            Implementation of <see cref="T:System.IDisposable"/>.
-            </summary>
         </member>
         <member name="M:FileCabinetApp.Writers.FileCabinetRecordXmlWriter.Write(FileCabinetApp.FileCabinetRecord)">
             <summary>

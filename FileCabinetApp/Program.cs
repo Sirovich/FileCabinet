@@ -123,12 +123,8 @@ namespace FileCabinetApp
             }
             else if (opts.Storage.Equals("file", StringComparison.InvariantCultureIgnoreCase))
             {
-                if (File.Exists("cabinet-records.db"))
-                {
-                    File.Delete("cabinet-records.db");
-                }
-
-                var fileStream = File.Create("cabinet-records.db");
+                FileStream fileStream;
+                fileStream = new FileStream(@"cabinet-records.db", FileMode.Create, FileAccess.ReadWrite);
                 fileCabinetService = new FileCabinetFilesystemService(fileStream);
             }
             else

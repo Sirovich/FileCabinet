@@ -8,7 +8,7 @@ namespace FileCabinetApp.Writers
     /// <summary>
     /// Class for write to csv file.
     /// </summary>
-    public class FileCabinetRecordCsvWriter : IWriter, IDisposable
+    public class FileCabinetRecordCsvWriter : IWriter
     {
         private StreamWriter writer;
 
@@ -19,14 +19,6 @@ namespace FileCabinetApp.Writers
         public FileCabinetRecordCsvWriter(StreamWriter writer)
         {
             this.writer = writer;
-        }
-
-        /// <summary>
-        /// Implementation of <see cref="IDisposable"/>.
-        /// </summary>
-        public void Dispose()
-        {
-            this.writer.Dispose();
         }
 
         /// <summary>

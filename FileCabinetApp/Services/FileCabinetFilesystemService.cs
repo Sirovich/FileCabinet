@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Globalization;
 using System.IO;
 using System.Text;
 using FileCabinetApp.Snapshots;
@@ -10,9 +11,18 @@ namespace FileCabinetApp.Services
     /// <summary>
     /// Class provides methods for working with records in filesystem.
     /// </summary>
-    public class FileCabinetFilesystemService : IFileCabinetService
+    public class FileCabinetFilesystemService : IFileCabinetService, IDisposable
     {
-        private FileStream fileStream;
+        private const int StringSize = 122;
+        private const int CharSize = 1;
+        private const int IntSize = 4;
+        private const int ShortSize = 2;
+        private const int DecimalSize = 16;
+
+        private BinaryWriter fileWriter;
+        private BinaryReader fileReader;
+        private int lastId = 0;
+        private int offset = 0;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="FileCabinetFilesystemService"/> class.
@@ -20,7 +30,8 @@ namespace FileCabinetApp.Services
         /// <param name="fileStream">Source stream.</param>
         public FileCabinetFilesystemService(FileStream fileStream)
         {
-            this.fileStream = fileStream;
+            this.fileWriter = new BinaryWriter(fileStream);
+            this.fileReader = new BinaryReader(fileStream);
         }
 
         /// <summary>
@@ -36,7 +47,32 @@ namespace FileCabinetApp.Services
         /// <returns>Id of created record.</returns>
         public int CreateRecord(short height, decimal weight, char sex, string firstName, string lastName, DateTime dateOfBirth)
         {
-            throw new NotImplementedException();
+            this.lastId++;
+            this.offset += ShortSize;
+            this.fileWriter.Seek(this.offset, 0);
+            this.fileWriter.Write(this.lastId);
+            this.offset += IntSize;
+            this.fileWriter.Write(firstName);
+            this.offset += StringSize;
+            this.fileWriter.Seek(this.offset, 0);
+            this.fileWriter.Write(lastName);
+            this.offset += StringSize;
+            this.fileWriter.Seek(this.offset, 0);
+            this.fileWriter.Write(dateOfBirth.Day);
+            this.offset += IntSize;
+            this.fileWriter.Seek(this.offset, 0);
+            this.fileWriter.Write(dateOfBirth.Month);
+            this.offset += IntSize;
+            this.fileWriter.Seek(this.offset, 0);
+            this.fileWriter.Write(dateOfBirth.Year);
+            this.offset += IntSize;
+            this.fileWriter.Write(sex);
+            this.offset += CharSize;
+            this.fileWriter.Write(weight);
+            this.offset += DecimalSize;
+            this.fileWriter.Write(height);
+            this.offset += ShortSize;
+            return this.lastId;
         }
 
         /// <summary>
@@ -91,7 +127,35 @@ namespace FileCabinetApp.Services
         /// <returns>Array of records.</returns>
         public ReadOnlyCollection<FileCabinetRecord> GetRecords()
         {
-            throw new NotImplementedException();
+            var list = new List<FileCabinetRecord>();
+            long offset = 0;
+            this.fileReader.BaseStream.Seek(offset, 0);
+            while (this.fileReader.BaseStream.Position < this.fileReader.BaseStream.Length)
+            {
+                var tempRecord = new FileCabinetRecord();
+                offset += ShortSize;
+                this.fileReader.BaseStream.Seek(offset, 0);
+                tempRecord.Id = this.fileReader.ReadInt32();
+                offset += IntSize;
+                tempRecord.FirstName = this.fileReader.ReadString();
+                this.fileReader.BaseStream.Seek(offset + StringSize, 0);
+                tempRecord.LastName = this.fileReader.ReadString();
+                offset += StringSize;
+                this.fileReader.BaseStream.Seek(offset + StringSize, 0);
+                int day = this.fileReader.ReadInt32();
+                int month = this.fileReader.ReadInt32();
+                int year = this.fileReader.ReadInt32();
+                tempRecord.DateOfBirth = tempRecord.DateOfBirth.AddDays(day - 1);
+                tempRecord.DateOfBirth = tempRecord.DateOfBirth.AddMonths(month - 1);
+                tempRecord.DateOfBirth = tempRecord.DateOfBirth.AddYears(year - 1);
+                tempRecord.Sex = this.fileReader.ReadChar();
+                tempRecord.Weight = this.fileReader.ReadDecimal();
+                tempRecord.Height = this.fileReader.ReadInt16();
+                offset = this.fileReader.BaseStream.Position;
+                list.Add(tempRecord);
+            }
+
+            return list.AsReadOnly();
         }
 
         /// <summary>
@@ -110,6 +174,28 @@ namespace FileCabinetApp.Services
         public FileCabinetServiceSnapshot MakeSnapshot()
         {
             throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Implementation of IDisposable interface.
+        /// </summary>
+        public void Dispose()
+        {
+            this.Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        /// <summary>
+        /// Performs the actual work of releasing resources.
+        /// </summary>
+        /// <param name="disposing">Bool parameter.</param>
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                this.fileWriter.Close();
+                this.fileReader.Close();
+            }
         }
     }
 }

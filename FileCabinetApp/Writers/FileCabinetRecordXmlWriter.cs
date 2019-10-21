@@ -7,7 +7,7 @@ namespace FileCabinetApp.Writers
     /// <summary>
     /// Class for write to xml file.
     /// </summary>
-    public class FileCabinetRecordXmlWriter : IDisposable, IWriter
+    public class FileCabinetRecordXmlWriter : IWriter
     {
         private readonly XmlWriter writer;
 
@@ -18,13 +18,6 @@ namespace FileCabinetApp.Writers
         public FileCabinetRecordXmlWriter(XmlWriter writer)
         {
             this.writer = writer;
-        }
-
-        /// <summary>
-        /// Implementation of <see cref="IDisposable"/>.
-        /// </summary>
-        public void Dispose()
-        {
         }
 
         /// <summary>
