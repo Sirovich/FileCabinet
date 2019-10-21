@@ -251,12 +251,19 @@ namespace FileCabinetApp
             };
 
             var arguments = parameters.Split(' ', 2);
+
+            if (arguments.Length < 2)
+            {
+                Console.WriteLine(Resource.GetString("noRecordsMessage", CultureInfo.InvariantCulture));
+                return;
+            }
+
             var index = Array.FindIndex(methods, 0, methods.Length, i => i.Item1.Equals(arguments[0], StringComparison.InvariantCultureIgnoreCase));
             const int argumentIndex = 1;
             if (index >= 0)
             {
                 var records = methods[index].Item2(arguments[argumentIndex]);
-                if (records.Count == 0)
+                if (records is null || records.Count == 0)
                 {
                     Console.WriteLine(Resource.GetString("noRecordsMessage", CultureInfo.InvariantCulture));
                 }
