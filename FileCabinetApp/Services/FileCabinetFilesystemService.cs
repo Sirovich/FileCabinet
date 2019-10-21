@@ -164,7 +164,8 @@ namespace FileCabinetApp.Services
         /// <returns>Count of records.</returns>
         public int GetStat()
         {
-            throw new NotImplementedException();
+            const int recordSize = 281;
+            return Convert.ToInt32(this.fileReader.BaseStream.Length) / recordSize;
         }
 
         /// <summary>
