@@ -18,6 +18,7 @@ namespace FileCabinetApp.Services
         private const int IntSize = 4;
         private const int ShortSize = 2;
         private const int DecimalSize = 16;
+        private const int RecordSize = 281;
 
         private BinaryWriter fileWriter;
         private BinaryReader fileReader;
@@ -60,10 +61,8 @@ namespace FileCabinetApp.Services
             this.fileWriter.Seek(this.offset, 0);
             this.fileWriter.Write(dateOfBirth.Day);
             this.offset += IntSize;
-            this.fileWriter.Seek(this.offset, 0);
             this.fileWriter.Write(dateOfBirth.Month);
             this.offset += IntSize;
-            this.fileWriter.Seek(this.offset, 0);
             this.fileWriter.Write(dateOfBirth.Year);
             this.offset += IntSize;
             this.fileWriter.Write(sex);
@@ -88,7 +87,22 @@ namespace FileCabinetApp.Services
         /// <param name="weight">New weight of person.</param>
         public void EditRecord(int id, string firstName, string lastName, DateTime dateOfBirth, char sex, short height, decimal weight)
         {
-            throw new NotImplementedException();
+            int localOffset = ((id - 1) * RecordSize) + ShortSize;
+            this.fileWriter.Seek(localOffset, 0);
+            this.fileWriter.Write(this.lastId);
+            localOffset += IntSize;
+            this.fileWriter.Write(firstName);
+            localOffset += StringSize;
+            this.fileWriter.Seek(localOffset, 0);
+            this.fileWriter.Write(lastName);
+            localOffset += StringSize;
+            this.fileWriter.Seek(localOffset, 0);
+            this.fileWriter.Write(dateOfBirth.Day);
+            this.fileWriter.Write(dateOfBirth.Month);
+            this.fileWriter.Write(dateOfBirth.Year);
+            this.fileWriter.Write(sex);
+            this.fileWriter.Write(weight);
+            this.fileWriter.Write(height);
         }
 
         /// <summary>
@@ -164,8 +178,7 @@ namespace FileCabinetApp.Services
         /// <returns>Count of records.</returns>
         public int GetStat()
         {
-            const int recordSize = 281;
-            return Convert.ToInt32(this.fileReader.BaseStream.Length) / recordSize;
+            return Convert.ToInt32(this.fileReader.BaseStream.Length) / RecordSize;
         }
 
         /// <summary>
