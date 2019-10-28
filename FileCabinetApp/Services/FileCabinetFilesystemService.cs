@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Globalization;
 using System.IO;
+using System.Resources;
 using System.Text;
 using FileCabinetApp.Snapshots;
+using FileCabinetApp.Validators;
 
 namespace FileCabinetApp.Services
 {
@@ -20,19 +22,25 @@ namespace FileCabinetApp.Services
         private const int DecimalSize = 16;
         private const int RecordSize = 281;
 
+        private static readonly ResourceManager Resource = new ResourceManager("FileCabinetApp.res", typeof(Program).Assembly);
+
         private BinaryWriter fileWriter;
         private BinaryReader fileReader;
         private int lastId = 0;
         private int offset = 0;
 
+        private IRecordValidator recordValidator;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="FileCabinetFilesystemService"/> class.
         /// </summary>
         /// <param name="fileStream">Source stream.</param>
-        public FileCabinetFilesystemService(FileStream fileStream)
+        /// <param name="recordValidator">Source validator.</param>
+        public FileCabinetFilesystemService(FileStream fileStream, IRecordValidator recordValidator)
         {
             this.fileWriter = new BinaryWriter(fileStream);
             this.fileReader = new BinaryReader(fileStream);
+            this.recordValidator = recordValidator;
         }
 
         /// <summary>
@@ -48,6 +56,7 @@ namespace FileCabinetApp.Services
         /// <returns>Id of created record.</returns>
         public int CreateRecord(short height, decimal weight, char sex, string firstName, string lastName, DateTime dateOfBirth)
         {
+            this.recordValidator.ValidateParameters(firstName, lastName, dateOfBirth, sex, height, weight, Resource);
             this.lastId++;
             this.offset += ShortSize;
             this.fileWriter.Seek(this.offset, 0);
@@ -87,6 +96,7 @@ namespace FileCabinetApp.Services
         /// <param name="weight">New weight of person.</param>
         public void EditRecord(int id, string firstName, string lastName, DateTime dateOfBirth, char sex, short height, decimal weight)
         {
+            this.recordValidator.ValidateParameters(firstName, lastName, dateOfBirth, sex, height, weight, Resource);
             int localOffset = ((id - 1) * RecordSize) + ShortSize;
             this.fileWriter.Seek(localOffset, 0);
             this.fileWriter.Write(this.lastId);
@@ -265,7 +275,7 @@ namespace FileCabinetApp.Services
         /// <returns>Returns snapshot.</returns>
         public FileCabinetServiceSnapshot MakeSnapshot()
         {
-            throw new NotImplementedException();
+            return new FileCabinetServiceSnapshot(new List<FileCabinetRecord>(this.GetRecords()).ToArray());
         }
 
         /// <summary>
@@ -275,6 +285,91 @@ namespace FileCabinetApp.Services
         {
             this.Dispose(true);
             GC.SuppressFinalize(this);
+        }
+
+        /// <summary>
+        /// Restore records from snapshot.
+        /// </summary>
+        /// <param name="snapshot">Source snapshot.</param>
+        /// <returns>Number of imported records.</returns>
+        public int Restore(FileCabinetServiceSnapshot snapshot)
+        {
+            if (snapshot is null)
+            {
+                throw new ArgumentNullException(nameof(snapshot));
+            }
+
+            var list = new List<FileCabinetRecord>();
+            var importData = snapshot.Records;
+            var source = this.GetRecords();
+
+            int sourceIndex = 0;
+            int importIndex = 0;
+
+            for (; sourceIndex < source.Count && importIndex < importData.Count;)
+            {
+                if (source[sourceIndex].Id < importData[importIndex].Id)
+                {
+                    list.Add(source[sourceIndex]);
+                    sourceIndex++;
+                }
+                else if (source[sourceIndex].Id == importData[importIndex].Id)
+                {
+                    try
+                    {
+                        this.recordValidator.ValidateParameters(importData[importIndex], Resource);
+                        list.Add(importData[importIndex]);
+                        importIndex++;
+                        sourceIndex++;
+                    }
+                    catch (ArgumentException ex)
+                    {
+                        Console.WriteLine(Resource.GetString("importFailValidation", CultureInfo.InvariantCulture), importData[importIndex].Id, ex.Message);
+                        importIndex++;
+                        sourceIndex++;
+                        continue;
+                    }
+                }
+                else
+                {
+                    try
+                    {
+                        this.recordValidator.ValidateParameters(importData[importIndex], Resource);
+                        list.Add(importData[importIndex]);
+                        importIndex++;
+                    }
+                    catch (ArgumentException ex)
+                    {
+                        Console.WriteLine(Resource.GetString("importFailValidation", CultureInfo.InvariantCulture), importData[importIndex].Id, ex.Message);
+                        importIndex++;
+                        continue;
+                    }
+                }
+            }
+
+            for (; importIndex < importData.Count; importIndex++)
+            {
+                try
+                {
+                    this.recordValidator.ValidateParameters(importData[importIndex], Resource);
+                    list.Add(importData[importIndex]);
+                }
+                catch (ArgumentException ex)
+                {
+                    Console.WriteLine(Resource.GetString("importFailValidation", CultureInfo.InvariantCulture), importData[importIndex].Id, ex.Message);
+                    continue;
+                }
+            }
+
+            for (; sourceIndex < source.Count; sourceIndex++)
+            {
+                list.Add(source[sourceIndex]);
+            }
+
+            this.lastId = list[^1].Id;
+            this.WriteImportToFile(list);
+
+            return list.Count;
         }
 
         /// <summary>
@@ -313,6 +408,37 @@ namespace FileCabinetApp.Services
             tempRecord.Height = this.fileReader.ReadInt16();
 
             return tempRecord;
+        }
+
+        private void WriteImportToFile(List<FileCabinetRecord> records)
+        {
+            this.fileWriter.BaseStream.Seek(0, 0);
+            this.offset = 0;
+            foreach (var record in records)
+            {
+                this.offset += ShortSize;
+                this.fileWriter.Seek(this.offset, 0);
+                this.fileWriter.Write(record.Id);
+                this.offset += IntSize;
+                this.fileWriter.Write(record.FirstName);
+                this.offset += StringSize;
+                this.fileWriter.Seek(this.offset, 0);
+                this.fileWriter.Write(record.LastName);
+                this.offset += StringSize;
+                this.fileWriter.Seek(this.offset, 0);
+                this.fileWriter.Write(record.DateOfBirth.Day);
+                this.offset += IntSize;
+                this.fileWriter.Write(record.DateOfBirth.Month);
+                this.offset += IntSize;
+                this.fileWriter.Write(record.DateOfBirth.Year);
+                this.offset += IntSize;
+                this.fileWriter.Write(record.Sex);
+                this.offset += CharSize;
+                this.fileWriter.Write(record.Weight);
+                this.offset += DecimalSize;
+                this.fileWriter.Write(record.Height);
+                this.offset += ShortSize;
+            }
         }
     }
 }

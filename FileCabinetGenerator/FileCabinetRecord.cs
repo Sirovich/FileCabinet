@@ -31,10 +31,24 @@ namespace FileCabinetApp
         public string SomeDateString
         {
             get { return this.DateOfBirth.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture); }
-            set { this.DateOfBirth = DateTime.Parse(value); }
+            set { this.DateOfBirth = DateTime.Parse(value, CultureInfo.InvariantCulture); }
         }
 
         [XmlElement("Sex")]
+        public string SexString 
+        {
+            get
+            {
+                return Sex.ToString();
+            }
+
+            set
+            {
+                Sex = value[0];
+            }
+        }
+
+        [XmlIgnore]
         /// <summary>
         /// Gets or sets sex of a person.
         /// </summary>

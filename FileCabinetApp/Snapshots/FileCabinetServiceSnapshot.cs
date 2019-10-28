@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Text;
 using System.Xml;
+using FileCabinetApp.Readers;
 using FileCabinetApp.Writers;
 
 namespace FileCabinetApp.Snapshots
@@ -12,7 +14,7 @@ namespace FileCabinetApp.Snapshots
     /// </summary>
     public class FileCabinetServiceSnapshot
     {
-        private readonly FileCabinetRecord[] records;
+        private List<FileCabinetRecord> records;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="FileCabinetServiceSnapshot"/> class.
@@ -20,7 +22,27 @@ namespace FileCabinetApp.Snapshots
         /// <param name="records">Array of records.</param>
         public FileCabinetServiceSnapshot(FileCabinetRecord[] records)
         {
-            this.records = records;
+            this.records = new List<FileCabinetRecord>(records);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="FileCabinetServiceSnapshot"/> class.
+        /// </summary>
+        public FileCabinetServiceSnapshot()
+        {
+            this.records = new List<FileCabinetRecord>();
+        }
+
+        /// <summary>
+        /// Gets array of records.
+        /// </summary>
+        /// <value>Array of records.</value>
+        public ReadOnlyCollection<FileCabinetRecord> Records
+        {
+            get
+            {
+                return this.records.AsReadOnly();
+            }
         }
 
         /// <summary>
@@ -56,6 +78,26 @@ namespace FileCabinetApp.Snapshots
             }
 
             writer.WriteEndElement();
+        }
+
+        /// <summary>
+        /// Read records from file.
+        /// </summary>
+        /// <param name="streamReader">Source stream reader.</param>
+        public void LoadFromCsv(StreamReader streamReader)
+        {
+            var csvReader = new FileCabinetRecordCsvReader(streamReader);
+            this.records = new List<FileCabinetRecord>(csvReader.ReadAll());
+        }
+
+        /// <summary>
+        /// Read records from file.
+        /// </summary>
+        /// <param name="xmlReader">Source xml reader.</param>
+        public void LoadFromXml(XmlReader xmlReader)
+        {
+            var fileXmlReader = new FileCabinetRecordXmlReader(xmlReader);
+            this.records = new List<FileCabinetRecord>(fileXmlReader.ReadAll());
         }
     }
 }

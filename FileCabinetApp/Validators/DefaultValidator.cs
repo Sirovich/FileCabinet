@@ -148,5 +148,27 @@ namespace FileCabinetApp.Validators
                 throw new ArgumentException(resource.GetString("lastNameException", CultureInfo.InvariantCulture));
             }
         }
+
+        /// <summary>
+        /// Checks input parameters according to any rules.
+        /// </summary>
+        /// <param name="record">Source record.</param>
+        /// <param name="resource">Source resource manager.</param>
+        public void ValidateParameters(FileCabinetRecord record, ResourceManager resource)
+        {
+            if (record is null)
+            {
+                throw new ArgumentNullException(nameof(record));
+            }
+
+            try
+            {
+                this.ValidateParameters(record.FirstName, record.LastName, record.DateOfBirth, record.Sex, record.Height, record.Weight, resource);
+            }
+            catch (ArgumentException ex)
+            {
+                throw new ArgumentException(ex.Message);
+            }
+        }
     }
 }

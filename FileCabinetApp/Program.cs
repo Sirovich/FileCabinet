@@ -36,6 +36,7 @@ namespace FileCabinetApp
             new Tuple<string, Action<string>>("list", List),
             new Tuple<string, Action<string>>("stat", Stat),
             new Tuple<string, Action<string>>("export", Export),
+            new Tuple<string, Action<string>>("import", Import),
             new Tuple<string, Action<string>>("exit", Exit),
         };
 
@@ -48,6 +49,7 @@ namespace FileCabinetApp
             new string[] { "list", "prints all records", "The 'list' command prints all records." },
             new string[] { "stat", "prints count of records", "The 'stat' command prints count of records." },
             new string[] { "export", "saves records in file", "The 'export' command saves records in file." },
+            new string[] { "import", "imports records in file", "The 'import' command imports records in file." },
             new string[] { "exit", "exits the application", "The 'exit' command exits the application." },
         };
 
@@ -118,14 +120,14 @@ namespace FileCabinetApp
 
             if (opts.Storage.Equals("memory", StringComparison.InvariantCultureIgnoreCase))
             {
-                fileCabinetService = new FileCabinetMemoryService();
+                fileCabinetService = new FileCabinetMemoryService(recordValidator);
                 Console.WriteLine(Resource.GetString("memoryStorage", CultureInfo.InvariantCulture));
             }
             else if (opts.Storage.Equals("file", StringComparison.InvariantCultureIgnoreCase))
             {
                 FileStream fileStream;
                 fileStream = new FileStream(@"cabinet-records.db", FileMode.Create, FileAccess.ReadWrite);
-                fileCabinetService = new FileCabinetFilesystemService(fileStream);
+                fileCabinetService = new FileCabinetFilesystemService(fileStream, recordValidator);
             }
             else
             {
@@ -372,6 +374,60 @@ namespace FileCabinetApp
             else
             {
                 Console.WriteLine(Resource.GetString("exportUnknownArgument", CultureInfo.InvariantCulture), arguments[2]);
+            }
+        }
+
+        private static void Import(string parameters)
+        {
+            if (parameters == null)
+            {
+                Console.WriteLine(Resource.GetString("exportArgumentsException", CultureInfo.InvariantCulture));
+                Console.WriteLine(Resource.GetString("exportFormat", CultureInfo.InvariantCulture));
+                return;
+            }
+
+            var arguments = parameters.Split(' ');
+
+            if (arguments.Length == 1)
+            {
+                Console.WriteLine(Resource.GetString("importArgumentsException", CultureInfo.InvariantCulture));
+                Console.WriteLine(Resource.GetString("importFormat", CultureInfo.InvariantCulture));
+                return;
+            }
+            else if (arguments.Length == 2)
+            {
+                const int typeIndex = 0;
+                const int pathIndex = 1;
+
+                var snapshot = new FileCabinetServiceSnapshot();
+
+                if (arguments[typeIndex].Equals("csv", StringComparison.InvariantCultureIgnoreCase))
+                {
+                    using (var fileStream = new StreamReader(arguments[pathIndex]))
+                    {
+                        snapshot.LoadFromCsv(fileStream);
+                        int numberOfStored = fileCabinetService.Restore(snapshot);
+                        Console.WriteLine(Resource.GetString("importFileComplete", CultureInfo.InvariantCulture), numberOfStored, arguments[pathIndex]);
+                    }
+                }
+                else if (arguments[typeIndex].Equals("xml", StringComparison.InvariantCultureIgnoreCase))
+                {
+                    XmlWriterSettings settings = new XmlWriterSettings();
+                    settings.Indent = true;
+                    settings.IndentChars = "\t";
+
+                    using (var fileStream = new StreamReader(arguments[pathIndex]))
+                    using (var xmlReader = XmlReader.Create(fileStream))
+                    {
+                        snapshot.LoadFromXml(xmlReader);
+                        int numberOfImported = fileCabinetService.Restore(snapshot);
+                        Console.WriteLine(Resource.GetString("importFileComplete", CultureInfo.InvariantCulture), numberOfImported, arguments[pathIndex]);
+                    }
+                }
+            }
+            else
+            {
+                Console.WriteLine(Resource.GetString("importUnknownArgument", CultureInfo.InvariantCulture), arguments[2]);
             }
         }
 

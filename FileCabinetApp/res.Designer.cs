@@ -223,6 +223,51 @@ namespace FileCabinetApp {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Invalid parameters.
+        /// </summary>
+        internal static string importException {
+            get {
+                return ResourceManager.GetString("importException", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на #{0}: {1}.
+        /// </summary>
+        internal static string importFailValidation {
+            get {
+                return ResourceManager.GetString("importFailValidation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на {0} records were imported from {1}.
+        /// </summary>
+        internal static string importFileComplete {
+            get {
+                return ResourceManager.GetString("importFileComplete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Use export *type of result file* *file name*.
+        /// </summary>
+        internal static string importFormat {
+            get {
+                return ResourceManager.GetString("importFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Unknow argument {0}.
+        /// </summary>
+        internal static string importUnknownArgument {
+            get {
+                return ResourceManager.GetString("importUnknownArgument", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Invalid input: {0}..
         /// </summary>
         internal static string invalidInputMessage {
