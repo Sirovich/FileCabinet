@@ -73,5 +73,12 @@ namespace FileCabinetApp.Services
         /// </summary>
         /// <returns>Count of records.</returns>
         int GetStat();
+
+        /// <summary>
+        /// Import records from file.
+        /// </summary>
+        /// <param name="snapshot">Service status.</param>
+        /// <returns>Number of stored records.</returns>
+        int Restore(FileCabinetServiceSnapshot snapshot);
     }
 }

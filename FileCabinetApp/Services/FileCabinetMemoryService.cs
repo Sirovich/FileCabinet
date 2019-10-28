@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Globalization;
 using System.Resources;
 using FileCabinetApp.Snapshots;
 using FileCabinetApp.Validators;
@@ -12,13 +13,26 @@ namespace FileCabinetApp.Services
     /// </summary>
     public class FileCabinetMemoryService : IFileCabinetService
     {
-        private readonly List<FileCabinetRecord> list = new List<FileCabinetRecord>();
+        private static readonly ResourceManager Resource = new ResourceManager("FileCabinetApp.res", typeof(Program).Assembly);
 
         private readonly Dictionary<string, List<FileCabinetRecord>> firstNameDictionary = new Dictionary<string, List<FileCabinetRecord>>();
 
         private readonly Dictionary<string, List<FileCabinetRecord>> lastNameDictionary = new Dictionary<string, List<FileCabinetRecord>>();
 
         private readonly Dictionary<DateTime, List<FileCabinetRecord>> dateOfBirthDictionary = new Dictionary<DateTime, List<FileCabinetRecord>>();
+
+        private List<FileCabinetRecord> list = new List<FileCabinetRecord>();
+
+        private IRecordValidator recordValidator;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="FileCabinetMemoryService"/> class.
+        /// </summary>
+        /// <param name="recordValidator">Source validator.</param>
+        public FileCabinetMemoryService(IRecordValidator recordValidator)
+        {
+            this.recordValidator = recordValidator;
+        }
 
         /// <summary>
         /// Captures the status of the service.
@@ -42,6 +56,7 @@ namespace FileCabinetApp.Services
         /// <returns>Id of created record.</returns>
         public int CreateRecord(short height, decimal weight, char sex, string firstName, string lastName, DateTime dateOfBirth)
         {
+            this.recordValidator.ValidateParameters(firstName, lastName, dateOfBirth, sex, height, weight, Resource);
             var record = new FileCabinetRecord
             {
                 Id = this.list.Count + 1,
@@ -89,6 +104,7 @@ namespace FileCabinetApp.Services
         /// <param name="weight">New weight of person.</param>
         public void EditRecord(int id, string firstName, string lastName, DateTime dateOfBirth, char sex, short height, decimal weight)
         {
+            this.recordValidator.ValidateParameters(firstName, lastName, dateOfBirth, sex, height, weight, Resource);
             var records = this.list;
             foreach (FileCabinetRecord record in records)
             {
@@ -193,6 +209,88 @@ namespace FileCabinetApp.Services
         /// <returns>Count of records.</returns>
         public int GetStat()
         {
+            return this.list.Count;
+        }
+
+        /// <summary>
+        /// Import records from file.
+        /// </summary>
+        /// <param name="snapshot">Source snapshot.</param>
+        /// <returns>Number of stored.</returns>
+        public int Restore(FileCabinetServiceSnapshot snapshot)
+        {
+            if (snapshot is null)
+            {
+                throw new ArgumentNullException(nameof(snapshot));
+            }
+
+            var list = new List<FileCabinetRecord>();
+            var importData = snapshot.Records;
+            int sourceIndex = 0;
+            int importIndex = 0;
+
+            for (; sourceIndex < this.list.Count && importIndex < importData.Count;)
+            {
+                if (this.list[sourceIndex].Id < importData[importIndex].Id)
+                {
+                    list.Add(this.list[sourceIndex]);
+                    sourceIndex++;
+                }
+                else if (this.list[sourceIndex].Id == importData[importIndex].Id)
+                {
+                    try
+                    {
+                        this.recordValidator.ValidateParameters(importData[importIndex], Resource);
+                        list.Add(importData[importIndex]);
+                        importIndex++;
+                        sourceIndex++;
+                    }
+                    catch (ArgumentException ex)
+                    {
+                        Console.WriteLine(Resource.GetString("importFailValidation", CultureInfo.InvariantCulture), importData[importIndex].Id, ex.Message);
+                        importIndex++;
+                        sourceIndex++;
+                        continue;
+                    }
+                }
+                else
+                {
+                    try
+                    {
+                        this.recordValidator.ValidateParameters(importData[importIndex], Resource);
+                        list.Add(importData[importIndex]);
+                        importIndex++;
+                    }
+                    catch (ArgumentException ex)
+                    {
+                        Console.WriteLine(Resource.GetString("importFailValidation", CultureInfo.InvariantCulture), importData[importIndex].Id, ex.Message);
+                        importIndex++;
+                        continue;
+                    }
+                }
+            }
+
+            for (; importIndex < importData.Count; importIndex++)
+            {
+                try
+                {
+                    this.recordValidator.ValidateParameters(importData[importIndex], Resource);
+                    list.Add(importData[importIndex]);
+                }
+                catch (ArgumentException ex)
+                {
+                    Console.WriteLine(Resource.GetString("importFailValidation", CultureInfo.InvariantCulture), importData[importIndex].Id, ex.Message);
+                    continue;
+                }
+            }
+
+            for (; sourceIndex < this.list.Count; sourceIndex++)
+            {
+                list.Add(this.list[sourceIndex]);
+            }
+
+            this.list = list;
+
             return this.list.Count;
         }
     }

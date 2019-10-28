@@ -119,6 +119,109 @@
             </summary>
             <param name="args">Arguments of command line.</param>
         </member>
+        <member name="T:FileCabinetApp.Readers.FileCabinetRecordCsvReader">
+            <summary>
+            FileCabinetRecordCsvReader.
+            </summary>
+        </member>
+        <member name="M:FileCabinetApp.Readers.FileCabinetRecordCsvReader.#ctor(System.IO.StreamReader)">
+            <summary>
+            Initializes a new instance of the <see cref="T:FileCabinetApp.Readers.FileCabinetRecordCsvReader"/> class.
+            </summary>
+            <param name="fileReader">Source stream reader.</param>
+        </member>
+        <member name="M:FileCabinetApp.Readers.FileCabinetRecordCsvReader.ReadAll">
+            <summary>
+            Read records from file.
+            </summary>
+            <returns>Array of records.</returns>
+        </member>
+        <member name="T:FileCabinetApp.Readers.FileCabinetRecordXmlReader">
+            <summary>
+            FileCabinetRecordXmlReader.
+            </summary>
+        </member>
+        <member name="M:FileCabinetApp.Readers.FileCabinetRecordXmlReader.#ctor(System.Xml.XmlReader)">
+            <summary>
+            Initializes a new instance of the <see cref="T:FileCabinetApp.Readers.FileCabinetRecordXmlReader"/> class.
+            </summary>
+            <param name="xmlReader">Source xml reader.</param>
+        </member>
+        <member name="M:FileCabinetApp.Readers.FileCabinetRecordXmlReader.ReadAll">
+            <summary>
+            Read records from file.
+            </summary>
+            <returns>Array of records.</returns>
+        </member>
+        <member name="T:FileCabinetApp.Readers.Models.FileCabinetRecordsXmlModel">
+            <summary>
+            FileCabinetRecordsXmlModel.
+            </summary>
+        </member>
+        <member name="P:FileCabinetApp.Readers.Models.FileCabinetRecordsXmlModel.Records">
+            <summary>
+            Gets or sets records.
+            </summary>
+            <value>Array of records.</value>
+        </member>
+        <member name="T:FileCabinetApp.Readers.Models.FileCabinetRecordXmlModel">
+            <summary>
+            Contains property.
+            </summary>
+        </member>
+        <member name="P:FileCabinetApp.Readers.Models.FileCabinetRecordXmlModel.Id">
+            <summary>
+            Gets or sets Id of record.
+            </summary>
+            <value>Id of record.</value>
+        </member>
+        <member name="P:FileCabinetApp.Readers.Models.FileCabinetRecordXmlModel.Name">
+            <summary>
+            Gets or sets first and last names.
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:FileCabinetApp.Readers.Models.FileCabinetRecordXmlModel.DateOfBirth">
+            <summary>
+            Gets or sets persong date of birth.
+            </summary>
+            <value>Person date of birth.</value>
+        </member>
+        <member name="P:FileCabinetApp.Readers.Models.FileCabinetRecordXmlModel.Sex">
+            <summary>
+            Gets or sets sex of a person.
+            </summary>
+            <value>Sex of a person.</value>
+        </member>
+        <member name="P:FileCabinetApp.Readers.Models.FileCabinetRecordXmlModel.Weight">
+            <summary>
+            Gets or sets person weight.
+            </summary>
+            <value>Person weight.</value>
+        </member>
+        <member name="P:FileCabinetApp.Readers.Models.FileCabinetRecordXmlModel.Height">
+            <summary>
+            Gets or sets person height.
+            </summary>
+            <value>Person height.</value>
+        </member>
+        <member name="T:FileCabinetApp.Readers.Models.FileCabinetRecordXmlName">
+            <summary>
+            FileCabinetRecordXmlName.
+            </summary>
+        </member>
+        <member name="P:FileCabinetApp.Readers.Models.FileCabinetRecordXmlName.FirstName">
+            <summary>
+            Gets or sets person first name.
+            </summary>
+            <value>Person first name.</value>
+        </member>
+        <member name="P:FileCabinetApp.Readers.Models.FileCabinetRecordXmlName.LastName">
+            <summary>
+            Gets or sets preson last name.
+            </summary>
+            <value>Person last name.</value>
+        </member>
         <member name="T:FileCabinetApp.res">
             <summary>
               Класс ресурса со строгой типизацией для поиска локализованных строк и т.д.
@@ -225,6 +328,31 @@
               Ищет локализованную строку, похожую на Enter your command, or enter &apos;help&apos; to get help..
             </summary>
         </member>
+        <member name="P:FileCabinetApp.res.importException">
+            <summary>
+              Ищет локализованную строку, похожую на Invalid parameters.
+            </summary>
+        </member>
+        <member name="P:FileCabinetApp.res.importFailValidation">
+            <summary>
+              Ищет локализованную строку, похожую на #{0}: {1}.
+            </summary>
+        </member>
+        <member name="P:FileCabinetApp.res.importFileComplete">
+            <summary>
+              Ищет локализованную строку, похожую на {0} records were imported from {1}.
+            </summary>
+        </member>
+        <member name="P:FileCabinetApp.res.importFormat">
+            <summary>
+              Ищет локализованную строку, похожую на Use export *type of result file* *file name*.
+            </summary>
+        </member>
+        <member name="P:FileCabinetApp.res.importUnknownArgument">
+            <summary>
+              Ищет локализованную строку, похожую на Unknow argument {0}.
+            </summary>
+        </member>
         <member name="P:FileCabinetApp.res.invalidInputMessage">
             <summary>
               Ищет локализованную строку, похожую на Invalid input: {0}..
@@ -305,11 +433,12 @@
             Class provides methods for working with records in filesystem.
             </summary>
         </member>
-        <member name="M:FileCabinetApp.Services.FileCabinetFilesystemService.#ctor(System.IO.FileStream)">
+        <member name="M:FileCabinetApp.Services.FileCabinetFilesystemService.#ctor(System.IO.FileStream,FileCabinetApp.Validators.IRecordValidator)">
             <summary>
             Initializes a new instance of the <see cref="T:FileCabinetApp.Services.FileCabinetFilesystemService"/> class.
             </summary>
             <param name="fileStream">Source stream.</param>
+            <param name="recordValidator">Source validator.</param>
         </member>
         <member name="M:FileCabinetApp.Services.FileCabinetFilesystemService.CreateRecord(System.Int16,System.Decimal,System.Char,System.String,System.String,System.DateTime)">
             <summary>
@@ -381,6 +510,13 @@
             Implementation of IDisposable interface.
             </summary>
         </member>
+        <member name="M:FileCabinetApp.Services.FileCabinetFilesystemService.Restore(FileCabinetApp.Snapshots.FileCabinetServiceSnapshot)">
+            <summary>
+            Restore records from snapshot.
+            </summary>
+            <param name="snapshot">Source snapshot.</param>
+            <returns>Number of imported records.</returns>
+        </member>
         <member name="M:FileCabinetApp.Services.FileCabinetFilesystemService.Dispose(System.Boolean)">
             <summary>
             Performs the actual work of releasing resources.
@@ -391,6 +527,12 @@
             <summary>
             Class provides methods for working with records.
             </summary>
+        </member>
+        <member name="M:FileCabinetApp.Services.FileCabinetMemoryService.#ctor(FileCabinetApp.Validators.IRecordValidator)">
+            <summary>
+            Initializes a new instance of the <see cref="T:FileCabinetApp.Services.FileCabinetMemoryService"/> class.
+            </summary>
+            <param name="recordValidator">Source validator.</param>
         </member>
         <member name="M:FileCabinetApp.Services.FileCabinetMemoryService.MakeSnapshot">
             <summary>
@@ -456,6 +598,13 @@
             Gets count of records.
             </summary>
             <returns>Count of records.</returns>
+        </member>
+        <member name="M:FileCabinetApp.Services.FileCabinetMemoryService.Restore(FileCabinetApp.Snapshots.FileCabinetServiceSnapshot)">
+            <summary>
+            Import records from file.
+            </summary>
+            <param name="snapshot">Source snapshot.</param>
+            <returns>Number of stored.</returns>
         </member>
         <member name="T:FileCabinetApp.Services.IFileCabinetService">
             <summary>
@@ -527,6 +676,13 @@
             </summary>
             <returns>Count of records.</returns>
         </member>
+        <member name="M:FileCabinetApp.Services.IFileCabinetService.Restore(FileCabinetApp.Snapshots.FileCabinetServiceSnapshot)">
+            <summary>
+            Import records from file.
+            </summary>
+            <param name="snapshot">Service status.</param>
+            <returns>Number of stored records.</returns>
+        </member>
         <member name="T:FileCabinetApp.Snapshots.FileCabinetServiceSnapshot">
             <summary>
             Class to work with service status.
@@ -537,6 +693,17 @@
             Initializes a new instance of the <see cref="T:FileCabinetApp.Snapshots.FileCabinetServiceSnapshot"/> class.
             </summary>
             <param name="records">Array of records.</param>
+        </member>
+        <member name="M:FileCabinetApp.Snapshots.FileCabinetServiceSnapshot.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:FileCabinetApp.Snapshots.FileCabinetServiceSnapshot"/> class.
+            </summary>
+        </member>
+        <member name="P:FileCabinetApp.Snapshots.FileCabinetServiceSnapshot.Records">
+            <summary>
+            Gets array of records.
+            </summary>
+            <value>Array of records.</value>
         </member>
         <member name="M:FileCabinetApp.Snapshots.FileCabinetServiceSnapshot.SaveToCsv(System.IO.StreamWriter)">
             <summary>
@@ -549,6 +716,18 @@
             Write records in xml file.
             </summary>
             <param name="writer">Source stream.</param>
+        </member>
+        <member name="M:FileCabinetApp.Snapshots.FileCabinetServiceSnapshot.LoadFromCsv(System.IO.StreamReader)">
+            <summary>
+            Read records from file.
+            </summary>
+            <param name="streamReader">Source stream reader.</param>
+        </member>
+        <member name="M:FileCabinetApp.Snapshots.FileCabinetServiceSnapshot.LoadFromXml(System.Xml.XmlReader)">
+            <summary>
+            Read records from file.
+            </summary>
+            <param name="xmlReader">Source xml reader.</param>
         </member>
         <member name="T:FileCabinetApp.Validators.CustomValidator">
             <summary>
@@ -609,6 +788,13 @@
             <param name="sex">Sex of a person.</param>
             <param name="height">Person height.</param>
             <param name="weight">Person weight.</param>
+            <param name="resource">Source resource manager.</param>
+        </member>
+        <member name="M:FileCabinetApp.Validators.CustomValidator.ValidateParameters(FileCabinetApp.FileCabinetRecord,System.Resources.ResourceManager)">
+            <summary>
+            Checks input parameters according to any rules.
+            </summary>
+            <param name="record">Source record.</param>
             <param name="resource">Source resource manager.</param>
         </member>
         <member name="T:FileCabinetApp.Validators.DefaultValidator">
@@ -672,6 +858,13 @@
             <param name="weight">Person weight.</param>
             <param name="resource">Source resource manager.</param>
         </member>
+        <member name="M:FileCabinetApp.Validators.DefaultValidator.ValidateParameters(FileCabinetApp.FileCabinetRecord,System.Resources.ResourceManager)">
+            <summary>
+            Checks input parameters according to any rules.
+            </summary>
+            <param name="record">Source record.</param>
+            <param name="resource">Source resource manager.</param>
+        </member>
         <member name="T:FileCabinetApp.Validators.IRecordValidator">
             <summary>
             Interface for validators.
@@ -689,6 +882,13 @@
             <param name="sex">Sex of a person.</param>
             <param name="height">Person height.</param>
             <param name="weight">Person weight.</param>
+            <param name="resource">Source resource manager.</param>
+        </member>
+        <member name="M:FileCabinetApp.Validators.IRecordValidator.ValidateParameters(FileCabinetApp.FileCabinetRecord,System.Resources.ResourceManager)">
+            <summary>
+            Checks input parameters according to any rules.
+            </summary>
+            <param name="record">Source record.</param>
             <param name="resource">Source resource manager.</param>
         </member>
         <member name="M:FileCabinetApp.Validators.IRecordValidator.ValidateFirstName(System.String)">

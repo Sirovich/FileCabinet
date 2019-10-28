@@ -23,6 +23,13 @@ namespace FileCabinetApp.Validators
         void ValidateParameters(string firstName, string lastName, DateTime dateOfBirth, char sex, short height, decimal weight, ResourceManager resource);
 
         /// <summary>
+        /// Checks input parameters according to any rules.
+        /// </summary>
+        /// <param name="record">Source record.</param>
+        /// <param name="resource">Source resource manager.</param>
+        void ValidateParameters(FileCabinetRecord record, ResourceManager resource);
+
+        /// <summary>
         /// Validates input string with any rule.
         /// </summary>
         /// <param name="firstName">Person first name.</param>
