@@ -31,6 +31,7 @@ namespace FileCabinetApp
         {
             new Tuple<string, Action<string>>("help", PrintHelp),
             new Tuple<string, Action<string>>("create", Create),
+            new Tuple<string, Action<string>>("remove", Remove),
             new Tuple<string, Action<string>>("edit", Edit),
             new Tuple<string, Action<string>>("find", Find),
             new Tuple<string, Action<string>>("list", List),
@@ -44,6 +45,7 @@ namespace FileCabinetApp
         {
             new string[] { "help", "prints the help screen", "The 'help' command prints the help screen." },
             new string[] { "create", "creates new record", "The 'create' command creates new record." },
+            new string[] { "remove", "removes record", "The 'remove' command removes record." },
             new string[] { "edit", "updates record", "The 'edit' command updates record." },
             new string[] { "find", "finds records by parameter", "The 'find' command finds records by parameter." },
             new string[] { "list", "prints all records", "The 'list' command prints all records." },
@@ -184,6 +186,25 @@ namespace FileCabinetApp
                 {
                     Console.WriteLine(ex.Message);
                 }
+            }
+        }
+
+        private static void Remove(string parameters)
+        {
+            int id = 0;
+            if (!int.TryParse(parameters, out id))
+            {
+                Console.WriteLine(Resource.GetString("invalidInputMessage", CultureInfo.InvariantCulture), parameters);
+                return;
+            }
+
+            if (!fileCabinetService.RemoveRecord(id))
+            {
+                Console.WriteLine(Resource.GetString("recordNotExist", CultureInfo.InvariantCulture), id);
+            }
+            else
+            {
+                Console.WriteLine(Resource.GetString("removeSuccess", CultureInfo.InvariantCulture), id);
             }
         }
 

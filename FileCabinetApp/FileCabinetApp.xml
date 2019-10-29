@@ -403,9 +403,19 @@
               Ищет локализованную строку, похожую на Record #{0} is created..
             </summary>
         </member>
+        <member name="P:FileCabinetApp.res.recordNotExist">
+            <summary>
+              Ищет локализованную строку, похожую на Record #{0} doesn&apos;t exists..
+            </summary>
+        </member>
         <member name="P:FileCabinetApp.res.recordUpdateMessage">
             <summary>
               Ищет локализованную строку, похожую на Record #{0} is updated..
+            </summary>
+        </member>
+        <member name="P:FileCabinetApp.res.removeSuccess">
+            <summary>
+              Ищет локализованную строку, похожую на Record #{0} is removed..
             </summary>
         </member>
         <member name="P:FileCabinetApp.res.sexException">
