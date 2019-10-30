@@ -534,6 +534,11 @@
             <param name="id">Source id.</param>
             <returns>True if record with source id is exist.</returns>
         </member>
+        <member name="M:FileCabinetApp.Services.FileCabinetFilesystemService.Purge">
+            <summary>
+            Do defragmentation.
+            </summary>
+        </member>
         <member name="M:FileCabinetApp.Services.FileCabinetFilesystemService.Dispose(System.Boolean)">
             <summary>
             Performs the actual work of releasing resources.
@@ -632,7 +637,7 @@
         </member>
         <member name="M:FileCabinetApp.Services.FileCabinetMemoryService.Purge">
             <summary>
-            
+            Do defragmetation.
             </summary>
         </member>
         <member name="T:FileCabinetApp.Services.IFileCabinetService">
@@ -665,6 +670,11 @@
             </summary>
             <param name="id">Source id.</param>
             <returns>True if record with source id is exist.</returns>
+        </member>
+        <member name="M:FileCabinetApp.Services.IFileCabinetService.Purge">
+            <summary>
+            Do defragmentation.
+            </summary>
         </member>
         <member name="M:FileCabinetApp.Services.IFileCabinetService.EditRecord(System.Int32,System.String,System.String,System.DateTime,System.Char,System.Int16,System.Decimal)">
             <summary>
