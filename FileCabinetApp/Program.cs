@@ -33,6 +33,7 @@ namespace FileCabinetApp
             new Tuple<string, Action<string>>("create", Create),
             new Tuple<string, Action<string>>("remove", Remove),
             new Tuple<string, Action<string>>("edit", Edit),
+            new Tuple<string, Action<string>>("purge", Purge),
             new Tuple<string, Action<string>>("find", Find),
             new Tuple<string, Action<string>>("list", List),
             new Tuple<string, Action<string>>("stat", Stat),
@@ -47,6 +48,7 @@ namespace FileCabinetApp
             new string[] { "create", "creates new record", "The 'create' command creates new record." },
             new string[] { "remove", "removes record", "The 'remove' command removes record." },
             new string[] { "edit", "updates record", "The 'edit' command updates record." },
+            new string[] { "purge", "do defragmenation", "The 'purge' command does defragmenation." },
             new string[] { "find", "finds records by parameter", "The 'find' command finds records by parameter." },
             new string[] { "list", "prints all records", "The 'list' command prints all records." },
             new string[] { "stat", "prints count of records", "The 'stat' command prints count of records." },
@@ -450,6 +452,11 @@ namespace FileCabinetApp
             {
                 Console.WriteLine(Resource.GetString("importUnknownArgument", CultureInfo.InvariantCulture), arguments[2]);
             }
+        }
+
+        private static void Purge(string parameters)
+        {
+            fileCabinetService.Purge();
         }
 
         private static void Exit(string parameters)

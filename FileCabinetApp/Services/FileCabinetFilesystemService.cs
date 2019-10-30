@@ -266,6 +266,7 @@ namespace FileCabinetApp.Services
             this.fileReader.BaseStream.Seek(offset, 0);
             while (offset < this.fileReader.BaseStream.Length)
             {
+                this.fileReader.BaseStream.Seek(offset, 0);
                 var tempRecord = new FileCabinetRecord();
                 if (this.fileReader.ReadBoolean())
                 {
@@ -438,6 +439,49 @@ namespace FileCabinetApp.Services
         }
 
         /// <summary>
+        /// Do defragmentation.
+        /// </summary>
+        public void Purge()
+        {
+            int offset = 0;
+            int positionOfDeleted = 0;
+
+            while (offset < this.fileReader.BaseStream.Length)
+            {
+                this.fileReader.BaseStream.Seek(offset, 0);
+
+                if (this.fileReader.ReadBoolean())
+                {
+                    positionOfDeleted = offset;
+                    offset += RecordSize;
+                    while (offset < this.fileReader.BaseStream.Length)
+                    {
+                        this.fileReader.BaseStream.Seek(offset, 0);
+                        if (!this.fileReader.ReadBoolean())
+                        {
+                            var record = this.GetRecord(offset);
+                            this.fileWriter.BaseStream.Seek(offset, 0);
+                            this.fileWriter.Write(true);
+                            this.WriteToFile(record, positionOfDeleted);
+                            offset = positionOfDeleted;
+                            break;
+                        }
+
+                        offset += RecordSize;
+                    }
+
+                    if (offset >= this.fileReader.BaseStream.Length)
+                    {
+                        this.fileReader.BaseStream.SetLength(positionOfDeleted);
+                        this.offset = positionOfDeleted;
+                    }
+                }
+
+                offset += RecordSize;
+            }
+        }
+
+        /// <summary>
         /// Performs the actual work of releasing resources.
         /// </summary>
         /// <param name="disposing">Bool parameter.</param>
@@ -504,6 +548,28 @@ namespace FileCabinetApp.Services
                 this.fileWriter.Write(record.Height);
                 this.offset += ShortSize;
             }
+        }
+
+        private void WriteToFile(FileCabinetRecord record, int offset)
+        {
+            this.fileWriter.Seek(offset, 0);
+            this.fileWriter.Write(false);
+            offset += ShortSize;
+            this.fileWriter.Seek(offset, 0);
+            this.fileWriter.Write(record.Id);
+            offset += IntSize;
+            this.fileWriter.Write(record.FirstName);
+            offset += StringSize;
+            this.fileWriter.Seek(offset, 0);
+            this.fileWriter.Write(record.LastName);
+            offset += StringSize;
+            this.fileWriter.Seek(offset, 0);
+            this.fileWriter.Write(record.DateOfBirth.Day);
+            this.fileWriter.Write(record.DateOfBirth.Month);
+            this.fileWriter.Write(record.DateOfBirth.Year);
+            this.fileWriter.Write(record.Sex);
+            this.fileWriter.Write(record.Weight);
+            this.fileWriter.Write(record.Height);
         }
     }
 }

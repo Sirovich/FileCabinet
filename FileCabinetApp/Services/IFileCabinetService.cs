@@ -36,6 +36,11 @@ namespace FileCabinetApp.Services
         bool RemoveRecord(int id);
 
         /// <summary>
+        /// Do defragmentation.
+        /// </summary>
+        void Purge();
+
+        /// <summary>
         /// Edits an existing record.
         /// </summary>
         /// <exception cref="ArgumentException">Throws when record with this id does not exist.</exception>

@@ -527,6 +527,13 @@
             <param name="snapshot">Source snapshot.</param>
             <returns>Number of imported records.</returns>
         </member>
+        <member name="M:FileCabinetApp.Services.FileCabinetFilesystemService.RemoveRecord(System.Int32)">
+            <summary>
+            Remove record.
+            </summary>
+            <param name="id">Source id.</param>
+            <returns>True if record with source id is exist.</returns>
+        </member>
         <member name="M:FileCabinetApp.Services.FileCabinetFilesystemService.Dispose(System.Boolean)">
             <summary>
             Performs the actual work of releasing resources.
@@ -562,6 +569,13 @@
             <param name="lastName">Person last name.</param>
             <param name="dateOfBirth">Person date of birth.</param>
             <returns>Id of created record.</returns>
+        </member>
+        <member name="M:FileCabinetApp.Services.FileCabinetMemoryService.RemoveRecord(System.Int32)">
+            <summary>
+            Remove record.
+            </summary>
+            <param name="id">Source id.</param>
+            <returns>True if record with source id is exist.</returns>
         </member>
         <member name="M:FileCabinetApp.Services.FileCabinetMemoryService.EditRecord(System.Int32,System.String,System.String,System.DateTime,System.Char,System.Int16,System.Decimal)">
             <summary>
@@ -616,6 +630,11 @@
             <param name="snapshot">Source snapshot.</param>
             <returns>Number of stored.</returns>
         </member>
+        <member name="M:FileCabinetApp.Services.FileCabinetMemoryService.Purge">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="T:FileCabinetApp.Services.IFileCabinetService">
             <summary>
             Contains basic functionality for service.
@@ -639,6 +658,13 @@
             <param name="lastName">Person last name.</param>
             <param name="dateOfBirth">Person date of birth.</param>
             <returns>Id of created record.</returns>
+        </member>
+        <member name="M:FileCabinetApp.Services.IFileCabinetService.RemoveRecord(System.Int32)">
+            <summary>
+            Remove record.
+            </summary>
+            <param name="id">Source id.</param>
+            <returns>True if record with source id is exist.</returns>
         </member>
         <member name="M:FileCabinetApp.Services.IFileCabinetService.EditRecord(System.Int32,System.String,System.String,System.DateTime,System.Char,System.Int16,System.Decimal)">
             <summary>

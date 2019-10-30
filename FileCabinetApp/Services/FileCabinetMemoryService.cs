@@ -297,6 +297,14 @@ namespace FileCabinetApp.Services
             return this.list.Count;
         }
 
+        /// <summary>
+        /// Do defragmetation.
+        /// </summary>
+        public void Purge()
+        {
+            return;
+        }
+
         private void RemoveRecordFromDictionaries(FileCabinetRecord record)
         {
             this.firstNameDictionary[record.FirstName].Remove(record);
