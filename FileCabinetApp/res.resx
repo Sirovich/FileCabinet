@@ -216,8 +216,14 @@
   <data name="recordCreateMessage" xml:space="preserve">
     <value>Record #{0} is created.</value>
   </data>
+  <data name="recordNotExist" xml:space="preserve">
+    <value>Record #{0} doesn't exists.</value>
+  </data>
   <data name="recordUpdateMessage" xml:space="preserve">
     <value>Record #{0} is updated.</value>
+  </data>
+  <data name="removeSuccess" xml:space="preserve">
+    <value>Record #{0} is removed.</value>
   </data>
   <data name="sexException" xml:space="preserve">
     <value>Not valid sex</value>

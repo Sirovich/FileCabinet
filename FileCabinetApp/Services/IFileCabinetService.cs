@@ -29,6 +29,18 @@ namespace FileCabinetApp.Services
         int CreateRecord(short height, decimal weight, char sex, string firstName, string lastName, DateTime dateOfBirth);
 
         /// <summary>
+        /// Remove record.
+        /// </summary>
+        /// <param name="id">Source id.</param>
+        /// <returns>True if record with source id is exist.</returns>
+        bool RemoveRecord(int id);
+
+        /// <summary>
+        /// Do defragmentation.
+        /// </summary>
+        void Purge();
+
+        /// <summary>
         /// Edits an existing record.
         /// </summary>
         /// <exception cref="ArgumentException">Throws when record with this id does not exist.</exception>

@@ -68,27 +68,38 @@ namespace FileCabinetApp.Services
                 DateOfBirth = dateOfBirth,
             };
 
-            if (!this.firstNameDictionary.ContainsKey(record.FirstName))
-            {
-                this.firstNameDictionary.Add(record.FirstName, new List<FileCabinetRecord>());
-            }
-
-            if (!this.lastNameDictionary.ContainsKey(record.LastName))
-            {
-                this.lastNameDictionary.Add(record.LastName, new List<FileCabinetRecord>());
-            }
-
-            if (!this.dateOfBirthDictionary.ContainsKey(record.DateOfBirth))
-            {
-                this.dateOfBirthDictionary.Add(record.DateOfBirth, new List<FileCabinetRecord>());
-            }
-
-            this.dateOfBirthDictionary[record.DateOfBirth].Add(record);
-            this.lastNameDictionary[record.LastName].Add(record);
-            this.firstNameDictionary[record.FirstName].Add(record);
+            this.AddToDictionaries(record);
             this.list.Add(record);
 
             return record.Id;
+        }
+
+        /// <summary>
+        /// Remove record.
+        /// </summary>
+        /// <param name="id">Source id.</param>
+        /// <returns>True if record with source id is exist.</returns>
+        public bool RemoveRecord(int id)
+        {
+            FileCabinetRecord temp = null;
+
+            foreach (var record in this.list)
+            {
+                if (record.Id == id)
+                {
+                    temp = record;
+                    this.list.Remove(record);
+                    break;
+                }
+            }
+
+            if (temp != null)
+            {
+                this.RemoveRecordFromDictionaries(temp);
+                return true;
+            }
+
+            return false;
         }
 
         /// <summary>
@@ -120,24 +131,7 @@ namespace FileCabinetApp.Services
                     record.Height = height;
                     record.DateOfBirth = dateOfBirth;
 
-                    if (!this.firstNameDictionary.ContainsKey(record.FirstName))
-                    {
-                        this.firstNameDictionary.Add(record.FirstName, new List<FileCabinetRecord>());
-                    }
-
-                    if (!this.lastNameDictionary.ContainsKey(record.LastName))
-                    {
-                        this.lastNameDictionary.Add(record.LastName, new List<FileCabinetRecord>());
-                    }
-
-                    if (!this.dateOfBirthDictionary.ContainsKey(record.DateOfBirth))
-                    {
-                        this.dateOfBirthDictionary.Add(record.DateOfBirth, new List<FileCabinetRecord>());
-                    }
-
-                    this.dateOfBirthDictionary[record.DateOfBirth].Add(record);
-                    this.lastNameDictionary[record.LastName].Add(record);
-                    this.firstNameDictionary[record.FirstName].Add(record);
+                    this.AddToDictionaries(record);
                     return;
                 }
             }
@@ -242,6 +236,13 @@ namespace FileCabinetApp.Services
                     {
                         this.recordValidator.ValidateParameters(importData[importIndex], Resource);
                         list.Add(importData[importIndex]);
+
+                        this.firstNameDictionary[this.list[sourceIndex].FirstName].Remove(this.list[sourceIndex]);
+                        this.lastNameDictionary[this.list[sourceIndex].LastName].Remove(this.list[sourceIndex]);
+                        this.dateOfBirthDictionary[this.list[sourceIndex].DateOfBirth].Remove(this.list[sourceIndex]);
+
+                        this.AddToDictionaries(importData[importIndex]);
+
                         importIndex++;
                         sourceIndex++;
                     }
@@ -258,6 +259,7 @@ namespace FileCabinetApp.Services
                     try
                     {
                         this.recordValidator.ValidateParameters(importData[importIndex], Resource);
+                        this.AddToDictionaries(importData[importIndex]);
                         list.Add(importData[importIndex]);
                         importIndex++;
                     }
@@ -276,6 +278,7 @@ namespace FileCabinetApp.Services
                 {
                     this.recordValidator.ValidateParameters(importData[importIndex], Resource);
                     list.Add(importData[importIndex]);
+                    this.AddToDictionaries(importData[importIndex]);
                 }
                 catch (ArgumentException ex)
                 {
@@ -292,6 +295,43 @@ namespace FileCabinetApp.Services
             this.list = list;
 
             return this.list.Count;
+        }
+
+        /// <summary>
+        /// Do defragmetation.
+        /// </summary>
+        public void Purge()
+        {
+            return;
+        }
+
+        private void RemoveRecordFromDictionaries(FileCabinetRecord record)
+        {
+            this.firstNameDictionary[record.FirstName].Remove(record);
+            this.lastNameDictionary[record.LastName].Remove(record);
+            this.dateOfBirthDictionary[record.DateOfBirth].Remove(record);
+        }
+
+        private void AddToDictionaries(FileCabinetRecord record)
+        {
+            if (!this.firstNameDictionary.ContainsKey(record.FirstName))
+            {
+                this.firstNameDictionary.Add(record.FirstName, new List<FileCabinetRecord>());
+            }
+
+            if (!this.lastNameDictionary.ContainsKey(record.LastName))
+            {
+                this.lastNameDictionary.Add(record.LastName, new List<FileCabinetRecord>());
+            }
+
+            if (!this.dateOfBirthDictionary.ContainsKey(record.DateOfBirth))
+            {
+                this.dateOfBirthDictionary.Add(record.DateOfBirth, new List<FileCabinetRecord>());
+            }
+
+            this.dateOfBirthDictionary[record.DateOfBirth].Add(record);
+            this.lastNameDictionary[record.LastName].Add(record);
+            this.firstNameDictionary[record.FirstName].Add(record);
         }
     }
 }

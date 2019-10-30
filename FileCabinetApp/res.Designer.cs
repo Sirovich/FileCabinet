@@ -358,11 +358,29 @@ namespace FileCabinetApp {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Record #{0} doesn&apos;t exists..
+        /// </summary>
+        internal static string recordNotExist {
+            get {
+                return ResourceManager.GetString("recordNotExist", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Record #{0} is updated..
         /// </summary>
         internal static string recordUpdateMessage {
             get {
                 return ResourceManager.GetString("recordUpdateMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Record #{0} is removed..
+        /// </summary>
+        internal static string removeSuccess {
+            get {
+                return ResourceManager.GetString("removeSuccess", resourceCulture);
             }
         }
         

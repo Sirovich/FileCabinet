@@ -97,8 +97,15 @@ namespace FileCabinetApp.Services
         public void EditRecord(int id, string firstName, string lastName, DateTime dateOfBirth, char sex, short height, decimal weight)
         {
             this.recordValidator.ValidateParameters(firstName, lastName, dateOfBirth, sex, height, weight, Resource);
-            int localOffset = ((id - 1) * RecordSize) + ShortSize;
+            int localOffset = (id - 1) * RecordSize;
+
             this.fileWriter.Seek(localOffset, 0);
+            if (this.fileReader.ReadBoolean())
+            {
+                return;
+            }
+
+            this.fileWriter.Seek(localOffset + ShortSize, 0);
             this.fileWriter.Write(this.lastId);
             localOffset += IntSize;
             this.fileWriter.Write(firstName);
@@ -122,39 +129,49 @@ namespace FileCabinetApp.Services
         /// <returns>Array of records with this date of birth.</returns>
         public ReadOnlyCollection<FileCabinetRecord> FindByDateOfBirth(string dateOfBirth)
         {
-            if (!DateTime.TryParse(dateOfBirth, out _))
+            DateTime date;
+            if (!DateTime.TryParse(dateOfBirth, out date))
             {
                 return null;
             }
 
-            const int firstNamePosition = ShortSize + IntSize + StringSize + StringSize;
+            const int datePosition = ShortSize + IntSize + StringSize + StringSize;
             int currentId = 1;
             int fileLength = Convert.ToInt32(this.fileReader.BaseStream.Length);
-            int localOffset = firstNamePosition;
+            int localOffset = 0;
             var list = new List<FileCabinetRecord>();
 
-            int day = 1;
-            int month = 1;
-            int year = 0001;
-            DateTime temp = new DateTime(year, month, day);
+            int dayDefault = 1;
+            int monthDefault = 1;
+            int yearDefault = 0001;
 
             while (localOffset < fileLength)
             {
+                DateTime temp = new DateTime(yearDefault, monthDefault, dayDefault);
                 this.fileReader.BaseStream.Seek(localOffset, 0);
-                day = this.fileReader.ReadInt32();
-                month = this.fileReader.ReadInt32();
-                year = this.fileReader.ReadInt32();
+
+                if (this.fileReader.ReadBoolean())
+                {
+                    localOffset += RecordSize;
+                    continue;
+                }
+
+                this.fileReader.BaseStream.Seek(localOffset + ShortSize, 0);
+                currentId = this.fileReader.ReadInt32();
+                this.fileReader.BaseStream.Seek(localOffset + datePosition, 0);
+                int day = this.fileReader.ReadInt32();
+                int month = this.fileReader.ReadInt32();
+                int year = this.fileReader.ReadInt32();
 
                 temp = temp.AddDays(day - 1);
                 temp = temp.AddMonths(month - 1);
                 temp = temp.AddYears(year - 1);
 
-                if (DateTime.Compare(temp, DateTime.Parse(dateOfBirth, CultureInfo.InvariantCulture)) == 0)
+                if (DateTime.Compare(temp, date) == 0)
                 {
-                    list.Add(this.GetRecord(currentId));
+                    list.Add(this.GetRecord(localOffset));
                 }
 
-                currentId++;
                 localOffset += RecordSize;
             }
 
@@ -168,24 +185,31 @@ namespace FileCabinetApp.Services
         /// <returns>Array of records with this first name.</returns>
         public ReadOnlyCollection<FileCabinetRecord> FindByFirstName(string firstName)
         {
-            const int firstNamePosition = ShortSize + IntSize;
-            int currentId = 1;
+            int currentId;
             int fileLength = Convert.ToInt32(this.fileReader.BaseStream.Length);
-            int localOffset = firstNamePosition;
+            int localOffset = 0;
             var list = new List<FileCabinetRecord>();
             string temp = null;
 
             while (localOffset < fileLength)
             {
                 this.fileReader.BaseStream.Seek(localOffset, 0);
+
+                if (this.fileReader.ReadBoolean())
+                {
+                    localOffset += RecordSize;
+                    continue;
+                }
+
+                this.fileReader.BaseStream.Seek(localOffset + ShortSize, 0);
+                currentId = this.fileReader.ReadInt32();
                 temp = this.fileReader.ReadString();
 
                 if (temp.Equals(firstName, StringComparison.InvariantCultureIgnoreCase))
                 {
-                    list.Add(this.GetRecord(currentId));
+                    list.Add(this.GetRecord(localOffset));
                 }
 
-                currentId++;
                 localOffset += RecordSize;
             }
 
@@ -200,23 +224,31 @@ namespace FileCabinetApp.Services
         public ReadOnlyCollection<FileCabinetRecord> FindByLastName(string lastName)
         {
             const int lastNamePosition = ShortSize + IntSize + StringSize;
-            int currentId = 1;
+            int currentId;
             int fileLength = Convert.ToInt32(this.fileReader.BaseStream.Length);
-            int localOffset = lastNamePosition;
+            int localOffset = 0;
             var list = new List<FileCabinetRecord>();
             string temp = null;
 
             while (localOffset < fileLength)
             {
                 this.fileReader.BaseStream.Seek(localOffset, 0);
-                temp = this.fileReader.ReadString();
 
-                if (temp.Equals(lastName, StringComparison.InvariantCultureIgnoreCase))
+                if (this.fileReader.ReadBoolean())
                 {
-                    list.Add(this.GetRecord(currentId));
+                    localOffset += RecordSize;
+                    continue;
                 }
 
-                currentId++;
+                this.fileReader.BaseStream.Seek(localOffset + ShortSize, 0);
+                currentId = this.fileReader.ReadInt32();
+                this.fileReader.BaseStream.Seek(localOffset + lastNamePosition, 0);
+                temp = this.fileReader.ReadString();
+                if (temp.Equals(lastName, StringComparison.InvariantCultureIgnoreCase))
+                {
+                    list.Add(this.GetRecord(localOffset));
+                }
+
                 localOffset += RecordSize;
             }
 
@@ -232,9 +264,16 @@ namespace FileCabinetApp.Services
             var list = new List<FileCabinetRecord>();
             long offset = 0;
             this.fileReader.BaseStream.Seek(offset, 0);
-            while (this.fileReader.BaseStream.Position < this.fileReader.BaseStream.Length)
+            while (offset < this.fileReader.BaseStream.Length)
             {
+                this.fileReader.BaseStream.Seek(offset, 0);
                 var tempRecord = new FileCabinetRecord();
+                if (this.fileReader.ReadBoolean())
+                {
+                    offset += RecordSize;
+                    continue;
+                }
+
                 offset += ShortSize;
                 this.fileReader.BaseStream.Seek(offset, 0);
                 tempRecord.Id = this.fileReader.ReadInt32();
@@ -373,6 +412,76 @@ namespace FileCabinetApp.Services
         }
 
         /// <summary>
+        /// Remove record.
+        /// </summary>
+        /// <param name="id">Source id.</param>
+        /// <returns>True if record with source id is exist.</returns>
+        public bool RemoveRecord(int id)
+        {
+            int offset = ShortSize;
+            this.fileReader.BaseStream.Seek(offset, 0);
+            while (offset < this.fileReader.BaseStream.Length)
+            {
+                this.fileReader.BaseStream.Seek(offset, 0);
+
+                int currentId = this.fileReader.ReadInt32();
+                if (id == currentId)
+                {
+                    this.fileReader.BaseStream.Seek(offset - ShortSize, 0);
+                    this.fileWriter.Write(true);
+                    return true;
+                }
+
+                offset += RecordSize;
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// Do defragmentation.
+        /// </summary>
+        public void Purge()
+        {
+            int offset = 0;
+            int positionOfDeleted = 0;
+
+            while (offset < this.fileReader.BaseStream.Length)
+            {
+                this.fileReader.BaseStream.Seek(offset, 0);
+
+                if (this.fileReader.ReadBoolean())
+                {
+                    positionOfDeleted = offset;
+                    offset += RecordSize;
+                    while (offset < this.fileReader.BaseStream.Length)
+                    {
+                        this.fileReader.BaseStream.Seek(offset, 0);
+                        if (!this.fileReader.ReadBoolean())
+                        {
+                            var record = this.GetRecord(offset);
+                            this.fileWriter.BaseStream.Seek(offset, 0);
+                            this.fileWriter.Write(true);
+                            this.WriteToFile(record, positionOfDeleted);
+                            offset = positionOfDeleted;
+                            break;
+                        }
+
+                        offset += RecordSize;
+                    }
+
+                    if (offset >= this.fileReader.BaseStream.Length)
+                    {
+                        this.fileReader.BaseStream.SetLength(positionOfDeleted);
+                        this.offset = positionOfDeleted;
+                    }
+                }
+
+                offset += RecordSize;
+            }
+        }
+
+        /// <summary>
         /// Performs the actual work of releasing resources.
         /// </summary>
         /// <param name="disposing">Bool parameter.</param>
@@ -385,9 +494,9 @@ namespace FileCabinetApp.Services
             }
         }
 
-        private FileCabinetRecord GetRecord(int id)
+        private FileCabinetRecord GetRecord(int offset)
         {
-            int offset = ((id - 1) * RecordSize) + ShortSize;
+            offset += ShortSize;
             this.fileReader.BaseStream.Seek(offset, 0);
             var tempRecord = new FileCabinetRecord();
             tempRecord.Id = this.fileReader.ReadInt32();
@@ -439,6 +548,28 @@ namespace FileCabinetApp.Services
                 this.fileWriter.Write(record.Height);
                 this.offset += ShortSize;
             }
+        }
+
+        private void WriteToFile(FileCabinetRecord record, int offset)
+        {
+            this.fileWriter.Seek(offset, 0);
+            this.fileWriter.Write(false);
+            offset += ShortSize;
+            this.fileWriter.Seek(offset, 0);
+            this.fileWriter.Write(record.Id);
+            offset += IntSize;
+            this.fileWriter.Write(record.FirstName);
+            offset += StringSize;
+            this.fileWriter.Seek(offset, 0);
+            this.fileWriter.Write(record.LastName);
+            offset += StringSize;
+            this.fileWriter.Seek(offset, 0);
+            this.fileWriter.Write(record.DateOfBirth.Day);
+            this.fileWriter.Write(record.DateOfBirth.Month);
+            this.fileWriter.Write(record.DateOfBirth.Year);
+            this.fileWriter.Write(record.Sex);
+            this.fileWriter.Write(record.Weight);
+            this.fileWriter.Write(record.Height);
         }
     }
 }
