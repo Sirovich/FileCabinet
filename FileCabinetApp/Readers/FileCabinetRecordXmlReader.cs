@@ -34,6 +34,12 @@ namespace FileCabinetApp.Readers
         {
             XmlSerializer xmlSerializer = new XmlSerializer(typeof(FileCabinetRecordsXmlModel));
             this.records = (FileCabinetRecordsXmlModel)xmlSerializer.Deserialize(this.xmlReader);
+
+            if (this.records.Records is null)
+            {
+                return null;
+            }
+
             return TransformToBaseModel(new List<FileCabinetRecordXmlModel>(this.records.Records));
         }
 

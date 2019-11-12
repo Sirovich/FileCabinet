@@ -4,6 +4,231 @@
         <name>FileCabinetApp</name>
     </assembly>
     <members>
+        <member name="T:FileCabinetApp.CommandHandlers.AppCommandRequest">
+            <summary>
+            Command request.
+            </summary>
+        </member>
+        <member name="M:FileCabinetApp.CommandHandlers.AppCommandRequest.#ctor(System.String,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:FileCabinetApp.CommandHandlers.AppCommandRequest"/> class.
+            </summary>
+            <param name="command">Source command.</param>
+            <param name="parameters">Source parameters.</param>
+        </member>
+        <member name="P:FileCabinetApp.CommandHandlers.AppCommandRequest.Command">
+            <summary>
+            Gets command.
+            </summary>
+            <value>Command.</value>
+        </member>
+        <member name="P:FileCabinetApp.CommandHandlers.AppCommandRequest.Parameters">
+            <summary>
+            Gets parameters.
+            </summary>
+            <value>Parameters.</value>
+        </member>
+        <member name="T:FileCabinetApp.CommandHandlers.CommandHandlerBase">
+            <summary>
+            Base command handler class.
+            </summary>
+        </member>
+        <member name="M:FileCabinetApp.CommandHandlers.CommandHandlerBase.Handle(FileCabinetApp.CommandHandlers.AppCommandRequest)">
+            <inheritdoc/>
+        </member>
+        <member name="M:FileCabinetApp.CommandHandlers.CommandHandlerBase.SetNext(FileCabinetApp.CommandHandlers.ICommandHandler)">
+            <inheritdoc/>
+        </member>
+        <member name="T:FileCabinetApp.CommandHandlers.Handlers.CreateCommandHandler">
+            <summary>
+            Command handler for create command.
+            </summary>
+        </member>
+        <member name="M:FileCabinetApp.CommandHandlers.Handlers.CreateCommandHandler.#ctor(FileCabinetApp.Validators.IRecordValidator,FileCabinetApp.Services.IFileCabinetService)">
+            <summary>
+            Initializes a new instance of the <see cref="T:FileCabinetApp.CommandHandlers.Handlers.CreateCommandHandler"/> class.
+            </summary>
+            <param name="recordValidator">Source record validator.</param>
+            <param name="fileCabinetService">Source service.</param>
+        </member>
+        <member name="M:FileCabinetApp.CommandHandlers.Handlers.CreateCommandHandler.Handle(FileCabinetApp.CommandHandlers.AppCommandRequest)">
+            <inheritdoc/>
+        </member>
+        <member name="T:FileCabinetApp.CommandHandlers.Handlers.EditCommandHandler">
+            <summary>
+            Command handler for edit.
+            </summary>
+        </member>
+        <member name="M:FileCabinetApp.CommandHandlers.Handlers.EditCommandHandler.#ctor(FileCabinetApp.Validators.IRecordValidator,FileCabinetApp.Services.IFileCabinetService)">
+            <summary>
+            Initializes a new instance of the <see cref="T:FileCabinetApp.CommandHandlers.Handlers.EditCommandHandler"/> class.
+            </summary>
+            <param name="recordValidator">Source record validator.</param>
+            <param name="fileCabinetService">Source service.</param>
+        </member>
+        <member name="M:FileCabinetApp.CommandHandlers.Handlers.EditCommandHandler.Handle(FileCabinetApp.CommandHandlers.AppCommandRequest)">
+            <inheritdoc/>
+        </member>
+        <member name="T:FileCabinetApp.CommandHandlers.Handlers.ExitCommandHandler">
+            <summary>
+            Command handler for exit.
+            </summary>
+        </member>
+        <member name="M:FileCabinetApp.CommandHandlers.Handlers.ExitCommandHandler.#ctor(System.Action{System.Boolean})">
+            <summary>
+            Initializes a new instance of the <see cref="T:FileCabinetApp.CommandHandlers.Handlers.ExitCommandHandler"/> class.
+            </summary>
+            <param name="action">Delegate to stop working.</param>
+        </member>
+        <member name="M:FileCabinetApp.CommandHandlers.Handlers.ExitCommandHandler.Handle(FileCabinetApp.CommandHandlers.AppCommandRequest)">
+            <inheritdoc/>
+        </member>
+        <member name="T:FileCabinetApp.CommandHandlers.Handlers.ExportCommandHandler">
+            <summary>
+            Command handler for export.
+            </summary>
+        </member>
+        <member name="M:FileCabinetApp.CommandHandlers.Handlers.ExportCommandHandler.#ctor(FileCabinetApp.Services.IFileCabinetService)">
+            <summary>
+            Initializes a new instance of the <see cref="T:FileCabinetApp.CommandHandlers.Handlers.ExportCommandHandler"/> class.
+            </summary>
+            <param name="fileCabinetService">Source service.</param>
+        </member>
+        <member name="M:FileCabinetApp.CommandHandlers.Handlers.ExportCommandHandler.Handle(FileCabinetApp.CommandHandlers.AppCommandRequest)">
+            <inheritdoc/>
+        </member>
+        <member name="T:FileCabinetApp.CommandHandlers.Handlers.FindCommandHandler">
+            <summary>
+            Command handler for find.
+            </summary>
+        </member>
+        <member name="M:FileCabinetApp.CommandHandlers.Handlers.FindCommandHandler.#ctor(FileCabinetApp.Services.IFileCabinetService,FileCabinetApp.Printer.IRecordPrinter)">
+            <summary>
+            Initializes a new instance of the <see cref="T:FileCabinetApp.CommandHandlers.Handlers.FindCommandHandler"/> class.
+            </summary>
+            <param name="fileCabinetService">Source service.</param>
+            <param name="printer">Source printer.</param>
+        </member>
+        <member name="M:FileCabinetApp.CommandHandlers.Handlers.FindCommandHandler.Handle(FileCabinetApp.CommandHandlers.AppCommandRequest)">
+            <inheritdoc/>
+        </member>
+        <member name="T:FileCabinetApp.CommandHandlers.Handlers.HelpCommandHandler">
+            <summary>
+            Command handler for help.
+            </summary>
+        </member>
+        <member name="M:FileCabinetApp.CommandHandlers.Handlers.HelpCommandHandler.Handle(FileCabinetApp.CommandHandlers.AppCommandRequest)">
+            <inheritdoc/>
+        </member>
+        <member name="T:FileCabinetApp.CommandHandlers.Handlers.ImportCommandHandler">
+            <summary>
+            Command handler for import.
+            </summary>
+        </member>
+        <member name="M:FileCabinetApp.CommandHandlers.Handlers.ImportCommandHandler.#ctor(FileCabinetApp.Services.IFileCabinetService)">
+            <summary>
+            Initializes a new instance of the <see cref="T:FileCabinetApp.CommandHandlers.Handlers.ImportCommandHandler"/> class.
+            </summary>
+            <param name="fileCabinetService">Source service.</param>
+        </member>
+        <member name="M:FileCabinetApp.CommandHandlers.Handlers.ImportCommandHandler.Handle(FileCabinetApp.CommandHandlers.AppCommandRequest)">
+            <inheritdoc/>
+        </member>
+        <member name="T:FileCabinetApp.CommandHandlers.Handlers.ListCommandHandler">
+            <summary>
+            Command handler for list.
+            </summary>
+        </member>
+        <member name="M:FileCabinetApp.CommandHandlers.Handlers.ListCommandHandler.#ctor(FileCabinetApp.Services.IFileCabinetService,FileCabinetApp.Printer.IRecordPrinter)">
+            <summary>
+            Initializes a new instance of the <see cref="T:FileCabinetApp.CommandHandlers.Handlers.ListCommandHandler"/> class.
+            </summary>
+            <param name="fileCabinetService">Source service.</param>
+            <param name="printer">Source printer.</param>
+        </member>
+        <member name="M:FileCabinetApp.CommandHandlers.Handlers.ListCommandHandler.Handle(FileCabinetApp.CommandHandlers.AppCommandRequest)">
+            <inheritdoc/>
+        </member>
+        <member name="T:FileCabinetApp.CommandHandlers.Handlers.PurgeCommandHandler">
+            <summary>
+            Command handler for purge.
+            </summary>
+        </member>
+        <member name="M:FileCabinetApp.CommandHandlers.Handlers.PurgeCommandHandler.#ctor(FileCabinetApp.Services.IFileCabinetService)">
+            <summary>
+            Initializes a new instance of the <see cref="T:FileCabinetApp.CommandHandlers.Handlers.PurgeCommandHandler"/> class.
+            </summary>
+            <param name="fileCabinetService">Source service.</param>
+        </member>
+        <member name="M:FileCabinetApp.CommandHandlers.Handlers.PurgeCommandHandler.Handle(FileCabinetApp.CommandHandlers.AppCommandRequest)">
+            <inheritdoc/>
+        </member>
+        <member name="T:FileCabinetApp.CommandHandlers.Handlers.RemoveCommandHandler">
+            <summary>
+            Command handler for remove.
+            </summary>
+        </member>
+        <member name="M:FileCabinetApp.CommandHandlers.Handlers.RemoveCommandHandler.#ctor(FileCabinetApp.Services.IFileCabinetService)">
+            <summary>
+            Initializes a new instance of the <see cref="T:FileCabinetApp.CommandHandlers.Handlers.RemoveCommandHandler"/> class.
+            </summary>
+            <param name="fileCabinetService">Source service.</param>
+        </member>
+        <member name="M:FileCabinetApp.CommandHandlers.Handlers.RemoveCommandHandler.Handle(FileCabinetApp.CommandHandlers.AppCommandRequest)">
+            <inheritdoc/>
+        </member>
+        <member name="T:FileCabinetApp.CommandHandlers.Handlers.StatCommandHandler">
+            <summary>
+            Command handler for stat.
+            </summary>
+        </member>
+        <member name="M:FileCabinetApp.CommandHandlers.Handlers.StatCommandHandler.#ctor(FileCabinetApp.Services.IFileCabinetService)">
+            <summary>
+            Initializes a new instance of the <see cref="T:FileCabinetApp.CommandHandlers.Handlers.StatCommandHandler"/> class.
+            </summary>
+            <param name="fileCabinetService">Source service.</param>
+        </member>
+        <member name="M:FileCabinetApp.CommandHandlers.Handlers.StatCommandHandler.Handle(FileCabinetApp.CommandHandlers.AppCommandRequest)">
+            <inheritdoc/>
+        </member>
+        <member name="T:FileCabinetApp.CommandHandlers.ICommandHandler">
+            <summary>
+            Command handler interface.
+            </summary>
+        </member>
+        <member name="M:FileCabinetApp.CommandHandlers.ICommandHandler.SetNext(FileCabinetApp.CommandHandlers.ICommandHandler)">
+            <summary>
+            Sets next handle.
+            </summary>
+            <param name="commandHandler">Next handler to set.</param>
+            <returns>Next handeler.</returns>
+        </member>
+        <member name="M:FileCabinetApp.CommandHandlers.ICommandHandler.Handle(FileCabinetApp.CommandHandlers.AppCommandRequest)">
+            <summary>
+            Handle request and try process command.
+            </summary>
+            <param name="commandRequest">Source command request.</param>
+        </member>
+        <member name="T:FileCabinetApp.CommandHandlers.ServiceCommandHandlerBase">
+            <summary>
+            Command handler for handlers with service.
+            </summary>
+        </member>
+        <member name="M:FileCabinetApp.CommandHandlers.ServiceCommandHandlerBase.#ctor(FileCabinetApp.Services.IFileCabinetService)">
+            <summary>
+            Initializes a new instance of the <see cref="T:FileCabinetApp.CommandHandlers.ServiceCommandHandlerBase"/> class.
+            </summary>
+            <param name="fileCabinetService">Source service.</param>
+        </member>
+        <member name="P:FileCabinetApp.CommandHandlers.ServiceCommandHandlerBase.Service">
+            <summary>
+            Gets service.
+            </summary>
+            <value>Service.</value>
+        </member>
+        <member name="M:FileCabinetApp.CommandHandlers.ServiceCommandHandlerBase.Handle(FileCabinetApp.CommandHandlers.AppCommandRequest)">
+            <inheritdoc/>
+        </member>
         <member name="T:FileCabinetApp.Converters.Converter">
             <summary>
             Provides methods to converte input from console.
@@ -107,6 +332,25 @@
             Gets or sets property contains command line argument for storage.
             </summary>
             <value>Command line argument.</value>
+        </member>
+        <member name="T:FileCabinetApp.Printer.DefaultPrinter">
+            <summary>
+            Default printer.
+            </summary>
+        </member>
+        <member name="M:FileCabinetApp.Printer.DefaultPrinter.Print(System.Collections.Generic.IEnumerable{FileCabinetApp.FileCabinetRecord})">
+            <inheritdoc/>
+        </member>
+        <member name="T:FileCabinetApp.Printer.IRecordPrinter">
+            <summary>
+            Interface for printers.
+            </summary>
+        </member>
+        <member name="M:FileCabinetApp.Printer.IRecordPrinter.Print(System.Collections.Generic.IEnumerable{FileCabinetApp.FileCabinetRecord})">
+            <summary>
+            Prints records.
+            </summary>
+            <param name="records">Source records.</param>
         </member>
         <member name="T:FileCabinetApp.Program">
             <summary>
@@ -353,6 +597,11 @@
               Ищет локализованную строку, похожую на Unknow argument {0}.
             </summary>
         </member>
+        <member name="P:FileCabinetApp.res.invalidArgument">
+            <summary>
+              Ищет локализованную строку, похожую на Invalid argument..
+            </summary>
+        </member>
         <member name="P:FileCabinetApp.res.invalidInputMessage">
             <summary>
               Ищет локализованную строку, похожую на Invalid input: {0}..
@@ -386,6 +635,11 @@
         <member name="P:FileCabinetApp.res.noExplanationMessage">
             <summary>
               Ищет локализованную строку, похожую на There is no explanation for &apos;{0}&apos; command..
+            </summary>
+        </member>
+        <member name="P:FileCabinetApp.res.noRecords">
+            <summary>
+              Ищет локализованную строку, похожую на Storage is empty..
             </summary>
         </member>
         <member name="P:FileCabinetApp.res.noRecordsMessage">

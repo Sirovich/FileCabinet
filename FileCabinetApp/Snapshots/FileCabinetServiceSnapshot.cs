@@ -97,7 +97,14 @@ namespace FileCabinetApp.Snapshots
         public void LoadFromXml(XmlReader xmlReader)
         {
             var fileXmlReader = new FileCabinetRecordXmlReader(xmlReader);
-            this.records = new List<FileCabinetRecord>(fileXmlReader.ReadAll());
+            var list = fileXmlReader.ReadAll();
+            
+            if (list is null)
+            {
+                return;
+            }
+
+            this.records = new List<FileCabinetRecord>(list);
         }
     }
 }

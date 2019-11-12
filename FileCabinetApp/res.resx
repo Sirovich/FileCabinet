@@ -186,6 +186,9 @@
   <data name="importUnknownArgument" xml:space="preserve">
     <value>Unknow argument {0}</value>
   </data>
+  <data name="invalidArgument" xml:space="preserve">
+    <value>Invalid argument.</value>
+  </data>
   <data name="invalidInputMessage" xml:space="preserve">
     <value>Invalid input: {0}.</value>
   </data>
@@ -206,6 +209,9 @@
   </data>
   <data name="noExplanationMessage" xml:space="preserve">
     <value>There is no explanation for '{0}' command.</value>
+  </data>
+  <data name="noRecords" xml:space="preserve">
+    <value>Storage is empty.</value>
   </data>
   <data name="noRecordsMessage" xml:space="preserve">
     <value>No records with this parameters</value>

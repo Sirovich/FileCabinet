@@ -268,6 +268,15 @@ namespace FileCabinetApp {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Invalid argument..
+        /// </summary>
+        internal static string invalidArgument {
+            get {
+                return ResourceManager.GetString("invalidArgument", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Invalid input: {0}..
         /// </summary>
         internal static string invalidInputMessage {
@@ -327,6 +336,15 @@ namespace FileCabinetApp {
         internal static string noExplanationMessage {
             get {
                 return ResourceManager.GetString("noExplanationMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Storage is empty..
+        /// </summary>
+        internal static string noRecords {
+            get {
+                return ResourceManager.GetString("noRecords", resourceCulture);
             }
         }
         

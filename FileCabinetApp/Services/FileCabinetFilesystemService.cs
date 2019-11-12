@@ -405,7 +405,15 @@ namespace FileCabinetApp.Services
                 list.Add(source[sourceIndex]);
             }
 
-            this.lastId = list[^1].Id;
+            if (list.Count == 0)
+            {
+                this.lastId = 0;
+            }
+            else
+            {
+                this.lastId = list[^1].Id;
+            }
+
             this.WriteImportToFile(list);
 
             return list.Count;
