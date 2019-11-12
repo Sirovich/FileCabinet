@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Globalization;
-using FileCabinetApp;
 
 namespace FileCabinetApp.CommandHandlers.Handlers
 {
@@ -33,13 +32,13 @@ namespace FileCabinetApp.CommandHandlers.Handlers
         {
             if (commandRequest is null)
             {
-                Console.WriteLine(Resources.Resource.GetString("invalidArgument", CultureInfo.InvariantCulture));
+                Console.WriteLine(Source.Resource.GetString("invalidArgument", CultureInfo.InvariantCulture));
                 return;
             }
 
             if (commandRequest.Command is null)
             {
-                Console.WriteLine(Resources.Resource.GetString("invalidArgument", CultureInfo.InvariantCulture));
+                Console.WriteLine(Source.Resource.GetString("invalidArgument", CultureInfo.InvariantCulture));
                 return;
             }
 
@@ -64,12 +63,12 @@ namespace FileCabinetApp.CommandHandlers.Handlers
                 }
                 else
                 {
-                    Console.WriteLine(Resources.Resource.GetString("noExplanationMessage", CultureInfo.InvariantCulture), parameters);
+                    Console.WriteLine(Source.Resource.GetString("noExplanationMessage", CultureInfo.InvariantCulture), parameters);
                 }
             }
             else
             {
-                Console.WriteLine(Resources.Resource.GetString("availableMessage", CultureInfo.InvariantCulture));
+                Console.WriteLine(Source.Resource.GetString("availableMessage", CultureInfo.InvariantCulture));
 
                 foreach (var helpMessage in helpMessages)
                 {

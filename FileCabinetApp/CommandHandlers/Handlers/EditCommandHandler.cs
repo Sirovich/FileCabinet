@@ -30,13 +30,13 @@ namespace FileCabinetApp.CommandHandlers.Handlers
         {
             if (commandRequest is null)
             {
-                Console.WriteLine(Resources.Resource.GetString("invalidArgument", CultureInfo.InvariantCulture));
+                Console.WriteLine(Source.Resource.GetString("invalidArgument", CultureInfo.InvariantCulture));
                 return;
             }
 
             if (commandRequest.Command is null)
             {
-                Console.WriteLine(Resources.Resource.GetString("invalidArgument", CultureInfo.InvariantCulture));
+                Console.WriteLine(Source.Resource.GetString("invalidArgument", CultureInfo.InvariantCulture));
                 return;
             }
 
@@ -105,20 +105,20 @@ namespace FileCabinetApp.CommandHandlers.Handlers
                 {
                     try
                     {
-                        Console.Write(Resources.Resource.GetString("firstNameInputMessage", CultureInfo.InvariantCulture));
+                        Console.Write(Source.Resource.GetString("firstNameInputMessage", CultureInfo.InvariantCulture));
                         var firstName = ReadInput(Converter.StringConverter, this.recordValidator.ValidateFirstName);
-                        Console.Write(Resources.Resource.GetString("lastNameInputMessage", CultureInfo.InvariantCulture));
+                        Console.Write(Source.Resource.GetString("lastNameInputMessage", CultureInfo.InvariantCulture));
                         var lastName = ReadInput(Converter.StringConverter, this.recordValidator.ValidateLastName);
-                        Console.Write(Resources.Resource.GetString("sexInputMessage", CultureInfo.InvariantCulture));
+                        Console.Write(Source.Resource.GetString("sexInputMessage", CultureInfo.InvariantCulture));
                         var sex = ReadInput(Converter.SexConverter, this.recordValidator.ValidateSex);
-                        Console.Write(Resources.Resource.GetString("weightInputMessage", CultureInfo.InvariantCulture));
+                        Console.Write(Source.Resource.GetString("weightInputMessage", CultureInfo.InvariantCulture));
                         var weight = ReadInput(Converter.WeightConverter, this.recordValidator.ValidateWeight);
-                        Console.Write(Resources.Resource.GetString("heightInputMessage", CultureInfo.InvariantCulture));
+                        Console.Write(Source.Resource.GetString("heightInputMessage", CultureInfo.InvariantCulture));
                         var height = ReadInput(Converter.HeightConverter, this.recordValidator.ValidateHeight);
-                        Console.Write(Resources.Resource.GetString("dateOfBirthInputMessage", CultureInfo.InvariantCulture));
+                        Console.Write(Source.Resource.GetString("dateOfBirthInputMessage", CultureInfo.InvariantCulture));
                         DateTime dateOfBirth = ReadInput(Converter.DateOfBirthConverter, this.recordValidator.ValidateDateOfBirth);
                         this.Service.EditRecord(id, firstName as string, lastName as string, dateOfBirth, sex, height, weight);
-                        Console.WriteLine(Resources.Resource.GetString("recordUpdateMessage", CultureInfo.InvariantCulture), record.Id);
+                        Console.WriteLine(Source.Resource.GetString("recordUpdateMessage", CultureInfo.InvariantCulture), record.Id);
                         return;
                     }
                     catch (FormatException ex)

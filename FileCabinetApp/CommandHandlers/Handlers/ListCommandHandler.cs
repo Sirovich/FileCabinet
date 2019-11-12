@@ -1,6 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
-using FileCabinetApp.Printer;
 using FileCabinetApp.Services;
 
 namespace FileCabinetApp.CommandHandlers.Handlers
@@ -10,14 +10,14 @@ namespace FileCabinetApp.CommandHandlers.Handlers
     /// </summary>
     public class ListCommandHandler : ServiceCommandHandlerBase
     {
-        private IRecordPrinter printer;
+        private Action<IEnumerable<FileCabinetRecord>> printer;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ListCommandHandler"/> class.
         /// </summary>
         /// <param name="fileCabinetService">Source service.</param>
         /// <param name="printer">Source printer.</param>
-        public ListCommandHandler(IFileCabinetService fileCabinetService, IRecordPrinter printer)
+        public ListCommandHandler(IFileCabinetService fileCabinetService, Action<IEnumerable<FileCabinetRecord>> printer)
             : base(fileCabinetService)
         {
             this.printer = printer;
@@ -28,19 +28,19 @@ namespace FileCabinetApp.CommandHandlers.Handlers
         {
             if (commandRequest is null)
             {
-                Console.WriteLine(Resources.Resource.GetString("invalidArgument", CultureInfo.InvariantCulture));
+                Console.WriteLine(Source.Resource.GetString("invalidArgument", CultureInfo.InvariantCulture));
                 return;
             }
 
             if (commandRequest.Command is null)
             {
-                Console.WriteLine(Resources.Resource.GetString("invalidArgument", CultureInfo.InvariantCulture));
+                Console.WriteLine(Source.Resource.GetString("invalidArgument", CultureInfo.InvariantCulture));
                 return;
             }
 
             if (commandRequest.Command.Equals("list", StringComparison.InvariantCultureIgnoreCase))
             {
-                this.List(commandRequest.Parameters);
+                this.List();
             }
             else
             {
@@ -48,16 +48,16 @@ namespace FileCabinetApp.CommandHandlers.Handlers
             }
         }
 
-        private void List(string parameters)
+        private void List()
         {
             var list = this.Service.GetRecords();
 
             if (list.Count == 0)
             {
-                Console.WriteLine(Resources.Resource.GetString("noRecords", CultureInfo.InvariantCulture));
+                Console.WriteLine(Source.Resource.GetString("noRecords", CultureInfo.InvariantCulture));
             }
 
-            this.printer.Print(list);
+            this.printer(list);
         }
     }
 }

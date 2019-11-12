@@ -2,7 +2,6 @@
 using System.Globalization;
 using System.IO;
 using System.Xml;
-using FileCabinetApp;
 using FileCabinetApp.Services;
 using FileCabinetApp.Snapshots;
 
@@ -27,13 +26,13 @@ namespace FileCabinetApp.CommandHandlers.Handlers
         {
             if (commandRequest is null)
             {
-                Console.WriteLine(Resources.Resource.GetString("invalidArgument", CultureInfo.InvariantCulture));
+                Console.WriteLine(Source.Resource.GetString("invalidArgument", CultureInfo.InvariantCulture));
                 return;
             }
 
             if (commandRequest.Command is null)
             {
-                Console.WriteLine(Resources.Resource.GetString("invalidArgument", CultureInfo.InvariantCulture));
+                Console.WriteLine(Source.Resource.GetString("invalidArgument", CultureInfo.InvariantCulture));
                 return;
             }
 
@@ -51,8 +50,8 @@ namespace FileCabinetApp.CommandHandlers.Handlers
         {
             if (parameters == null)
             {
-                Console.WriteLine(Resources.Resource.GetString("exportArgumentsException", CultureInfo.InvariantCulture));
-                Console.WriteLine(Resources.Resource.GetString("exportFormat", CultureInfo.InvariantCulture));
+                Console.WriteLine(Source.Resource.GetString("exportArgumentsException", CultureInfo.InvariantCulture));
+                Console.WriteLine(Source.Resource.GetString("exportFormat", CultureInfo.InvariantCulture));
                 return;
             }
 
@@ -60,8 +59,8 @@ namespace FileCabinetApp.CommandHandlers.Handlers
 
             if (arguments.Length == 1)
             {
-                Console.WriteLine(Resources.Resource.GetString("importArgumentsException", CultureInfo.InvariantCulture));
-                Console.WriteLine(Resources.Resource.GetString("importFormat", CultureInfo.InvariantCulture));
+                Console.WriteLine(Source.Resource.GetString("importArgumentsException", CultureInfo.InvariantCulture));
+                Console.WriteLine(Source.Resource.GetString("importFormat", CultureInfo.InvariantCulture));
                 return;
             }
             else if (arguments.Length == 2)
@@ -77,7 +76,7 @@ namespace FileCabinetApp.CommandHandlers.Handlers
                     {
                         snapshot.LoadFromCsv(fileStream);
                         int numberOfStored = this.Service.Restore(snapshot);
-                        Console.WriteLine(Resources.Resource.GetString("importFileComplete", CultureInfo.InvariantCulture), numberOfStored, arguments[pathIndex]);
+                        Console.WriteLine(Source.Resource.GetString("importFileComplete", CultureInfo.InvariantCulture), numberOfStored, arguments[pathIndex]);
                     }
                 }
                 else if (arguments[typeIndex].Equals("xml", StringComparison.InvariantCultureIgnoreCase))
@@ -91,13 +90,13 @@ namespace FileCabinetApp.CommandHandlers.Handlers
                     {
                         snapshot.LoadFromXml(xmlReader);
                         int numberOfImported = this.Service.Restore(snapshot);
-                        Console.WriteLine(Resources.Resource.GetString("importFileComplete", CultureInfo.InvariantCulture), numberOfImported, arguments[pathIndex]);
+                        Console.WriteLine(Source.Resource.GetString("importFileComplete", CultureInfo.InvariantCulture), numberOfImported, arguments[pathIndex]);
                     }
                 }
             }
             else
             {
-                Console.WriteLine(Resources.Resource.GetString("importUnknownArgument", CultureInfo.InvariantCulture), arguments[2]);
+                Console.WriteLine(Source.Resource.GetString("importUnknownArgument", CultureInfo.InvariantCulture), arguments[2]);
             }
         }
     }

@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Collections.ObjectModel;
+using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Resources;
@@ -8,7 +8,6 @@ using CommandLine;
 using FileCabinetApp.CommandHandlers;
 using FileCabinetApp.CommandHandlers.Handlers;
 using FileCabinetApp.Converters;
-using FileCabinetApp.Printer;
 using FileCabinetApp.Services;
 using FileCabinetApp.Snapshots;
 using FileCabinetApp.Validators;
@@ -32,16 +31,16 @@ namespace FileCabinetApp
         /// <param name="args">Arguments of command line.</param>
         public static void Main(string[] args)
         {
-            Console.WriteLine(Resources.Resource.GetString("developerNameMessage", CultureInfo.InvariantCulture), Program.DeveloperName);
+            Console.WriteLine(Source.Resource.GetString("developerNameMessage", CultureInfo.InvariantCulture), Program.DeveloperName);
             GetCommandLineArguments(args);
-            Console.WriteLine(Resources.Resource.GetString("hintMessage", CultureInfo.InvariantCulture));
+            Console.WriteLine(Source.Resource.GetString("hintMessage", CultureInfo.InvariantCulture));
             Console.WriteLine();
 
             var commands = CreateCommandHandler();
 
             do
             {
-                Console.Write(Resources.Resource.GetString("pointer", CultureInfo.InvariantCulture));
+                Console.Write(Source.Resource.GetString("pointer", CultureInfo.InvariantCulture));
                 var inputs = Console.ReadLine().Split(' ', 2);
                 const int commandIndex = 0;
                 const int argumentIndex = 1;
@@ -49,7 +48,7 @@ namespace FileCabinetApp
 
                 if (command is null || command.Trim().Length == 0)
                 {
-                    Console.WriteLine(Resources.Resource.GetString("hintMessage", CultureInfo.InvariantCulture));
+                    Console.WriteLine(Source.Resource.GetString("hintMessage", CultureInfo.InvariantCulture));
                     continue;
                 }
 
@@ -74,22 +73,22 @@ namespace FileCabinetApp
             if (opts.Rule.Equals("Default", StringComparison.InvariantCultureIgnoreCase))
             {
                 recordValidator = new DefaultValidator();
-                Console.WriteLine(Resources.Resource.GetString("defaultRule", CultureInfo.InvariantCulture));
+                Console.WriteLine(Source.Resource.GetString("defaultRule", CultureInfo.InvariantCulture));
             }
             else if (opts.Rule.Equals("Custom", StringComparison.InvariantCultureIgnoreCase))
             {
                 recordValidator = new CustomValidator();
-                Console.WriteLine(Resources.Resource.GetString("customRule", CultureInfo.InvariantCulture));
+                Console.WriteLine(Source.Resource.GetString("customRule", CultureInfo.InvariantCulture));
             }
             else
             {
-                throw new ArgumentException(Resources.Resource.GetString("invalidRule", CultureInfo.InvariantCulture));
+                throw new ArgumentException(Source.Resource.GetString("invalidRule", CultureInfo.InvariantCulture));
             }
 
             if (opts.Storage.Equals("memory", StringComparison.InvariantCultureIgnoreCase))
             {
                 fileCabinetService = new FileCabinetMemoryService(recordValidator);
-                Console.WriteLine(Resources.Resource.GetString("memoryStorage", CultureInfo.InvariantCulture));
+                Console.WriteLine(Source.Resource.GetString("memoryStorage", CultureInfo.InvariantCulture));
             }
             else if (opts.Storage.Equals("file", StringComparison.InvariantCultureIgnoreCase))
             {
@@ -99,7 +98,7 @@ namespace FileCabinetApp
             }
             else
             {
-                throw new ArgumentException(Resources.Resource.GetString("invalidStorage", CultureInfo.InvariantCulture));
+                throw new ArgumentException(Source.Resource.GetString("invalidStorage", CultureInfo.InvariantCulture));
             }
         }
 
@@ -108,14 +107,26 @@ namespace FileCabinetApp
             isRunning = state;
         }
 
+        private static void Print(IEnumerable<FileCabinetRecord> records)
+        {
+            if (records is null)
+            {
+                throw new ArgumentNullException(nameof(records));
+            }
+
+            foreach (var record in records)
+            {
+                Console.WriteLine($"#{record.Id}, {record.FirstName}, {record.LastName}, {record.Sex}, {record.Weight}, {record.Height}, {record.DateOfBirth.ToString("yyyy-MMM-dd", CultureInfo.InvariantCulture)}");
+            }
+        }
+
         private static ICommandHandler CreateCommandHandler()
         {
-            var recordPrinter = new DefaultPrinter();
             var helpHandler = new HelpCommandHandler();
             var importHandler = new ImportCommandHandler(fileCabinetService);
             var exportHandler = new ExportCommandHandler(fileCabinetService);
-            var findHandler = new FindCommandHandler(fileCabinetService, recordPrinter);
-            var listHandler = new ListCommandHandler(fileCabinetService, recordPrinter);
+            var findHandler = new FindCommandHandler(fileCabinetService, Print);
+            var listHandler = new ListCommandHandler(fileCabinetService, Print);
             var purgeHandler = new PurgeCommandHandler(fileCabinetService);
             var removeHandler = new RemoveCommandHandler(fileCabinetService);
             var statHandler = new StatCommandHandler(fileCabinetService);

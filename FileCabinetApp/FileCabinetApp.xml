@@ -102,7 +102,7 @@
             Command handler for find.
             </summary>
         </member>
-        <member name="M:FileCabinetApp.CommandHandlers.Handlers.FindCommandHandler.#ctor(FileCabinetApp.Services.IFileCabinetService,FileCabinetApp.Printer.IRecordPrinter)">
+        <member name="M:FileCabinetApp.CommandHandlers.Handlers.FindCommandHandler.#ctor(FileCabinetApp.Services.IFileCabinetService,System.Action{System.Collections.Generic.IEnumerable{FileCabinetApp.FileCabinetRecord}})">
             <summary>
             Initializes a new instance of the <see cref="T:FileCabinetApp.CommandHandlers.Handlers.FindCommandHandler"/> class.
             </summary>
@@ -139,7 +139,7 @@
             Command handler for list.
             </summary>
         </member>
-        <member name="M:FileCabinetApp.CommandHandlers.Handlers.ListCommandHandler.#ctor(FileCabinetApp.Services.IFileCabinetService,FileCabinetApp.Printer.IRecordPrinter)">
+        <member name="M:FileCabinetApp.CommandHandlers.Handlers.ListCommandHandler.#ctor(FileCabinetApp.Services.IFileCabinetService,System.Action{System.Collections.Generic.IEnumerable{FileCabinetApp.FileCabinetRecord}})">
             <summary>
             Initializes a new instance of the <see cref="T:FileCabinetApp.CommandHandlers.Handlers.ListCommandHandler"/> class.
             </summary>
@@ -332,25 +332,6 @@
             Gets or sets property contains command line argument for storage.
             </summary>
             <value>Command line argument.</value>
-        </member>
-        <member name="T:FileCabinetApp.Printer.DefaultPrinter">
-            <summary>
-            Default printer.
-            </summary>
-        </member>
-        <member name="M:FileCabinetApp.Printer.DefaultPrinter.Print(System.Collections.Generic.IEnumerable{FileCabinetApp.FileCabinetRecord})">
-            <inheritdoc/>
-        </member>
-        <member name="T:FileCabinetApp.Printer.IRecordPrinter">
-            <summary>
-            Interface for printers.
-            </summary>
-        </member>
-        <member name="M:FileCabinetApp.Printer.IRecordPrinter.Print(System.Collections.Generic.IEnumerable{FileCabinetApp.FileCabinetRecord})">
-            <summary>
-            Prints records.
-            </summary>
-            <param name="records">Source records.</param>
         </member>
         <member name="T:FileCabinetApp.Program">
             <summary>
@@ -1028,6 +1009,17 @@
             Read records from file.
             </summary>
             <param name="xmlReader">Source xml reader.</param>
+        </member>
+        <member name="T:FileCabinetApp.Source">
+            <summary>
+            Resources class.
+            </summary>
+        </member>
+        <member name="P:FileCabinetApp.Source.Resource">
+            <summary>
+            Gets resource manager.
+            </summary>
+            <value>Resource manager.</value>
         </member>
         <member name="T:FileCabinetApp.Validators.CustomValidator">
             <summary>

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Globalization;
-using FileCabinetApp;
 using FileCabinetApp.Services;
 
 namespace FileCabinetApp.CommandHandlers.Handlers
@@ -24,13 +23,13 @@ namespace FileCabinetApp.CommandHandlers.Handlers
         {
             if (commandRequest is null)
             {
-                Console.WriteLine(Resources.Resource.GetString("invalidArgument", CultureInfo.InvariantCulture));
+                Console.WriteLine(Source.Resource.GetString("invalidArgument", CultureInfo.InvariantCulture));
                 return;
             }
 
             if (commandRequest.Command is null)
             {
-                Console.WriteLine(Resources.Resource.GetString("invalidArgument", CultureInfo.InvariantCulture));
+                Console.WriteLine(Source.Resource.GetString("invalidArgument", CultureInfo.InvariantCulture));
                 return;
             }
 
@@ -49,17 +48,17 @@ namespace FileCabinetApp.CommandHandlers.Handlers
             int id = 0;
             if (!int.TryParse(parameters, out id))
             {
-                Console.WriteLine(Resources.Resource.GetString("invalidInputMessage", CultureInfo.InvariantCulture), parameters);
+                Console.WriteLine(Source.Resource.GetString("invalidInputMessage", CultureInfo.InvariantCulture), parameters);
                 return;
             }
 
             if (!this.Service.RemoveRecord(id))
             {
-                Console.WriteLine(Resources.Resource.GetString("recordNotExist", CultureInfo.InvariantCulture), id);
+                Console.WriteLine(Source.Resource.GetString("recordNotExist", CultureInfo.InvariantCulture), id);
             }
             else
             {
-                Console.WriteLine(Resources.Resource.GetString("removeSuccess", CultureInfo.InvariantCulture), id);
+                Console.WriteLine(Source.Resource.GetString("removeSuccess", CultureInfo.InvariantCulture), id);
             }
         }
     }

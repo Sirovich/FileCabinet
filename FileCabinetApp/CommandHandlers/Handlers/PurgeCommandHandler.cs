@@ -23,19 +23,19 @@ namespace FileCabinetApp.CommandHandlers.Handlers
         {
             if (commandRequest is null)
             {
-                Console.WriteLine(Resources.Resource.GetString("invalidArgument", CultureInfo.InvariantCulture));
+                Console.WriteLine(Source.Resource.GetString("invalidArgument", CultureInfo.InvariantCulture));
                 return;
             }
 
             if (commandRequest.Command is null)
             {
-                Console.WriteLine(Resources.Resource.GetString("invalidArgument", CultureInfo.InvariantCulture));
+                Console.WriteLine(Source.Resource.GetString("invalidArgument", CultureInfo.InvariantCulture));
                 return;
             }
 
             if (commandRequest.Command.Equals("purge", StringComparison.InvariantCultureIgnoreCase))
             {
-                this.Purge(commandRequest.Parameters);
+                this.Purge();
             }
             else
             {
@@ -43,7 +43,7 @@ namespace FileCabinetApp.CommandHandlers.Handlers
             }
         }
 
-        private void Purge(string parameters)
+        private void Purge()
         {
             this.Service.Purge();
         }

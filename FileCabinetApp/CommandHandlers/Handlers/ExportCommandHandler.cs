@@ -25,13 +25,13 @@ namespace FileCabinetApp.CommandHandlers.Handlers
         {
             if (commandRequest is null)
             {
-                Console.WriteLine(Resources.Resource.GetString("invalidArgument", CultureInfo.InvariantCulture));
+                Console.WriteLine(Source.Resource.GetString("invalidArgument", CultureInfo.InvariantCulture));
                 return;
             }
 
             if (commandRequest.Command is null)
             {
-                Console.WriteLine(Resources.Resource.GetString("invalidArgument", CultureInfo.InvariantCulture));
+                Console.WriteLine(Source.Resource.GetString("invalidArgument", CultureInfo.InvariantCulture));
                 return;
             }
 
@@ -49,8 +49,8 @@ namespace FileCabinetApp.CommandHandlers.Handlers
         {
             if (parameters == null)
             {
-                Console.WriteLine(Resources.Resource.GetString("exportArgumentsException", CultureInfo.InvariantCulture));
-                Console.WriteLine(Resources.Resource.GetString("exportFormat", CultureInfo.InvariantCulture));
+                Console.WriteLine(Source.Resource.GetString("exportArgumentsException", CultureInfo.InvariantCulture));
+                Console.WriteLine(Source.Resource.GetString("exportFormat", CultureInfo.InvariantCulture));
                 return;
             }
 
@@ -58,8 +58,8 @@ namespace FileCabinetApp.CommandHandlers.Handlers
 
             if (arguments.Length == 1)
             {
-                Console.WriteLine(Resources.Resource.GetString("exportArgumentsException", CultureInfo.InvariantCulture));
-                Console.WriteLine(Resources.Resource.GetString("exportFormat", CultureInfo.InvariantCulture));
+                Console.WriteLine(Source.Resource.GetString("exportArgumentsException", CultureInfo.InvariantCulture));
+                Console.WriteLine(Source.Resource.GetString("exportFormat", CultureInfo.InvariantCulture));
                 return;
             }
             else if (arguments.Length == 2)
@@ -68,7 +68,7 @@ namespace FileCabinetApp.CommandHandlers.Handlers
                 const int typeIndex = 0;
                 if (File.Exists(arguments[pathIndex]))
                 {
-                    Console.WriteLine(Resources.Resource.GetString("fileExistMessage", CultureInfo.InvariantCulture), arguments[pathIndex]);
+                    Console.WriteLine(Source.Resource.GetString("fileExistMessage", CultureInfo.InvariantCulture), arguments[pathIndex]);
                     var answer = Console.ReadLine();
                     if (answer.Equals("y", StringComparison.InvariantCultureIgnoreCase))
                     {
@@ -86,9 +86,9 @@ namespace FileCabinetApp.CommandHandlers.Handlers
                 {
                     using (var fileStream = new StreamWriter(arguments[pathIndex]))
                     {
-                        fileStream.WriteLine(Resources.Resource.GetString("fileHeader", CultureInfo.InvariantCulture));
+                        fileStream.WriteLine(Source.Resource.GetString("fileHeader", CultureInfo.InvariantCulture));
                         snapshot.SaveToCsv(fileStream);
-                        Console.WriteLine(Resources.Resource.GetString("exportFileComplete", CultureInfo.InvariantCulture), arguments[pathIndex]);
+                        Console.WriteLine(Source.Resource.GetString("exportFileComplete", CultureInfo.InvariantCulture), arguments[pathIndex]);
                     }
                 }
                 else if (arguments[typeIndex].Equals("xml", StringComparison.InvariantCultureIgnoreCase))
@@ -100,13 +100,13 @@ namespace FileCabinetApp.CommandHandlers.Handlers
                     using (var fileStream = XmlWriter.Create(arguments[pathIndex], settings))
                     {
                         snapshot.SaveToXml(fileStream);
-                        Console.WriteLine(Resources.Resource.GetString("exportFileComplete", CultureInfo.InvariantCulture), arguments[pathIndex]);
+                        Console.WriteLine(Source.Resource.GetString("exportFileComplete", CultureInfo.InvariantCulture), arguments[pathIndex]);
                     }
                 }
             }
             else
             {
-                Console.WriteLine(Resources.Resource.GetString("exportUnknownArgument", CultureInfo.InvariantCulture), arguments[2]);
+                Console.WriteLine(Source.Resource.GetString("exportUnknownArgument", CultureInfo.InvariantCulture), arguments[2]);
             }
         }
     }

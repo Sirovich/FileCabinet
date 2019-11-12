@@ -98,7 +98,7 @@ namespace FileCabinetApp.Snapshots
         {
             var fileXmlReader = new FileCabinetRecordXmlReader(xmlReader);
             var list = fileXmlReader.ReadAll();
-            
+
             if (list is null)
             {
                 return;

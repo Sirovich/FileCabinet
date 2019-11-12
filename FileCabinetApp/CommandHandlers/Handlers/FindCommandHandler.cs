@@ -1,8 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Globalization;
-using FileCabinetApp;
-using FileCabinetApp.Printer;
 using FileCabinetApp.Services;
 
 namespace FileCabinetApp.CommandHandlers.Handlers
@@ -12,14 +11,14 @@ namespace FileCabinetApp.CommandHandlers.Handlers
     /// </summary>
     public class FindCommandHandler : ServiceCommandHandlerBase
     {
-        private IRecordPrinter printer;
+        private Action<IEnumerable<FileCabinetRecord>> printer;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="FindCommandHandler"/> class.
         /// </summary>
         /// <param name="fileCabinetService">Source service.</param>
         /// <param name="printer">Source printer.</param>
-        public FindCommandHandler(IFileCabinetService fileCabinetService, IRecordPrinter printer)
+        public FindCommandHandler(IFileCabinetService fileCabinetService, Action<IEnumerable<FileCabinetRecord>> printer)
             : base(fileCabinetService)
         {
             this.printer = printer;
@@ -30,13 +29,13 @@ namespace FileCabinetApp.CommandHandlers.Handlers
         {
             if (commandRequest is null)
             {
-                Console.WriteLine(Resources.Resource.GetString("invalidArgument", CultureInfo.InvariantCulture));
+                Console.WriteLine(Source.Resource.GetString("invalidArgument", CultureInfo.InvariantCulture));
                 return;
             }
 
             if (commandRequest.Command is null)
             {
-                Console.WriteLine(Resources.Resource.GetString("invalidArgument", CultureInfo.InvariantCulture));
+                Console.WriteLine(Source.Resource.GetString("invalidArgument", CultureInfo.InvariantCulture));
                 return;
             }
 
@@ -54,7 +53,7 @@ namespace FileCabinetApp.CommandHandlers.Handlers
         {
             if (parameters is null)
             {
-                Console.WriteLine(Resources.Resource.GetString("invalidArgument", CultureInfo.InvariantCulture));
+                Console.WriteLine(Source.Resource.GetString("invalidArgument", CultureInfo.InvariantCulture));
                 return;
             }
 
@@ -69,7 +68,7 @@ namespace FileCabinetApp.CommandHandlers.Handlers
 
             if (arguments.Length < 2)
             {
-                Console.WriteLine(Resources.Resource.GetString("noRecordsMessage", CultureInfo.InvariantCulture));
+                Console.WriteLine(Source.Resource.GetString("noRecordsMessage", CultureInfo.InvariantCulture));
                 return;
             }
 
@@ -80,11 +79,11 @@ namespace FileCabinetApp.CommandHandlers.Handlers
                 var records = methods[index].Item2(arguments[argumentIndex]);
                 if (records is null || records.Count == 0)
                 {
-                    Console.WriteLine(Resources.Resource.GetString("noRecordsMessage", CultureInfo.InvariantCulture));
+                    Console.WriteLine(Source.Resource.GetString("noRecordsMessage", CultureInfo.InvariantCulture));
                 }
                 else
                 {
-                    this.printer.Print(records);
+                    this.printer(records);
                 }
             }
         }
