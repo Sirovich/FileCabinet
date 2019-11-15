@@ -1031,6 +1031,25 @@
             </summary>
             <value>Resource manager.</value>
         </member>
+        <member name="T:FileCabinetApp.Validators.CompositeValidator">
+            <summary>
+            Composite validator.
+            </summary>
+        </member>
+        <member name="M:FileCabinetApp.Validators.CompositeValidator.#ctor(System.Collections.Generic.IEnumerable{FileCabinetApp.Validators.IRecordValidator})">
+            <summary>
+            Initializes a new instance of the <see cref="T:FileCabinetApp.Validators.CompositeValidator"/> class.
+            </summary>
+            <param name="validators">Source validators.</param>
+        </member>
+        <member name="M:FileCabinetApp.Validators.CompositeValidator.ValidateParameters(FileCabinetApp.FileCabinetRecord)">
+            <inheritdoc/>
+        </member>
+        <member name="T:FileCabinetApp.Validators.CustomInputValidator">
+            <summary>
+            Input validator with custom rules.
+            </summary>
+        </member>
         <member name="M:FileCabinetApp.Validators.CustomInputValidator.ValidateFirstName(System.String)">
             <summary>
             Checks input parameter according to default rule.
@@ -1080,10 +1099,15 @@
         </member>
         <member name="M:FileCabinetApp.Validators.CustomValidator.CreateCustom(FileCabinetApp.Validators.ValidatorBuilder)">
             <summary>
-            
+            Creates new composite validator with custom rules.
             </summary>
-            <param name="validatorBuilder"></param>
-            <returns></returns>
+            <param name="validatorBuilder">Source builder.</param>
+            <returns>New composite validator.</returns>
+        </member>
+        <member name="T:FileCabinetApp.Validators.DefaultInputValidator">
+            <summary>
+            Validator with default rules.
+            </summary>
         </member>
         <member name="M:FileCabinetApp.Validators.DefaultInputValidator.ValidateFirstName(System.String)">
             <summary>
@@ -1132,12 +1156,112 @@
             Validator with default rules.
             </summary>
         </member>
-        <member name="M:FileCabinetApp.Validators.FieldValidators.FirstNameValidator.ValidateParameters(FileCabinetApp.FileCabinetRecord)">
+        <member name="M:FileCabinetApp.Validators.DefaultValidator.CreateDefault(FileCabinetApp.Validators.ValidatorBuilder)">
             <summary>
-            
+            Creates new composite validator with default rules.
             </summary>
-            <param name="record"></param>
-            <returns></returns>
+            <param name="validatorBuilder">Source builder.</param>
+            <returns>New composite validator.</returns>
+        </member>
+        <member name="T:FileCabinetApp.Validators.FieldValidators.DateValidator">
+            <summary>
+            Date validator.
+            </summary>
+        </member>
+        <member name="M:FileCabinetApp.Validators.FieldValidators.DateValidator.#ctor(System.DateTime,System.DateTime)">
+            <summary>
+            Initializes a new instance of the <see cref="T:FileCabinetApp.Validators.FieldValidators.DateValidator"/> class.
+            </summary>
+            <param name="minDate">Minimal date.</param>
+            <param name="maxDate">Maximim date.</param>
+        </member>
+        <member name="M:FileCabinetApp.Validators.FieldValidators.DateValidator.ValidateParameters(FileCabinetApp.FileCabinetRecord)">
+            <inheritdoc/>
+        </member>
+        <member name="T:FileCabinetApp.Validators.FieldValidators.FirstNameValidator">
+            <summary>
+            First name validator.
+            </summary>
+        </member>
+        <member name="M:FileCabinetApp.Validators.FieldValidators.FirstNameValidator.#ctor(System.Int32,System.Int32)">
+            <summary>
+            Initializes a new instance of the <see cref="T:FileCabinetApp.Validators.FieldValidators.FirstNameValidator"/> class.
+            </summary>
+            <param name="minLength">Minimal length.</param>
+            <param name="maxLength">Maximal length.</param>
+        </member>
+        <member name="M:FileCabinetApp.Validators.FieldValidators.FirstNameValidator.ValidateParameters(FileCabinetApp.FileCabinetRecord)">
+            <inheritdoc/>
+        </member>
+        <member name="T:FileCabinetApp.Validators.FieldValidators.HeightValidator">
+            <summary>
+            Height validator.
+            </summary>
+        </member>
+        <member name="M:FileCabinetApp.Validators.FieldValidators.HeightValidator.#ctor(System.Int32,System.Int32)">
+            <summary>
+            Initializes a new instance of the <see cref="T:FileCabinetApp.Validators.FieldValidators.HeightValidator"/> class.
+            </summary>
+            <param name="min">Minimal size.</param>
+            <param name="max">Maximal size.</param>
+        </member>
+        <member name="M:FileCabinetApp.Validators.FieldValidators.HeightValidator.ValidateParameters(FileCabinetApp.FileCabinetRecord)">
+            <inheritdoc/>
+        </member>
+        <member name="T:FileCabinetApp.Validators.FieldValidators.LastNameValidator">
+            <summary>
+            Last name validator.
+            </summary>
+        </member>
+        <member name="M:FileCabinetApp.Validators.FieldValidators.LastNameValidator.#ctor(System.Int32,System.Int32)">
+            <summary>
+            Initializes a new instance of the <see cref="T:FileCabinetApp.Validators.FieldValidators.LastNameValidator"/> class.
+            </summary>
+            <param name="minLength">Minimal length.</param>
+            <param name="maxLength">Maximal length.</param>
+        </member>
+        <member name="M:FileCabinetApp.Validators.FieldValidators.LastNameValidator.ValidateParameters(FileCabinetApp.FileCabinetRecord)">
+            <inheritdoc/>
+        </member>
+        <member name="T:FileCabinetApp.Validators.FieldValidators.SexValidator">
+            <summary>
+            Sex validator.
+            </summary>
+        </member>
+        <member name="M:FileCabinetApp.Validators.FieldValidators.SexValidator.#ctor(System.Char)">
+            <summary>
+            Initializes a new instance of the <see cref="T:FileCabinetApp.Validators.FieldValidators.SexValidator"/> class.
+            </summary>
+            <param name="unacceptable">Source char.</param>
+        </member>
+        <member name="M:FileCabinetApp.Validators.FieldValidators.SexValidator.#ctor(System.Char[])">
+            <summary>
+            Initializes a new instance of the <see cref="T:FileCabinetApp.Validators.FieldValidators.SexValidator"/> class.
+            </summary>
+            <param name="unacceptable">Source char array.</param>
+        </member>
+        <member name="M:FileCabinetApp.Validators.FieldValidators.SexValidator.ValidateParameters(FileCabinetApp.FileCabinetRecord)">
+            <inheritdoc/>
+        </member>
+        <member name="T:FileCabinetApp.Validators.FieldValidators.WeightValidator">
+            <summary>
+            Weight validator.
+            </summary>
+        </member>
+        <member name="M:FileCabinetApp.Validators.FieldValidators.WeightValidator.#ctor(System.Int32,System.Int32)">
+            <summary>
+            Initializes a new instance of the <see cref="T:FileCabinetApp.Validators.FieldValidators.WeightValidator"/> class.
+            </summary>
+            <param name="minLength">Minimal size.</param>
+            <param name="maxLength">Maximal size.</param>
+        </member>
+        <member name="M:FileCabinetApp.Validators.FieldValidators.WeightValidator.ValidateParameters(FileCabinetApp.FileCabinetRecord)">
+            <inheritdoc/>
+        </member>
+        <member name="T:FileCabinetApp.Validators.IInputValidator">
+            <summary>
+            Input validator.
+            </summary>
         </member>
         <member name="M:FileCabinetApp.Validators.IInputValidator.ValidateFirstName(System.String)">
             <summary>
@@ -1191,6 +1315,77 @@
             Checks input parameters according to any rules.
             </summary>
             <param name="record">Source record.</param>
+            <returns>True if record is valid.</returns>
+        </member>
+        <member name="T:FileCabinetApp.Validators.ValidatorBuilder">
+            <summary>
+            Validator builder.
+            </summary>
+        </member>
+        <member name="M:FileCabinetApp.Validators.ValidatorBuilder.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:FileCabinetApp.Validators.ValidatorBuilder"/> class.
+            </summary>
+        </member>
+        <member name="M:FileCabinetApp.Validators.ValidatorBuilder.ValidateFirstName(System.Int32,System.Int32)">
+            <summary>
+            Creates first name validator.
+            </summary>
+            <param name="min">Minimal size.</param>
+            <param name="max">Maximal size.</param>
+            <returns>Validator builder.</returns>
+        </member>
+        <member name="M:FileCabinetApp.Validators.ValidatorBuilder.ValidateLastName(System.Int32,System.Int32)">
+            <summary>
+            Creates last name validator.
+            </summary>
+            <param name="min">Miniimal size.</param>
+            <param name="max">Maximal size.</param>
+            <returns>Validator builder.</returns>
+        </member>
+        <member name="M:FileCabinetApp.Validators.ValidatorBuilder.ValidateDateBirth(System.DateTime,System.DateTime)">
+            <summary>
+            Creates date validator.
+            </summary>
+            <param name="min">Minimal date.</param>
+            <param name="max">Maximal date.</param>
+            <returns>Validator builder.</returns>
+        </member>
+        <member name="M:FileCabinetApp.Validators.ValidatorBuilder.ValidateSex(System.Char)">
+            <summary>
+            Creates sex validator.
+            </summary>
+            <param name="unaccept">Unaccept char.</param>
+            <returns>Validator builder.</returns>
+        </member>
+        <member name="M:FileCabinetApp.Validators.ValidatorBuilder.ValidateSex(System.Char[])">
+            <summary>
+            Creates sex validator.
+            </summary>
+            <param name="unaccept">Unaccept array of chars.</param>
+            <returns>Validator builder.</returns>
+        </member>
+        <member name="M:FileCabinetApp.Validators.ValidatorBuilder.ValidateWeight(System.Int32,System.Int32)">
+            <summary>
+            Creates weight validator.
+            </summary>
+            <param name="min">Minimal size.</param>
+            <param name="max">Maximal size.</param>
+            <returns>Validator builder.</returns>
+        </member>
+        <member name="M:FileCabinetApp.Validators.ValidatorBuilder.ValidateHeight(System.Int32,System.Int32)">
+            <summary>
+            Creates height validator.
+            </summary>
+            <param name="min">Minimal size.</param>
+            <param name="max">Maximal size.</param>
+            <returns>Validator builder.</returns>
+        </member>
+        <member name="M:FileCabinetApp.Validators.ValidatorBuilder.Create">
+            <summary>
+            Creates composite validator.
+            </summary>
+            <returns>New composite validator.</returns>
         </member>
         <member name="T:FileCabinetApp.Writers.FileCabinetRecordCsvWriter">
             <summary>
