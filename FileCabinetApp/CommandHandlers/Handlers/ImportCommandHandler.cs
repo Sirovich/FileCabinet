@@ -74,9 +74,16 @@ namespace FileCabinetApp.CommandHandlers.Handlers
                 {
                     using (var fileStream = new StreamReader(arguments[pathIndex]))
                     {
-                        snapshot.LoadFromCsv(fileStream);
-                        int numberOfStored = this.Service.Restore(snapshot);
-                        Console.WriteLine(Source.Resource.GetString("importFileComplete", CultureInfo.InvariantCulture), numberOfStored, arguments[pathIndex]);
+                        try
+                        {
+                            snapshot.LoadFromCsv(fileStream);
+                            int numberOfStored = this.Service.Restore(snapshot);
+                            Console.WriteLine(Source.Resource.GetString("importFileComplete", CultureInfo.InvariantCulture), numberOfStored, arguments[pathIndex]);
+                        }
+                        catch (ArgumentNullException)
+                        {
+                            Console.WriteLine(Source.Resource.GetString("importFailed", CultureInfo.InvariantCulture));
+                        }
                     }
                 }
                 else if (arguments[typeIndex].Equals("xml", StringComparison.InvariantCultureIgnoreCase))

@@ -55,6 +55,7 @@ namespace FileCabinetApp.CommandHandlers.Handlers
             if (list.Count == 0)
             {
                 Console.WriteLine(Source.Resource.GetString("noRecords", CultureInfo.InvariantCulture));
+                return;
             }
 
             this.printer(list);

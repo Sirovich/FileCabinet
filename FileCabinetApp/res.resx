@@ -120,6 +120,9 @@
   <data name="availableMessage" xml:space="preserve">
     <value>Available commands:</value>
   </data>
+  <data name="badCsvFile" xml:space="preserve">
+    <value>There is an error in csv file</value>
+  </data>
   <data name="customRule" xml:space="preserve">
     <value>Using custom validation rules.</value>
   </data>
@@ -173,6 +176,9 @@
   </data>
   <data name="importException" xml:space="preserve">
     <value>Invalid parameters</value>
+  </data>
+  <data name="importFailed" xml:space="preserve">
+    <value>Cannot import from this file</value>
   </data>
   <data name="importFailValidation" xml:space="preserve">
     <value>#{0}: {1}</value>

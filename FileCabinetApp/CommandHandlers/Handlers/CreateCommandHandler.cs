@@ -3,6 +3,7 @@ using System.Globalization;
 using FileCabinetApp.Converters;
 using FileCabinetApp.Services;
 using FileCabinetApp.Validators;
+using FileCabinetApp.Validators.FieldValidators;
 
 namespace FileCabinetApp.CommandHandlers.Handlers
 {
@@ -11,14 +12,14 @@ namespace FileCabinetApp.CommandHandlers.Handlers
     /// </summary>
     public class CreateCommandHandler : ServiceCommandHandlerBase
     {
-        private IRecordValidator recordValidator;
+        private IInputValidator recordValidator;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CreateCommandHandler"/> class.
         /// </summary>
         /// <param name="recordValidator">Source record validator.</param>
         /// <param name="fileCabinetService">Source service.</param>
-        public CreateCommandHandler(IRecordValidator recordValidator, IFileCabinetService fileCabinetService)
+        public CreateCommandHandler(IInputValidator recordValidator, IFileCabinetService fileCabinetService)
             : base(fileCabinetService)
         {
             this.recordValidator = recordValidator;

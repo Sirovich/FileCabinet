@@ -70,6 +70,15 @@ namespace FileCabinetApp {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на There is an error in csv file.
+        /// </summary>
+        internal static string badCsvFile {
+            get {
+                return ResourceManager.GetString("badCsvFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Using custom validation rules..
         /// </summary>
         internal static string customRule {
@@ -228,6 +237,15 @@ namespace FileCabinetApp {
         internal static string importException {
             get {
                 return ResourceManager.GetString("importException", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Cannot import from this file.
+        /// </summary>
+        internal static string importFailed {
+            get {
+                return ResourceManager.GetString("importFailed", resourceCulture);
             }
         }
         

@@ -22,6 +22,7 @@ namespace FileCabinetApp
         private const string DeveloperName = "Ivan Sarokvashin";
 
         private static IRecordValidator recordValidator;
+        private static IInputValidator inputValidator;
         private static IFileCabinetService fileCabinetService;
         private static bool isRunning = true;
 
@@ -63,7 +64,8 @@ namespace FileCabinetApp
         {
             if (args is null)
             {
-                recordValidator = new DefaultValidator();
+                recordValidator = new ValidatorBuilder().CreateDefault();
+                inputValidator = new DefaultInputValidator();
                 return;
             }
 
@@ -72,12 +74,14 @@ namespace FileCabinetApp
 
             if (opts.Rule.Equals("Default", StringComparison.InvariantCultureIgnoreCase))
             {
-                recordValidator = new DefaultValidator();
+                recordValidator = new ValidatorBuilder().CreateDefault();
+                inputValidator = new DefaultInputValidator();
                 Console.WriteLine(Source.Resource.GetString("defaultRule", CultureInfo.InvariantCulture));
             }
             else if (opts.Rule.Equals("Custom", StringComparison.InvariantCultureIgnoreCase))
             {
-                recordValidator = new CustomValidator();
+                recordValidator = new ValidatorBuilder().CreateCustom();
+                inputValidator = new CustomInputValidator();
                 Console.WriteLine(Source.Resource.GetString("customRule", CultureInfo.InvariantCulture));
             }
             else
@@ -131,8 +135,8 @@ namespace FileCabinetApp
             var removeHandler = new RemoveCommandHandler(fileCabinetService);
             var statHandler = new StatCommandHandler(fileCabinetService);
             var exitHandler = new ExitCommandHandler(IsRunning);
-            var createHandler = new CreateCommandHandler(recordValidator, fileCabinetService);
-            var editHandler = new EditCommandHandler(recordValidator, fileCabinetService);
+            var createHandler = new CreateCommandHandler(inputValidator, fileCabinetService);
+            var editHandler = new EditCommandHandler(inputValidator, fileCabinetService);
 
             helpHandler.SetNext(importHandler).SetNext(exportHandler).
                 SetNext(findHandler).SetNext(listHandler).SetNext(purgeHandler).

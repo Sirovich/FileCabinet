@@ -12,14 +12,14 @@ namespace FileCabinetApp.CommandHandlers.Handlers
     /// </summary>
     public class EditCommandHandler : ServiceCommandHandlerBase
     {
-        private IRecordValidator recordValidator;
+        private IInputValidator recordValidator;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="EditCommandHandler"/> class.
         /// </summary>
         /// <param name="recordValidator">Source record validator.</param>
         /// <param name="fileCabinetService">Source service.</param>
-        public EditCommandHandler(IRecordValidator recordValidator, IFileCabinetService fileCabinetService)
+        public EditCommandHandler(IInputValidator recordValidator, IFileCabinetService fileCabinetService)
             : base(fileCabinetService)
         {
             this.recordValidator = recordValidator;
