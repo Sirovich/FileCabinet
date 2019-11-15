@@ -70,6 +70,15 @@ namespace FileCabinetApp {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на There is an error in csv file.
+        /// </summary>
+        internal static string badCsvFile {
+            get {
+                return ResourceManager.GetString("badCsvFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Using custom validation rules..
         /// </summary>
         internal static string customRule {
@@ -232,6 +241,15 @@ namespace FileCabinetApp {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Cannot import from this file.
+        /// </summary>
+        internal static string importFailed {
+            get {
+                return ResourceManager.GetString("importFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на #{0}: {1}.
         /// </summary>
         internal static string importFailValidation {
@@ -264,6 +282,15 @@ namespace FileCabinetApp {
         internal static string importUnknownArgument {
             get {
                 return ResourceManager.GetString("importUnknownArgument", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Invalid argument..
+        /// </summary>
+        internal static string invalidArgument {
+            get {
+                return ResourceManager.GetString("invalidArgument", resourceCulture);
             }
         }
         
@@ -327,6 +354,15 @@ namespace FileCabinetApp {
         internal static string noExplanationMessage {
             get {
                 return ResourceManager.GetString("noExplanationMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Storage is empty..
+        /// </summary>
+        internal static string noRecords {
+            get {
+                return ResourceManager.GetString("noRecords", resourceCulture);
             }
         }
         

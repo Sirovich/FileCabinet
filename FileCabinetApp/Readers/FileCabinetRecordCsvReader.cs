@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
+using System.Linq;
 using System.Text;
 
 namespace FileCabinetApp.Readers
@@ -30,20 +31,41 @@ namespace FileCabinetApp.Readers
         {
             var list = new List<FileCabinetRecord>();
             this.fileReader.BaseStream.Seek(0, 0);
-            var names = this.fileReader.ReadLine().Split(',');
 
+            var names = this.fileReader.ReadLine()?.Split(',', '.');
+            if (names is null || names.Length < 6)
+            {
+                Console.WriteLine(Source.Resource.GetString("badCsvFile", CultureInfo.InvariantCulture));
+                return null;
+            }
+
+            int firstNameIndex = Array.IndexOf(names, "First Name");
+            int lastNameIndex = Array.IndexOf(names, "Last Name");
+            int dateIndex = Array.IndexOf(names, "Date of Birth");
+            int idindex = Array.IndexOf(names, "Id");
+            int sexIndex = Array.IndexOf(names, "Sex");
+            int weightIndex = Array.IndexOf(names, "Weight");
+            int heightIndex = Array.IndexOf(names, "Height");
             while (!this.fileReader.EndOfStream)
             {
-                var fields = this.fileReader.ReadLine().Split(',');
-                var record = new FileCabinetRecord();
-                record.Id = int.Parse(fields[0], CultureInfo.InvariantCulture);
-                record.FirstName = fields[1];
-                record.LastName = fields[2];
-                record.DateOfBirth = DateTime.Parse(fields[3], CultureInfo.InvariantCulture);
-                record.Sex = char.Parse(fields[4]);
-                record.Weight = decimal.Parse(fields[5], CultureInfo.InvariantCulture);
-                record.Height = short.Parse(fields[6].Split('.')[0], CultureInfo.InvariantCulture);
-                list.Add(record);
+                try
+                {
+                    var fields = this.fileReader.ReadLine()?.Split(',');
+                    var record = new FileCabinetRecord();
+                    record.Id = int.Parse(fields[idindex], CultureInfo.InvariantCulture);
+                    record.FirstName = fields[firstNameIndex];
+                    record.LastName = fields[lastNameIndex];
+                    record.DateOfBirth = DateTime.Parse(fields[dateIndex], CultureInfo.InvariantCulture);
+                    record.Sex = char.Parse(fields[sexIndex]);
+                    record.Weight = decimal.Parse(fields[weightIndex], CultureInfo.InvariantCulture);
+                    record.Height = short.Parse(fields[heightIndex], CultureInfo.InvariantCulture);
+                    list.Add(record);
+                }
+                catch (IndexOutOfRangeException)
+                {
+                    Console.WriteLine(Source.Resource.GetString("badCsvFile", CultureInfo.InvariantCulture));
+                    return null;
+                }
             }
 
             return list;

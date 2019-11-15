@@ -56,7 +56,21 @@ namespace FileCabinetApp.Services
         /// <returns>Id of created record.</returns>
         public int CreateRecord(short height, decimal weight, char sex, string firstName, string lastName, DateTime dateOfBirth)
         {
-            this.recordValidator.ValidateParameters(firstName, lastName, dateOfBirth, sex, height, weight, Resource);
+            var temp = new FileCabinetRecord
+            {
+                Sex = sex,
+                Weight = weight,
+                Height = height,
+                FirstName = firstName,
+                LastName = lastName,
+                DateOfBirth = dateOfBirth,
+            };
+
+            if (!this.recordValidator.ValidateParameters(temp).Item1)
+            {
+                throw new ArgumentException(this.recordValidator.ValidateParameters(temp).Item2);
+            }
+
             this.lastId++;
             this.offset += ShortSize;
             this.fileWriter.Seek(this.offset, 0);
@@ -96,7 +110,21 @@ namespace FileCabinetApp.Services
         /// <param name="weight">New weight of person.</param>
         public void EditRecord(int id, string firstName, string lastName, DateTime dateOfBirth, char sex, short height, decimal weight)
         {
-            this.recordValidator.ValidateParameters(firstName, lastName, dateOfBirth, sex, height, weight, Resource);
+            var temp = new FileCabinetRecord
+            {
+                Sex = sex,
+                Weight = weight,
+                Height = height,
+                FirstName = firstName,
+                LastName = lastName,
+                DateOfBirth = dateOfBirth,
+            };
+
+            if (!this.recordValidator.ValidateParameters(temp).Item1)
+            {
+                throw new ArgumentException(this.recordValidator.ValidateParameters(temp).Item2);
+            }
+
             int localOffset = (id - 1) * RecordSize;
 
             this.fileWriter.Seek(localOffset, 0);
@@ -333,7 +361,7 @@ namespace FileCabinetApp.Services
         /// <returns>Number of imported records.</returns>
         public int Restore(FileCabinetServiceSnapshot snapshot)
         {
-            if (snapshot is null)
+            if (snapshot is null || snapshot.Records is null)
             {
                 throw new ArgumentNullException(nameof(snapshot));
             }
@@ -356,7 +384,7 @@ namespace FileCabinetApp.Services
                 {
                     try
                     {
-                        this.recordValidator.ValidateParameters(importData[importIndex], Resource);
+                        this.recordValidator.ValidateParameters(importData[importIndex]);
                         list.Add(importData[importIndex]);
                         importIndex++;
                         sourceIndex++;
@@ -373,7 +401,7 @@ namespace FileCabinetApp.Services
                 {
                     try
                     {
-                        this.recordValidator.ValidateParameters(importData[importIndex], Resource);
+                        this.recordValidator.ValidateParameters(importData[importIndex]);
                         list.Add(importData[importIndex]);
                         importIndex++;
                     }
@@ -390,7 +418,7 @@ namespace FileCabinetApp.Services
             {
                 try
                 {
-                    this.recordValidator.ValidateParameters(importData[importIndex], Resource);
+                    this.recordValidator.ValidateParameters(importData[importIndex]);
                     list.Add(importData[importIndex]);
                 }
                 catch (ArgumentException ex)
@@ -405,7 +433,15 @@ namespace FileCabinetApp.Services
                 list.Add(source[sourceIndex]);
             }
 
-            this.lastId = list[^1].Id;
+            if (list.Count == 0)
+            {
+                this.lastId = 0;
+            }
+            else
+            {
+                this.lastId = list[^1].Id;
+            }
+
             this.WriteImportToFile(list);
 
             return list.Count;

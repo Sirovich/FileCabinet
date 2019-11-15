@@ -120,6 +120,9 @@
   <data name="availableMessage" xml:space="preserve">
     <value>Available commands:</value>
   </data>
+  <data name="badCsvFile" xml:space="preserve">
+    <value>There is an error in csv file</value>
+  </data>
   <data name="customRule" xml:space="preserve">
     <value>Using custom validation rules.</value>
   </data>
@@ -174,6 +177,9 @@
   <data name="importException" xml:space="preserve">
     <value>Invalid parameters</value>
   </data>
+  <data name="importFailed" xml:space="preserve">
+    <value>Cannot import from this file</value>
+  </data>
   <data name="importFailValidation" xml:space="preserve">
     <value>#{0}: {1}</value>
   </data>
@@ -185,6 +191,9 @@
   </data>
   <data name="importUnknownArgument" xml:space="preserve">
     <value>Unknow argument {0}</value>
+  </data>
+  <data name="invalidArgument" xml:space="preserve">
+    <value>Invalid argument.</value>
   </data>
   <data name="invalidInputMessage" xml:space="preserve">
     <value>Invalid input: {0}.</value>
@@ -206,6 +215,9 @@
   </data>
   <data name="noExplanationMessage" xml:space="preserve">
     <value>There is no explanation for '{0}' command.</value>
+  </data>
+  <data name="noRecords" xml:space="preserve">
+    <value>Storage is empty.</value>
   </data>
   <data name="noRecordsMessage" xml:space="preserve">
     <value>No records with this parameters</value>

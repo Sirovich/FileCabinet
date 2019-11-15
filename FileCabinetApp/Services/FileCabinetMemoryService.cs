@@ -56,8 +56,7 @@ namespace FileCabinetApp.Services
         /// <returns>Id of created record.</returns>
         public int CreateRecord(short height, decimal weight, char sex, string firstName, string lastName, DateTime dateOfBirth)
         {
-            this.recordValidator.ValidateParameters(firstName, lastName, dateOfBirth, sex, height, weight, Resource);
-            var record = new FileCabinetRecord
+            var temp = new FileCabinetRecord
             {
                 Id = this.list.Count + 1,
                 Sex = sex,
@@ -68,6 +67,12 @@ namespace FileCabinetApp.Services
                 DateOfBirth = dateOfBirth,
             };
 
+            if (this.recordValidator.ValidateParameters(temp).Item1)
+            {
+                throw new ArgumentException(this.recordValidator.ValidateParameters(temp).Item2);
+            }
+
+            var record = temp;
             this.AddToDictionaries(record);
             this.list.Add(record);
 
@@ -115,7 +120,18 @@ namespace FileCabinetApp.Services
         /// <param name="weight">New weight of person.</param>
         public void EditRecord(int id, string firstName, string lastName, DateTime dateOfBirth, char sex, short height, decimal weight)
         {
-            this.recordValidator.ValidateParameters(firstName, lastName, dateOfBirth, sex, height, weight, Resource);
+            var temp = new FileCabinetRecord
+            {
+                Id = this.list.Count + 1,
+                Sex = sex,
+                Weight = weight,
+                Height = height,
+                FirstName = firstName,
+                LastName = lastName,
+                DateOfBirth = dateOfBirth,
+            };
+
+            this.recordValidator.ValidateParameters(temp);
             var records = this.list;
             foreach (FileCabinetRecord record in records)
             {
@@ -213,7 +229,7 @@ namespace FileCabinetApp.Services
         /// <returns>Number of stored.</returns>
         public int Restore(FileCabinetServiceSnapshot snapshot)
         {
-            if (snapshot is null)
+            if (snapshot is null || snapshot.Records is null)
             {
                 throw new ArgumentNullException(nameof(snapshot));
             }
@@ -234,7 +250,7 @@ namespace FileCabinetApp.Services
                 {
                     try
                     {
-                        this.recordValidator.ValidateParameters(importData[importIndex], Resource);
+                        this.recordValidator.ValidateParameters(importData[importIndex]);
                         list.Add(importData[importIndex]);
 
                         this.firstNameDictionary[this.list[sourceIndex].FirstName].Remove(this.list[sourceIndex]);
@@ -258,7 +274,7 @@ namespace FileCabinetApp.Services
                 {
                     try
                     {
-                        this.recordValidator.ValidateParameters(importData[importIndex], Resource);
+                        this.recordValidator.ValidateParameters(importData[importIndex]);
                         this.AddToDictionaries(importData[importIndex]);
                         list.Add(importData[importIndex]);
                         importIndex++;
@@ -276,7 +292,7 @@ namespace FileCabinetApp.Services
             {
                 try
                 {
-                    this.recordValidator.ValidateParameters(importData[importIndex], Resource);
+                    this.recordValidator.ValidateParameters(importData[importIndex]);
                     list.Add(importData[importIndex]);
                     this.AddToDictionaries(importData[importIndex]);
                 }

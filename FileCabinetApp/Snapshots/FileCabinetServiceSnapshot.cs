@@ -41,7 +41,7 @@ namespace FileCabinetApp.Snapshots
         {
             get
             {
-                return this.records.AsReadOnly();
+                return this.records?.AsReadOnly();
             }
         }
 
@@ -87,7 +87,15 @@ namespace FileCabinetApp.Snapshots
         public void LoadFromCsv(StreamReader streamReader)
         {
             var csvReader = new FileCabinetRecordCsvReader(streamReader);
-            this.records = new List<FileCabinetRecord>(csvReader.ReadAll());
+            var data = csvReader.ReadAll();
+            if (data is null)
+            {
+                this.records = null;
+            }
+            else
+            {
+                this.records = new List<FileCabinetRecord>(data);
+            }
         }
 
         /// <summary>
@@ -97,7 +105,14 @@ namespace FileCabinetApp.Snapshots
         public void LoadFromXml(XmlReader xmlReader)
         {
             var fileXmlReader = new FileCabinetRecordXmlReader(xmlReader);
-            this.records = new List<FileCabinetRecord>(fileXmlReader.ReadAll());
+            var list = fileXmlReader.ReadAll();
+
+            if (list is null)
+            {
+                return;
+            }
+
+            this.records = new List<FileCabinetRecord>(list);
         }
     }
 }
