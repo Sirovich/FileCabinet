@@ -8,9 +8,11 @@ using CommandLine;
 using FileCabinetApp.CommandHandlers;
 using FileCabinetApp.CommandHandlers.Handlers;
 using FileCabinetApp.Converters;
+using FileCabinetApp.Loggers;
 using FileCabinetApp.Services;
 using FileCabinetApp.Snapshots;
 using FileCabinetApp.Validators;
+using Microsoft.Extensions.Configuration;
 
 namespace FileCabinetApp
 {
@@ -39,10 +41,10 @@ namespace FileCabinetApp
 
             var commands = CreateCommandHandler();
 
-            do
+            while (isRunning)
             {
                 Console.Write(Source.Resource.GetString("pointer", CultureInfo.InvariantCulture));
-                var inputs = Console.ReadLine().Split(' ', 2);
+                var inputs = Console.ReadLine()?.Split(' ', 2);
                 const int commandIndex = 0;
                 const int argumentIndex = 1;
                 var command = inputs[commandIndex];
@@ -57,14 +59,37 @@ namespace FileCabinetApp
 
                 commands.Handle(new AppCommandRequest(command, parameters));
             }
-            while (isRunning);
         }
 
         private static void GetCommandLineArguments(string[] args)
         {
+            if (!File.Exists(Directory.GetCurrentDirectory() + "\\validation-rules.json"))
+            {
+                Console.WriteLine(Source.Resource.GetString("missingJsonFile", CultureInfo.InvariantCulture));
+                Environment.Exit(1488);
+            }
+
+            try
+            {
+                var builder = new ConfigurationBuilder()
+                   .SetBasePath(Directory.GetCurrentDirectory())
+                   .AddJsonFile("validation-rules.json")
+                   .Build();
+            }
+            catch (FormatException)
+            {
+                Console.WriteLine(Source.Resource.GetString("invalidJsonData", CultureInfo.InvariantCulture));
+                Environment.Exit(1478);
+            }
+
+            var configuration = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("validation-rules.json")
+                .Build();
+
             if (args is null)
             {
-                recordValidator = new ValidatorBuilder().CreateDefault();
+                recordValidator = new ValidatorBuilder().CreateValidator(configuration.GetSection("default"));
                 inputValidator = new DefaultInputValidator();
                 return;
             }
@@ -72,15 +97,23 @@ namespace FileCabinetApp
             var opts = new Options();
             var result = Parser.Default.ParseArguments<Options>(args).WithParsed(parsed => opts = parsed);
 
+            SetUpValidators(opts, configuration);
+            SetUpStorage(opts);
+            SetUpMeter(opts);
+            SetUpLogger(opts);
+        }
+
+        private static void SetUpValidators(Options opts, IConfiguration configuration)
+        {
             if (opts.Rule.Equals("Default", StringComparison.InvariantCultureIgnoreCase))
             {
-                recordValidator = new ValidatorBuilder().CreateDefault();
+                recordValidator = new ValidatorBuilder().CreateValidator(configuration.GetSection("default"));
                 inputValidator = new DefaultInputValidator();
                 Console.WriteLine(Source.Resource.GetString("defaultRule", CultureInfo.InvariantCulture));
             }
             else if (opts.Rule.Equals("Custom", StringComparison.InvariantCultureIgnoreCase))
             {
-                recordValidator = new ValidatorBuilder().CreateCustom();
+                recordValidator = new ValidatorBuilder().CreateValidator(configuration.GetSection("default"));
                 inputValidator = new CustomInputValidator();
                 Console.WriteLine(Source.Resource.GetString("customRule", CultureInfo.InvariantCulture));
             }
@@ -88,7 +121,10 @@ namespace FileCabinetApp
             {
                 throw new ArgumentException(Source.Resource.GetString("invalidRule", CultureInfo.InvariantCulture));
             }
+        }
 
+        private static void SetUpStorage(Options opts)
+        {
             if (opts.Storage.Equals("memory", StringComparison.InvariantCultureIgnoreCase))
             {
                 fileCabinetService = new FileCabinetMemoryService(recordValidator);
@@ -98,11 +134,28 @@ namespace FileCabinetApp
             {
                 FileStream fileStream;
                 fileStream = new FileStream(@"cabinet-records.db", FileMode.Create, FileAccess.ReadWrite);
-                fileCabinetService = new FileCabinetFilesystemService(fileStream, recordValidator);
+                var service = fileCabinetService = new FileCabinetFilesystemService(fileStream, recordValidator);
+                Console.WriteLine(Source.Resource.GetString("fileStorage", CultureInfo.InvariantCulture));
             }
             else
             {
                 throw new ArgumentException(Source.Resource.GetString("invalidStorage", CultureInfo.InvariantCulture));
+            }
+        }
+
+        private static void SetUpMeter(Options opts)
+        {
+            if (opts.Stopwatch)
+            {
+                fileCabinetService = new ServiceMeter(fileCabinetService);
+            }
+        }
+
+        private static void SetUpLogger(Options opts)
+        {
+            if (opts.Log)
+            {
+                fileCabinetService = new ServiceLogger(fileCabinetService);
             }
         }
 
