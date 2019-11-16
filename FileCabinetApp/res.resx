@@ -123,6 +123,15 @@
   <data name="badCsvFile" xml:space="preserve">
     <value>There is an error in csv file</value>
   </data>
+  <data name="createLog" xml:space="preserve">
+    <value>{0} - Calling Create() with FirstName = '{1}', LastName = '{2}', DateOfBirth = '{3}', Sex = '{4}', Weight = '{5}', Height = '{6}'</value>
+  </data>
+  <data name="createResultLog" xml:space="preserve">
+    <value>{0} - Create() returned '{1}'</value>
+  </data>
+  <data name="createTime" xml:space="preserve">
+    <value>Create method execution duration is {0}.</value>
+  </data>
   <data name="customRule" xml:space="preserve">
     <value>Using custom validation rules.</value>
   </data>
@@ -137,6 +146,15 @@
   </data>
   <data name="developerNameMessage" xml:space="preserve">
     <value>File Cabinet Application, developed by {0}</value>
+  </data>
+  <data name="editLog" xml:space="preserve">
+    <value>{0} - Calling Edit() with Id = '{1}', FirstName = '{2}', LastName = '{3}', DateOfBirth = '{4}', Sex = '{5}', Weight = '{6}', Height = '{7}'</value>
+  </data>
+  <data name="editResultLog" xml:space="preserve">
+    <value>{0} - Edit() completed</value>
+  </data>
+  <data name="editTime" xml:space="preserve">
+    <value>Edit method execution duration is {0}.</value>
   </data>
   <data name="exitMessage" xml:space="preserve">
     <value>Exiting an application...</value>
@@ -159,11 +177,59 @@
   <data name="fileHeader" xml:space="preserve">
     <value>Id,First Name,Last Name,Date of Birth,Sex,Weight,Height</value>
   </data>
+  <data name="fileStorage" xml:space="preserve">
+    <value>Using file storage</value>
+  </data>
+  <data name="findDateLog" xml:space="preserve">
+    <value>{0} - Calling FindDate() with DateOfBirth = '{1}'</value>
+  </data>
+  <data name="findDateResultLog" xml:space="preserve">
+    <value>{0} - FindDate() completed</value>
+  </data>
+  <data name="findDateTime" xml:space="preserve">
+    <value>FindDateOfBirth method execution duration is {0}.</value>
+  </data>
+  <data name="findFirstNameLog" xml:space="preserve">
+    <value>{0} - Calling FindFirstName() with FirstName = '{1}'</value>
+  </data>
+  <data name="findFirstNameResultLog" xml:space="preserve">
+    <value>{0} - FindFirstName() completed</value>
+  </data>
+  <data name="findFirstNameTime" xml:space="preserve">
+    <value>FindFirstName method execution duration is {0}.</value>
+  </data>
+  <data name="findLastNameLog" xml:space="preserve">
+    <value>{0} - Calling FindLastName() with LastName = '{1}'</value>
+  </data>
+  <data name="findLastNameResultLog" xml:space="preserve">
+    <value>{0} - FindLastName() completed</value>
+  </data>
+  <data name="findLastNameTime" xml:space="preserve">
+    <value>FindLastName method execution duration is {0}.</value>
+  </data>
   <data name="firstNameException" xml:space="preserve">
     <value>Not valid first name</value>
   </data>
   <data name="firstNameInputMessage" xml:space="preserve">
     <value>First name: </value>
+  </data>
+  <data name="getRecordsLog" xml:space="preserve">
+    <value>{0} - Calling GetRecords()</value>
+  </data>
+  <data name="getRecordsResultLog" xml:space="preserve">
+    <value>{0} - GetRecords() completed</value>
+  </data>
+  <data name="getRecordsTime" xml:space="preserve">
+    <value>GetRecords method execution duration is {0}.</value>
+  </data>
+  <data name="getStatLog" xml:space="preserve">
+    <value>{0} - Calling GetStat()</value>
+  </data>
+  <data name="getStatResultLog" xml:space="preserve">
+    <value>{0} - GetStat() completed</value>
+  </data>
+  <data name="getStatTime" xml:space="preserve">
+    <value>GetStat method execution duration is {0}.</value>
   </data>
   <data name="heightException" xml:space="preserve">
     <value>Not valid height</value>
@@ -198,6 +264,9 @@
   <data name="invalidInputMessage" xml:space="preserve">
     <value>Invalid input: {0}.</value>
   </data>
+  <data name="invalidJsonData" xml:space="preserve">
+    <value>Invalid configuration data</value>
+  </data>
   <data name="invalidRule" xml:space="preserve">
     <value>Not valid rule</value>
   </data>
@@ -210,8 +279,20 @@
   <data name="lastNameInputMessage" xml:space="preserve">
     <value>Last name: </value>
   </data>
+  <data name="makeSnapshotLog" xml:space="preserve">
+    <value>{0} - Calling MakeSnapshot()</value>
+  </data>
+  <data name="makeSnapshotResultLog" xml:space="preserve">
+    <value>{0} - MakeSnapshot() completed</value>
+  </data>
+  <data name="makeSnapshotTime" xml:space="preserve">
+    <value>MakeSnapshot method execution duration is {0}.</value>
+  </data>
   <data name="memoryStorage" xml:space="preserve">
     <value>Using memory storage</value>
+  </data>
+  <data name="missingJsonFile" xml:space="preserve">
+    <value>Configuration file not found</value>
   </data>
   <data name="noExplanationMessage" xml:space="preserve">
     <value>There is no explanation for '{0}' command.</value>
@@ -225,6 +306,15 @@
   <data name="pointer" xml:space="preserve">
     <value>&gt; </value>
   </data>
+  <data name="purgeLog" xml:space="preserve">
+    <value>{0} - Calling Purge()</value>
+  </data>
+  <data name="purgeResultLog" xml:space="preserve">
+    <value>{0} - Purge() completed</value>
+  </data>
+  <data name="purgeTime" xml:space="preserve">
+    <value>Purge method execution duration is {0}.</value>
+  </data>
   <data name="recordCreateMessage" xml:space="preserve">
     <value>Record #{0} is created.</value>
   </data>
@@ -234,8 +324,29 @@
   <data name="recordUpdateMessage" xml:space="preserve">
     <value>Record #{0} is updated.</value>
   </data>
+  <data name="removeFailedResultLog" xml:space="preserve">
+    <value>{0} - Remove() failed. Record with Id = '{1}' is missing</value>
+  </data>
+  <data name="removeLog" xml:space="preserve">
+    <value>{0} - Calling Remove() with Id = '{1}'</value>
+  </data>
+  <data name="removeResultLog" xml:space="preserve">
+    <value>{0} - Remove() completed</value>
+  </data>
   <data name="removeSuccess" xml:space="preserve">
     <value>Record #{0} is removed.</value>
+  </data>
+  <data name="removeTime" xml:space="preserve">
+    <value>Remove method execution duration is {0}.</value>
+  </data>
+  <data name="restoreLog" xml:space="preserve">
+    <value>{0} - Calling Restore()</value>
+  </data>
+  <data name="restoreResultLog" xml:space="preserve">
+    <value>{0} - Restore() completed</value>
+  </data>
+  <data name="restoreTime" xml:space="preserve">
+    <value>Restore method execution duration is {0}.</value>
   </data>
   <data name="sexException" xml:space="preserve">
     <value>Not valid sex</value>

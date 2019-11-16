@@ -316,6 +316,53 @@
             </summary>
             <value>Person date of birth.</value>
         </member>
+        <member name="T:FileCabinetApp.Loggers.ServiceLogger">
+            <summary>
+            Service logger.
+            </summary>
+        </member>
+        <member name="M:FileCabinetApp.Loggers.ServiceLogger.#ctor(FileCabinetApp.Services.IFileCabinetService)">
+            <summary>
+            Initializes a new instance of the <see cref="T:FileCabinetApp.Loggers.ServiceLogger"/> class.
+            </summary>
+            <param name="service">Source service.</param>
+        </member>
+        <member name="M:FileCabinetApp.Loggers.ServiceLogger.CreateRecord(System.Int16,System.Decimal,System.Char,System.String,System.String,System.DateTime)">
+            <inheritdoc/>
+        </member>
+        <member name="M:FileCabinetApp.Loggers.ServiceLogger.EditRecord(System.Int32,System.String,System.String,System.DateTime,System.Char,System.Int16,System.Decimal)">
+            <inheritdoc/>
+        </member>
+        <member name="M:FileCabinetApp.Loggers.ServiceLogger.FindByDateOfBirth(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:FileCabinetApp.Loggers.ServiceLogger.FindByFirstName(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:FileCabinetApp.Loggers.ServiceLogger.FindByLastName(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:FileCabinetApp.Loggers.ServiceLogger.GetRecords">
+            <inheritdoc/>
+        </member>
+        <member name="M:FileCabinetApp.Loggers.ServiceLogger.GetStat">
+            <inheritdoc/>
+        </member>
+        <member name="M:FileCabinetApp.Loggers.ServiceLogger.MakeSnapshot">
+            <inheritdoc/>
+        </member>
+        <member name="M:FileCabinetApp.Loggers.ServiceLogger.Purge">
+            <inheritdoc/>
+        </member>
+        <member name="M:FileCabinetApp.Loggers.ServiceLogger.RemoveRecord(System.Int32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:FileCabinetApp.Loggers.ServiceLogger.Restore(FileCabinetApp.Snapshots.FileCabinetServiceSnapshot)">
+            <inheritdoc/>
+        </member>
+        <member name="M:FileCabinetApp.Loggers.ServiceLogger.Dispose">
+            <inheritdoc/>
+        </member>
         <member name="T:FileCabinetApp.Options">
             <summary>
             Options for command line parser.
@@ -332,6 +379,18 @@
             Gets or sets property contains command line argument for storage.
             </summary>
             <value>Command line argument.</value>
+        </member>
+        <member name="P:FileCabinetApp.Options.Stopwatch">
+            <summary>
+            Gets or sets a value indicating whether gets or sets property contains command line argument for measuring runtime.
+            </summary>
+            <value>True if use stopwatch.</value>
+        </member>
+        <member name="P:FileCabinetApp.Options.Log">
+            <summary>
+            Gets or sets a value indicating whether gets or sets property contains command line argument for using logger.
+            </summary>
+            <value>True if use logger.</value>
         </member>
         <member name="T:FileCabinetApp.Program">
             <summary>
@@ -473,6 +532,21 @@
               Ищет локализованную строку, похожую на There is an error in csv file.
             </summary>
         </member>
+        <member name="P:FileCabinetApp.res.createLog">
+            <summary>
+              Ищет локализованную строку, похожую на {0} - Calling Create() with FirstName = &apos;{1}&apos;, LastName = &apos;{2}&apos;, DateOfBirth = &apos;{3}&apos;, Sex = &apos;{4}&apos;, Weight = &apos;{5}&apos;, Height = &apos;{6}&apos;.
+            </summary>
+        </member>
+        <member name="P:FileCabinetApp.res.createResultLog">
+            <summary>
+              Ищет локализованную строку, похожую на {0} - Create() returned &apos;{1}&apos;.
+            </summary>
+        </member>
+        <member name="P:FileCabinetApp.res.createTime">
+            <summary>
+              Ищет локализованную строку, похожую на Create method execution duration is {0}..
+            </summary>
+        </member>
         <member name="P:FileCabinetApp.res.customRule">
             <summary>
               Ищет локализованную строку, похожую на Using custom validation rules..
@@ -496,6 +570,21 @@
         <member name="P:FileCabinetApp.res.developerNameMessage">
             <summary>
               Ищет локализованную строку, похожую на File Cabinet Application, developed by {0}.
+            </summary>
+        </member>
+        <member name="P:FileCabinetApp.res.editLog">
+            <summary>
+              Ищет локализованную строку, похожую на {0} - Calling Edit() with Id = &apos;{1}&apos;, FirstName = &apos;{2}&apos;, LastName = &apos;{3}&apos;, DateOfBirth = &apos;{4}&apos;, Sex = &apos;{5}&apos;, Weight = &apos;{6}&apos;, Height = &apos;{7}&apos;.
+            </summary>
+        </member>
+        <member name="P:FileCabinetApp.res.editResultLog">
+            <summary>
+              Ищет локализованную строку, похожую на {0} - Edit() completed.
+            </summary>
+        </member>
+        <member name="P:FileCabinetApp.res.editTime">
+            <summary>
+              Ищет локализованную строку, похожую на Edit method execution duration is {0}..
             </summary>
         </member>
         <member name="P:FileCabinetApp.res.exitMessage">
@@ -533,6 +622,56 @@
               Ищет локализованную строку, похожую на Id,First Name,Last Name,Date of Birth,Sex,Weight,Height.
             </summary>
         </member>
+        <member name="P:FileCabinetApp.res.fileStorage">
+            <summary>
+              Ищет локализованную строку, похожую на Using file storage.
+            </summary>
+        </member>
+        <member name="P:FileCabinetApp.res.findDateLog">
+            <summary>
+              Ищет локализованную строку, похожую на {0} - Calling FindDate() with DateOfBirth = &apos;{1}&apos;.
+            </summary>
+        </member>
+        <member name="P:FileCabinetApp.res.findDateResultLog">
+            <summary>
+              Ищет локализованную строку, похожую на {0} - FindDate() completed.
+            </summary>
+        </member>
+        <member name="P:FileCabinetApp.res.findDateTime">
+            <summary>
+              Ищет локализованную строку, похожую на FindDateOfBirth method execution duration is {0}..
+            </summary>
+        </member>
+        <member name="P:FileCabinetApp.res.findFirstNameLog">
+            <summary>
+              Ищет локализованную строку, похожую на {0} - Calling FindFirstName() with FirstName = &apos;{1}&apos;.
+            </summary>
+        </member>
+        <member name="P:FileCabinetApp.res.findFirstNameResultLog">
+            <summary>
+              Ищет локализованную строку, похожую на {0} - FindFirstName() completed.
+            </summary>
+        </member>
+        <member name="P:FileCabinetApp.res.findFirstNameTime">
+            <summary>
+              Ищет локализованную строку, похожую на FindFirstName method execution duration is {0}..
+            </summary>
+        </member>
+        <member name="P:FileCabinetApp.res.findLastNameLog">
+            <summary>
+              Ищет локализованную строку, похожую на {0} - Calling FindLastName() with LastName = &apos;{1}&apos;.
+            </summary>
+        </member>
+        <member name="P:FileCabinetApp.res.findLastNameResultLog">
+            <summary>
+              Ищет локализованную строку, похожую на {0} - FindLastName() completed.
+            </summary>
+        </member>
+        <member name="P:FileCabinetApp.res.findLastNameTime">
+            <summary>
+              Ищет локализованную строку, похожую на FindLastName method execution duration is {0}..
+            </summary>
+        </member>
         <member name="P:FileCabinetApp.res.firstNameException">
             <summary>
               Ищет локализованную строку, похожую на Not valid first name.
@@ -541,6 +680,36 @@
         <member name="P:FileCabinetApp.res.firstNameInputMessage">
             <summary>
               Ищет локализованную строку, похожую на First name: .
+            </summary>
+        </member>
+        <member name="P:FileCabinetApp.res.getRecordsLog">
+            <summary>
+              Ищет локализованную строку, похожую на {0} - Calling GetRecords().
+            </summary>
+        </member>
+        <member name="P:FileCabinetApp.res.getRecordsResultLog">
+            <summary>
+              Ищет локализованную строку, похожую на {0} - GetRecords() completed.
+            </summary>
+        </member>
+        <member name="P:FileCabinetApp.res.getRecordsTime">
+            <summary>
+              Ищет локализованную строку, похожую на GetRecords method execution duration is {0}..
+            </summary>
+        </member>
+        <member name="P:FileCabinetApp.res.getStatLog">
+            <summary>
+              Ищет локализованную строку, похожую на {0} - Calling GetStat().
+            </summary>
+        </member>
+        <member name="P:FileCabinetApp.res.getStatResultLog">
+            <summary>
+              Ищет локализованную строку, похожую на {0} - GetStat() completed.
+            </summary>
+        </member>
+        <member name="P:FileCabinetApp.res.getStatTime">
+            <summary>
+              Ищет локализованную строку, похожую на GetStat method execution duration is {0}..
             </summary>
         </member>
         <member name="P:FileCabinetApp.res.heightException">
@@ -598,6 +767,11 @@
               Ищет локализованную строку, похожую на Invalid input: {0}..
             </summary>
         </member>
+        <member name="P:FileCabinetApp.res.invalidJsonData">
+            <summary>
+              Ищет локализованную строку, похожую на Invalid configuration data.
+            </summary>
+        </member>
         <member name="P:FileCabinetApp.res.invalidRule">
             <summary>
               Ищет локализованную строку, похожую на Not valid rule.
@@ -618,9 +792,29 @@
               Ищет локализованную строку, похожую на Last name: .
             </summary>
         </member>
+        <member name="P:FileCabinetApp.res.makeSnapshotLog">
+            <summary>
+              Ищет локализованную строку, похожую на {0} - Calling MakeSnapshot().
+            </summary>
+        </member>
+        <member name="P:FileCabinetApp.res.makeSnapshotResultLog">
+            <summary>
+              Ищет локализованную строку, похожую на {0} - MakeSnapshot() completed.
+            </summary>
+        </member>
+        <member name="P:FileCabinetApp.res.makeSnapshotTime">
+            <summary>
+              Ищет локализованную строку, похожую на MakeSnapshot method execution duration is {0}..
+            </summary>
+        </member>
         <member name="P:FileCabinetApp.res.memoryStorage">
             <summary>
               Ищет локализованную строку, похожую на Using memory storage.
+            </summary>
+        </member>
+        <member name="P:FileCabinetApp.res.missingJsonFile">
+            <summary>
+              Ищет локализованную строку, похожую на Configuration file not found.
             </summary>
         </member>
         <member name="P:FileCabinetApp.res.noExplanationMessage">
@@ -643,6 +837,21 @@
               Ищет локализованную строку, похожую на &gt; .
             </summary>
         </member>
+        <member name="P:FileCabinetApp.res.purgeLog">
+            <summary>
+              Ищет локализованную строку, похожую на {0} - Calling Purge().
+            </summary>
+        </member>
+        <member name="P:FileCabinetApp.res.purgeResultLog">
+            <summary>
+              Ищет локализованную строку, похожую на {0} - Purge() completed.
+            </summary>
+        </member>
+        <member name="P:FileCabinetApp.res.purgeTime">
+            <summary>
+              Ищет локализованную строку, похожую на Purge method execution duration is {0}..
+            </summary>
+        </member>
         <member name="P:FileCabinetApp.res.recordCreateMessage">
             <summary>
               Ищет локализованную строку, похожую на Record #{0} is created..
@@ -658,9 +867,44 @@
               Ищет локализованную строку, похожую на Record #{0} is updated..
             </summary>
         </member>
+        <member name="P:FileCabinetApp.res.removeFailedResultLog">
+            <summary>
+              Ищет локализованную строку, похожую на {0} - Remove() failed. Record with Id = &apos;{1}&apos; is missing.
+            </summary>
+        </member>
+        <member name="P:FileCabinetApp.res.removeLog">
+            <summary>
+              Ищет локализованную строку, похожую на {0} - Calling Remove() with Id = &apos;{1}&apos;.
+            </summary>
+        </member>
+        <member name="P:FileCabinetApp.res.removeResultLog">
+            <summary>
+              Ищет локализованную строку, похожую на {0} - Remove() completed.
+            </summary>
+        </member>
         <member name="P:FileCabinetApp.res.removeSuccess">
             <summary>
               Ищет локализованную строку, похожую на Record #{0} is removed..
+            </summary>
+        </member>
+        <member name="P:FileCabinetApp.res.removeTime">
+            <summary>
+              Ищет локализованную строку, похожую на Remove method execution duration is {0}..
+            </summary>
+        </member>
+        <member name="P:FileCabinetApp.res.restoreLog">
+            <summary>
+              Ищет локализованную строку, похожую на {0} - Calling Restore().
+            </summary>
+        </member>
+        <member name="P:FileCabinetApp.res.restoreResultLog">
+            <summary>
+              Ищет локализованную строку, похожую на {0} - Restore() completed.
+            </summary>
+        </member>
+        <member name="P:FileCabinetApp.res.restoreTime">
+            <summary>
+              Ищет локализованную строку, похожую на Restore method execution duration is {0}..
             </summary>
         </member>
         <member name="P:FileCabinetApp.res.sexException">
@@ -974,6 +1218,50 @@
             <param name="snapshot">Service status.</param>
             <returns>Number of stored records.</returns>
         </member>
+        <member name="T:FileCabinetApp.Services.ServiceMeter">
+            <summary>
+            Service meter.
+            </summary>
+        </member>
+        <member name="M:FileCabinetApp.Services.ServiceMeter.#ctor(FileCabinetApp.Services.IFileCabinetService)">
+            <summary>
+            Initializes a new instance of the <see cref="T:FileCabinetApp.Services.ServiceMeter"/> class.
+            </summary>
+            <param name="service">Source service.</param>
+        </member>
+        <member name="M:FileCabinetApp.Services.ServiceMeter.MakeSnapshot">
+            <inheritdoc/>
+        </member>
+        <member name="M:FileCabinetApp.Services.ServiceMeter.CreateRecord(System.Int16,System.Decimal,System.Char,System.String,System.String,System.DateTime)">
+            <inheritdoc/>
+        </member>
+        <member name="M:FileCabinetApp.Services.ServiceMeter.RemoveRecord(System.Int32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:FileCabinetApp.Services.ServiceMeter.Purge">
+            <inheritdoc/>
+        </member>
+        <member name="M:FileCabinetApp.Services.ServiceMeter.EditRecord(System.Int32,System.String,System.String,System.DateTime,System.Char,System.Int16,System.Decimal)">
+            <inheritdoc/>
+        </member>
+        <member name="M:FileCabinetApp.Services.ServiceMeter.FindByFirstName(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:FileCabinetApp.Services.ServiceMeter.FindByLastName(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:FileCabinetApp.Services.ServiceMeter.FindByDateOfBirth(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:FileCabinetApp.Services.ServiceMeter.GetRecords">
+            <inheritdoc/>
+        </member>
+        <member name="M:FileCabinetApp.Services.ServiceMeter.GetStat">
+            <inheritdoc/>
+        </member>
+        <member name="M:FileCabinetApp.Services.ServiceMeter.Restore(FileCabinetApp.Snapshots.FileCabinetServiceSnapshot)">
+            <inheritdoc/>
+        </member>
         <member name="T:FileCabinetApp.Snapshots.FileCabinetServiceSnapshot">
             <summary>
             Class to work with service status.
@@ -1092,18 +1380,6 @@
             <param name="height">Person height.</param>
             <returns>True if first name complies with the rules, false if not.</returns>
         </member>
-        <member name="T:FileCabinetApp.Validators.CustomValidator">
-            <summary>
-            Validator with custom rules.
-            </summary>
-        </member>
-        <member name="M:FileCabinetApp.Validators.CustomValidator.CreateCustom(FileCabinetApp.Validators.ValidatorBuilder)">
-            <summary>
-            Creates new composite validator with custom rules.
-            </summary>
-            <param name="validatorBuilder">Source builder.</param>
-            <returns>New composite validator.</returns>
-        </member>
         <member name="T:FileCabinetApp.Validators.DefaultInputValidator">
             <summary>
             Validator with default rules.
@@ -1156,11 +1432,12 @@
             Validator with default rules.
             </summary>
         </member>
-        <member name="M:FileCabinetApp.Validators.DefaultValidator.CreateDefault(FileCabinetApp.Validators.ValidatorBuilder)">
+        <member name="M:FileCabinetApp.Validators.DefaultValidator.CreateValidator(FileCabinetApp.Validators.ValidatorBuilder,Microsoft.Extensions.Configuration.IConfiguration)">
             <summary>
             Creates new composite validator with default rules.
             </summary>
             <param name="validatorBuilder">Source builder.</param>
+            <param name="configuration">Source configuration.</param>
             <returns>New composite validator.</returns>
         </member>
         <member name="T:FileCabinetApp.Validators.FieldValidators.DateValidator">

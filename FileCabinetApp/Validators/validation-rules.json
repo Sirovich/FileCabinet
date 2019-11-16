@@ -1,0 +1,55 @@
+{
+	"default": {
+		"firstName": {
+			"min": 2,
+			"max": 60
+		},
+		"lastName": {
+			"min": 2,
+			"max": 60
+		},
+		"dateOfBirth": {
+			"from": "01/01/1950",
+			"to": "15/11/2019"
+		},
+		"Sex": {
+			"from": " ",
+			"to": " "
+		},
+		"weight": {
+			"min": 0,
+			"max": 5000
+		},
+		"height": {
+			"min": 0,
+			"max": 5000
+		}
+
+	},
+	"custom": {
+		"firstName": {
+			"min": 3,
+			"max": 70
+		},
+		"lastName": {
+			"min": 3,
+			"max": 70
+		},
+		"dateOfBirth": {
+			"from": "25/03/1918",
+			"to": "15/11/2019"
+		},
+		"Sex": {
+			"from": "F",
+			"to": "F"
+		},
+		"weight": {
+			"min": 60,
+			"max": 5000
+		},
+		"height": {
+			"min": 146,
+			"max": 5000
+		}
+	}
+}

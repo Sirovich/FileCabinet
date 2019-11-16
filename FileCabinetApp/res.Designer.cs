@@ -79,6 +79,33 @@ namespace FileCabinetApp {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на {0} - Calling Create() with FirstName = &apos;{1}&apos;, LastName = &apos;{2}&apos;, DateOfBirth = &apos;{3}&apos;, Sex = &apos;{4}&apos;, Weight = &apos;{5}&apos;, Height = &apos;{6}&apos;.
+        /// </summary>
+        internal static string createLog {
+            get {
+                return ResourceManager.GetString("createLog", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на {0} - Create() returned &apos;{1}&apos;.
+        /// </summary>
+        internal static string createResultLog {
+            get {
+                return ResourceManager.GetString("createResultLog", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Create method execution duration is {0}..
+        /// </summary>
+        internal static string createTime {
+            get {
+                return ResourceManager.GetString("createTime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Using custom validation rules..
         /// </summary>
         internal static string customRule {
@@ -120,6 +147,33 @@ namespace FileCabinetApp {
         internal static string developerNameMessage {
             get {
                 return ResourceManager.GetString("developerNameMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на {0} - Calling Edit() with Id = &apos;{1}&apos;, FirstName = &apos;{2}&apos;, LastName = &apos;{3}&apos;, DateOfBirth = &apos;{4}&apos;, Sex = &apos;{5}&apos;, Weight = &apos;{6}&apos;, Height = &apos;{7}&apos;.
+        /// </summary>
+        internal static string editLog {
+            get {
+                return ResourceManager.GetString("editLog", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на {0} - Edit() completed.
+        /// </summary>
+        internal static string editResultLog {
+            get {
+                return ResourceManager.GetString("editResultLog", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Edit method execution duration is {0}..
+        /// </summary>
+        internal static string editTime {
+            get {
+                return ResourceManager.GetString("editTime", resourceCulture);
             }
         }
         
@@ -187,6 +241,96 @@ namespace FileCabinetApp {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Using file storage.
+        /// </summary>
+        internal static string fileStorage {
+            get {
+                return ResourceManager.GetString("fileStorage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на {0} - Calling FindDate() with DateOfBirth = &apos;{1}&apos;.
+        /// </summary>
+        internal static string findDateLog {
+            get {
+                return ResourceManager.GetString("findDateLog", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на {0} - FindDate() completed.
+        /// </summary>
+        internal static string findDateResultLog {
+            get {
+                return ResourceManager.GetString("findDateResultLog", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на FindDateOfBirth method execution duration is {0}..
+        /// </summary>
+        internal static string findDateTime {
+            get {
+                return ResourceManager.GetString("findDateTime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на {0} - Calling FindFirstName() with FirstName = &apos;{1}&apos;.
+        /// </summary>
+        internal static string findFirstNameLog {
+            get {
+                return ResourceManager.GetString("findFirstNameLog", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на {0} - FindFirstName() completed.
+        /// </summary>
+        internal static string findFirstNameResultLog {
+            get {
+                return ResourceManager.GetString("findFirstNameResultLog", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на FindFirstName method execution duration is {0}..
+        /// </summary>
+        internal static string findFirstNameTime {
+            get {
+                return ResourceManager.GetString("findFirstNameTime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на {0} - Calling FindLastName() with LastName = &apos;{1}&apos;.
+        /// </summary>
+        internal static string findLastNameLog {
+            get {
+                return ResourceManager.GetString("findLastNameLog", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на {0} - FindLastName() completed.
+        /// </summary>
+        internal static string findLastNameResultLog {
+            get {
+                return ResourceManager.GetString("findLastNameResultLog", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на FindLastName method execution duration is {0}..
+        /// </summary>
+        internal static string findLastNameTime {
+            get {
+                return ResourceManager.GetString("findLastNameTime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Not valid first name.
         /// </summary>
         internal static string firstNameException {
@@ -201,6 +345,60 @@ namespace FileCabinetApp {
         internal static string firstNameInputMessage {
             get {
                 return ResourceManager.GetString("firstNameInputMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на {0} - Calling GetRecords().
+        /// </summary>
+        internal static string getRecordsLog {
+            get {
+                return ResourceManager.GetString("getRecordsLog", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на {0} - GetRecords() completed.
+        /// </summary>
+        internal static string getRecordsResultLog {
+            get {
+                return ResourceManager.GetString("getRecordsResultLog", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на GetRecords method execution duration is {0}..
+        /// </summary>
+        internal static string getRecordsTime {
+            get {
+                return ResourceManager.GetString("getRecordsTime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на {0} - Calling GetStat().
+        /// </summary>
+        internal static string getStatLog {
+            get {
+                return ResourceManager.GetString("getStatLog", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на {0} - GetStat() completed.
+        /// </summary>
+        internal static string getStatResultLog {
+            get {
+                return ResourceManager.GetString("getStatResultLog", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на GetStat method execution duration is {0}..
+        /// </summary>
+        internal static string getStatTime {
+            get {
+                return ResourceManager.GetString("getStatTime", resourceCulture);
             }
         }
         
@@ -304,6 +502,15 @@ namespace FileCabinetApp {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Invalid configuration data.
+        /// </summary>
+        internal static string invalidJsonData {
+            get {
+                return ResourceManager.GetString("invalidJsonData", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Not valid rule.
         /// </summary>
         internal static string invalidRule {
@@ -340,11 +547,47 @@ namespace FileCabinetApp {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на {0} - Calling MakeSnapshot().
+        /// </summary>
+        internal static string makeSnapshotLog {
+            get {
+                return ResourceManager.GetString("makeSnapshotLog", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на {0} - MakeSnapshot() completed.
+        /// </summary>
+        internal static string makeSnapshotResultLog {
+            get {
+                return ResourceManager.GetString("makeSnapshotResultLog", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на MakeSnapshot method execution duration is {0}..
+        /// </summary>
+        internal static string makeSnapshotTime {
+            get {
+                return ResourceManager.GetString("makeSnapshotTime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Using memory storage.
         /// </summary>
         internal static string memoryStorage {
             get {
                 return ResourceManager.GetString("memoryStorage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Configuration file not found.
+        /// </summary>
+        internal static string missingJsonFile {
+            get {
+                return ResourceManager.GetString("missingJsonFile", resourceCulture);
             }
         }
         
@@ -385,6 +628,33 @@ namespace FileCabinetApp {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на {0} - Calling Purge().
+        /// </summary>
+        internal static string purgeLog {
+            get {
+                return ResourceManager.GetString("purgeLog", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на {0} - Purge() completed.
+        /// </summary>
+        internal static string purgeResultLog {
+            get {
+                return ResourceManager.GetString("purgeResultLog", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Purge method execution duration is {0}..
+        /// </summary>
+        internal static string purgeTime {
+            get {
+                return ResourceManager.GetString("purgeTime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Record #{0} is created..
         /// </summary>
         internal static string recordCreateMessage {
@@ -412,11 +682,74 @@ namespace FileCabinetApp {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на {0} - Remove() failed. Record with Id = &apos;{1}&apos; is missing.
+        /// </summary>
+        internal static string removeFailedResultLog {
+            get {
+                return ResourceManager.GetString("removeFailedResultLog", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на {0} - Calling Remove() with Id = &apos;{1}&apos;.
+        /// </summary>
+        internal static string removeLog {
+            get {
+                return ResourceManager.GetString("removeLog", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на {0} - Remove() completed.
+        /// </summary>
+        internal static string removeResultLog {
+            get {
+                return ResourceManager.GetString("removeResultLog", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Record #{0} is removed..
         /// </summary>
         internal static string removeSuccess {
             get {
                 return ResourceManager.GetString("removeSuccess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Remove method execution duration is {0}..
+        /// </summary>
+        internal static string removeTime {
+            get {
+                return ResourceManager.GetString("removeTime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на {0} - Calling Restore().
+        /// </summary>
+        internal static string restoreLog {
+            get {
+                return ResourceManager.GetString("restoreLog", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на {0} - Restore() completed.
+        /// </summary>
+        internal static string restoreResultLog {
+            get {
+                return ResourceManager.GetString("restoreResultLog", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Restore method execution duration is {0}..
+        /// </summary>
+        internal static string restoreTime {
+            get {
+                return ResourceManager.GetString("restoreTime", resourceCulture);
             }
         }
         

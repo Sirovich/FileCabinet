@@ -68,7 +68,8 @@ namespace FileCabinetApp.Services
 
             if (!this.recordValidator.ValidateParameters(temp).Item1)
             {
-                throw new ArgumentException(this.recordValidator.ValidateParameters(temp).Item2);
+                Console.WriteLine(this.recordValidator.ValidateParameters(temp).Item2);
+                return -1;
             }
 
             this.lastId++;
