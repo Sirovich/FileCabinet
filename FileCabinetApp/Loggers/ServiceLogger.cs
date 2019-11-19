@@ -29,19 +29,10 @@ namespace FileCabinetApp.Loggers
         }
 
         /// <inheritdoc/>
-        public int CreateRecord(short height, decimal weight, char sex, string firstName, string lastName, DateTime dateOfBirth)
-        {
-            this.writer.WriteLine(Source.Resource.GetString("createLog", CultureInfo.InvariantCulture), DateTime.Now, firstName, lastName, dateOfBirth, sex, weight, height);
-            var id = this.service.CreateRecord(height, weight, sex, firstName, lastName, dateOfBirth);
-            this.writer.WriteLine(Source.Resource.GetString("createResultLog", CultureInfo.InvariantCulture), DateTime.Now, id);
-            return id;
-        }
-
-        /// <inheritdoc/>
         public void EditRecord(int id, string firstName, string lastName, DateTime dateOfBirth, char sex, short height, decimal weight)
         {
             this.writer.WriteLine(Source.Resource.GetString("editLog", CultureInfo.InvariantCulture), DateTime.Now, firstName, lastName, dateOfBirth, sex, weight, height);
-            this.service.CreateRecord(height, weight, sex, firstName, lastName, dateOfBirth);
+            this.service.EditRecord(id, firstName, lastName, dateOfBirth, sex, height, weight);
             this.writer.WriteLine(Source.Resource.GetString("editResultLog", CultureInfo.InvariantCulture), DateTime.Now);
         }
 
@@ -137,6 +128,28 @@ namespace FileCabinetApp.Loggers
         public void Dispose()
         {
             this.writer.Close();
+        }
+
+        /// <inheritdoc/>
+        public bool Insert(FileCabinetRecord record)
+        {
+            if (record is null)
+            {
+                throw new ArgumentNullException(nameof(record));
+            }
+
+            this.writer.WriteLine(Source.Resource.GetString("insertLog", CultureInfo.InvariantCulture), DateTime.Now, record.Id, record.FirstName, record.LastName, record.Sex, record.Weight, record.Height);
+            var result = this.service.Insert(record);
+            if (result)
+            {
+                this.writer.WriteLine(Source.Resource.GetString("insertResultLog", CultureInfo.InvariantCulture), DateTime.Now);
+            }
+            else
+            {
+                this.writer.WriteLine(Source.Resource.GetString("insertFailedResultLog", CultureInfo.InvariantCulture), DateTime.Now);
+            }
+
+            return result;
         }
     }
 }

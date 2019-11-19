@@ -188,13 +188,13 @@ namespace FileCabinetApp
             var removeHandler = new RemoveCommandHandler(fileCabinetService);
             var statHandler = new StatCommandHandler(fileCabinetService);
             var exitHandler = new ExitCommandHandler(IsRunning);
-            var createHandler = new CreateCommandHandler(inputValidator, fileCabinetService);
+            var insertHandler = new InsertCommandHandler(recordValidator, fileCabinetService);
             var editHandler = new EditCommandHandler(inputValidator, fileCabinetService);
 
             helpHandler.SetNext(importHandler).SetNext(exportHandler).
                 SetNext(findHandler).SetNext(listHandler).SetNext(purgeHandler).
                 SetNext(removeHandler).SetNext(statHandler).SetNext(exitHandler).
-                SetNext(createHandler).SetNext(editHandler);
+                SetNext(insertHandler).SetNext(editHandler);
 
             return helpHandler;
         }

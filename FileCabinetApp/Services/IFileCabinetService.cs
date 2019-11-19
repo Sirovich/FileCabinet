@@ -19,15 +19,9 @@ namespace FileCabinetApp.Services
         /// <summary>
         /// Creates new record.
         /// </summary>
-        /// <exception cref="ArgumentException">Throws when any value does not meet the requirements.</exception>
-        /// <param name="height">Persong height.</param>
-        /// <param name="weight">Person weight.</param>
-        /// <param name="sex">Sex of a person.</param>
-        /// <param name="firstName">Person first name.</param>
-        /// <param name="lastName">Person last name.</param>
-        /// <param name="dateOfBirth">Person date of birth.</param>
-        /// <returns>Id of created record.</returns>
-        int CreateRecord(short height, decimal weight, char sex, string firstName, string lastName, DateTime dateOfBirth);
+        /// <param name="record">Source record.</param>
+        /// <returns>True if complete.</returns>
+        bool Insert(FileCabinetRecord record);
 
         /// <summary>
         /// Remove record.

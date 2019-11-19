@@ -41,57 +41,13 @@ namespace FileCabinetApp.Services
             this.maxId = 0;
         }
 
-        /// <summary>
-        /// Captures the status of the service.
-        /// </summary>
-        /// <returns>Returns snapshot.</returns>
+        /// <inheritdoc/>
         public FileCabinetServiceSnapshot MakeSnapshot()
         {
             return new FileCabinetServiceSnapshot(this.list.ToArray());
         }
 
-        /// <summary>
-        /// Creates new record.
-        /// </summary>
-        /// <exception cref="ArgumentException">Throws when any value does not meet the requirements.</exception>
-        /// <param name="height">Persong height.</param>
-        /// <param name="weight">Person weight.</param>
-        /// <param name="sex">Sex of a person.</param>
-        /// <param name="firstName">Person first name.</param>
-        /// <param name="lastName">Person last name.</param>
-        /// <param name="dateOfBirth">Person date of birth.</param>
-        /// <returns>Id of created record.</returns>
-        public int CreateRecord(short height, decimal weight, char sex, string firstName, string lastName, DateTime dateOfBirth)
-        {
-            var temp = new FileCabinetRecord
-            {
-                Id = this.maxId,
-                Sex = sex,
-                Weight = weight,
-                Height = height,
-                FirstName = firstName,
-                LastName = lastName,
-                DateOfBirth = dateOfBirth,
-            };
-
-            if (!this.recordValidator.ValidateParameters(temp).Item1)
-            {
-                throw new ArgumentException(this.recordValidator.ValidateParameters(temp).Item2);
-            }
-
-            this.idсache.Add(temp.Id);
-            var record = temp;
-            this.AddToDictionaries(record);
-            this.list.Add(record);
-
-            return record.Id;
-        }
-
-        /// <summary>
-        /// Remove record.
-        /// </summary>
-        /// <param name="id">Source id.</param>
-        /// <returns>True if record with source id is exist.</returns>
+        /// <inheritdoc/>
         public bool RemoveRecord(int id)
         {
             FileCabinetRecord temp = null;
@@ -116,17 +72,7 @@ namespace FileCabinetApp.Services
             return false;
         }
 
-        /// <summary>
-        /// Edits an existing record.
-        /// </summary>
-        /// <exception cref="ArgumentException">Throws when record with this id does not exist.</exception>
-        /// <param name="id">Existing record id.</param>
-        /// <param name="firstName">New first name of person.</param>
-        /// <param name="lastName">New last name of person.</param>
-        /// <param name="dateOfBirth">New date of birth of person.</param>
-        /// <param name="sex">New sex of a person.</param>
-        /// <param name="height">New height of person.</param>
-        /// <param name="weight">New weight of person.</param>
+        /// <inheritdoc/>
         public void EditRecord(int id, string firstName, string lastName, DateTime dateOfBirth, char sex, short height, decimal weight)
         {
             var temp = new FileCabinetRecord
@@ -164,11 +110,7 @@ namespace FileCabinetApp.Services
             throw new ArgumentException($"{id} record is not found.");
         }
 
-        /// <summary>
-        /// Finds all records with this first name.
-        /// </summary>
-        /// <param name="firstName">First name to search.</param>
-        /// <returns>Array of records with this first name.</returns>
+        /// <inheritdoc/>
         public IEnumerable<FileCabinetRecord> FindByFirstName(string firstName)
         {
             if (this.firstNameDictionary.ContainsKey(firstName))
@@ -196,11 +138,7 @@ namespace FileCabinetApp.Services
             }
         }
 
-        /// <summary>
-        /// Finds all records with this date of birth.
-        /// </summary>
-        /// <param name="dateOfBirth">Date of birth to search.</param>
-        /// <returns>Array of records with this date of birth.</returns>
+        /// <inheritdoc/>
         public IEnumerable<FileCabinetRecord> FindByDateOfBirth(string dateOfBirth)
         {
             DateTime date = default;
@@ -216,10 +154,7 @@ namespace FileCabinetApp.Services
             }
         }
 
-        /// <summary>
-        /// Gets array of records.
-        /// </summary>
-        /// <returns>Array of records.</returns>
+        /// <inheritdoc/>
         public ReadOnlyCollection<FileCabinetRecord> GetRecords()
         {
             return new ReadOnlyCollection<FileCabinetRecord>(this.list);
@@ -234,11 +169,7 @@ namespace FileCabinetApp.Services
             return this.list.Count;
         }
 
-        /// <summary>
-        /// Import records from file.
-        /// </summary>
-        /// <param name="snapshot">Source snapshot.</param>
-        /// <returns>Number of stored.</returns>
+        /// <inheritdoc/>
         public int Restore(FileCabinetServiceSnapshot snapshot)
         {
             if (snapshot is null || snapshot.Records is null)
@@ -287,12 +218,35 @@ namespace FileCabinetApp.Services
             return count;
         }
 
-        /// <summary>
-        /// Do defragmetation.
-        /// </summary>
+        /// <inheritdoc/>
         public void Purge()
         {
             return;
+        }
+
+        /// <inheritdoc/>
+        public bool Insert(FileCabinetRecord record)
+        {
+            if (record is null)
+            {
+                throw new ArgumentNullException(nameof(record));
+            }
+
+            if (!this.recordValidator.ValidateParameters(record).Item1)
+            {
+                Console.WriteLine(this.recordValidator.ValidateParameters(record).Item2);
+                return false;
+            }
+
+            if (this.idсache.Contains(record.Id))
+            {
+                Console.WriteLine(Source.Resource.GetString("idAlreadyExists", CultureInfo.InvariantCulture));
+                return false;
+            }
+
+            this.list.Add(record);
+            this.idсache.Add(record.Id);
+            return true;
         }
 
         private void RemoveRecordFromDictionaries(FileCabinetRecord record)

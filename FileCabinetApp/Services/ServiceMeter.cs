@@ -34,15 +34,6 @@ namespace FileCabinetApp.Services
         }
 
         /// <inheritdoc/>
-        public int CreateRecord(short height, decimal weight, char sex, string firstName, string lastName, DateTime dateOfBirth)
-        {
-            var watch = Stopwatch.StartNew();
-            int id = this.service.CreateRecord(height, weight, sex, firstName, lastName, dateOfBirth);
-            this.ShowTime(Source.Resource.GetString("createTime", CultureInfo.InvariantCulture), watch.ElapsedTicks);
-            return id;
-        }
-
-        /// <inheritdoc/>
         public bool RemoveRecord(int id)
         {
             var watch = Stopwatch.StartNew();
@@ -109,6 +100,15 @@ namespace FileCabinetApp.Services
             var watch = Stopwatch.StartNew();
             var result = this.service.GetStat();
             this.ShowTime(Source.Resource.GetString("getStatTime", CultureInfo.InvariantCulture), watch.ElapsedTicks);
+            return result;
+        }
+
+        /// <inheritdoc/>
+        public bool Insert(FileCabinetRecord record)
+        {
+            var watch = Stopwatch.StartNew();
+            var result = this.service.Insert(record);
+            this.ShowTime(Source.Resource.GetString("insertTime", CultureInfo.InvariantCulture), watch.ElapsedTicks);
             return result;
         }
 

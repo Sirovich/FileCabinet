@@ -39,21 +39,6 @@
         <member name="M:FileCabinetApp.CommandHandlers.CommandHandlerBase.SetNext(FileCabinetApp.CommandHandlers.ICommandHandler)">
             <inheritdoc/>
         </member>
-        <member name="T:FileCabinetApp.CommandHandlers.Handlers.CreateCommandHandler">
-            <summary>
-            Command handler for create command.
-            </summary>
-        </member>
-        <member name="M:FileCabinetApp.CommandHandlers.Handlers.CreateCommandHandler.#ctor(FileCabinetApp.Validators.IInputValidator,FileCabinetApp.Services.IFileCabinetService)">
-            <summary>
-            Initializes a new instance of the <see cref="T:FileCabinetApp.CommandHandlers.Handlers.CreateCommandHandler"/> class.
-            </summary>
-            <param name="recordValidator">Source record validator.</param>
-            <param name="fileCabinetService">Source service.</param>
-        </member>
-        <member name="M:FileCabinetApp.CommandHandlers.Handlers.CreateCommandHandler.Handle(FileCabinetApp.CommandHandlers.AppCommandRequest)">
-            <inheritdoc/>
-        </member>
         <member name="T:FileCabinetApp.CommandHandlers.Handlers.EditCommandHandler">
             <summary>
             Command handler for edit.
@@ -132,6 +117,21 @@
             <param name="fileCabinetService">Source service.</param>
         </member>
         <member name="M:FileCabinetApp.CommandHandlers.Handlers.ImportCommandHandler.Handle(FileCabinetApp.CommandHandlers.AppCommandRequest)">
+            <inheritdoc/>
+        </member>
+        <member name="T:FileCabinetApp.CommandHandlers.Handlers.InsertCommandHandler">
+            <summary>
+            Command handler for insert.
+            </summary>
+        </member>
+        <member name="M:FileCabinetApp.CommandHandlers.Handlers.InsertCommandHandler.#ctor(FileCabinetApp.Validators.IRecordValidator,FileCabinetApp.Services.IFileCabinetService)">
+            <summary>
+            Initializes a new instance of the <see cref="T:FileCabinetApp.CommandHandlers.Handlers.InsertCommandHandler"/> class.
+            </summary>
+            <param name="recordValidator">Source record validator.</param>
+            <param name="fileCabinetService">Source service.</param>
+        </member>
+        <member name="M:FileCabinetApp.CommandHandlers.Handlers.InsertCommandHandler.Handle(FileCabinetApp.CommandHandlers.AppCommandRequest)">
             <inheritdoc/>
         </member>
         <member name="T:FileCabinetApp.CommandHandlers.Handlers.ListCommandHandler">
@@ -327,9 +327,6 @@
             </summary>
             <param name="service">Source service.</param>
         </member>
-        <member name="M:FileCabinetApp.Loggers.ServiceLogger.CreateRecord(System.Int16,System.Decimal,System.Char,System.String,System.String,System.DateTime)">
-            <inheritdoc/>
-        </member>
         <member name="M:FileCabinetApp.Loggers.ServiceLogger.EditRecord(System.Int32,System.String,System.String,System.DateTime,System.Char,System.Int16,System.Decimal)">
             <inheritdoc/>
         </member>
@@ -361,6 +358,9 @@
             <inheritdoc/>
         </member>
         <member name="M:FileCabinetApp.Loggers.ServiceLogger.Dispose">
+            <inheritdoc/>
+        </member>
+        <member name="M:FileCabinetApp.Loggers.ServiceLogger.Insert(FileCabinetApp.FileCabinetRecord)">
             <inheritdoc/>
         </member>
         <member name="T:FileCabinetApp.Options">
@@ -530,21 +530,6 @@
         <member name="P:FileCabinetApp.res.badCsvFile">
             <summary>
               Ищет локализованную строку, похожую на There is an error in csv file.
-            </summary>
-        </member>
-        <member name="P:FileCabinetApp.res.createLog">
-            <summary>
-              Ищет локализованную строку, похожую на {0} - Calling Create() with FirstName = &apos;{1}&apos;, LastName = &apos;{2}&apos;, DateOfBirth = &apos;{3}&apos;, Sex = &apos;{4}&apos;, Weight = &apos;{5}&apos;, Height = &apos;{6}&apos;.
-            </summary>
-        </member>
-        <member name="P:FileCabinetApp.res.createResultLog">
-            <summary>
-              Ищет локализованную строку, похожую на {0} - Create() returned &apos;{1}&apos;.
-            </summary>
-        </member>
-        <member name="P:FileCabinetApp.res.createTime">
-            <summary>
-              Ищет локализованную строку, похожую на Create method execution duration is {0}..
             </summary>
         </member>
         <member name="P:FileCabinetApp.res.customRule">
@@ -742,6 +727,11 @@
               Ищет локализованную строку, похожую на Enter your command, or enter &apos;help&apos; to get help..
             </summary>
         </member>
+        <member name="P:FileCabinetApp.res.idException">
+            <summary>
+              Ищет локализованную строку, похожую на Not valid id.
+            </summary>
+        </member>
         <member name="P:FileCabinetApp.res.importException">
             <summary>
               Ищет локализованную строку, похожую на Invalid parameters.
@@ -777,6 +767,31 @@
               Ищет локализованную строку, похожую на Unknown file format {0}.
             </summary>
         </member>
+        <member name="P:FileCabinetApp.res.insertFailedResultLog">
+            <summary>
+              Ищет локализованную строку, похожую на {0} - Insert() failed.
+            </summary>
+        </member>
+        <member name="P:FileCabinetApp.res.insertFormat">
+            <summary>
+              Ищет локализованную строку, похожую на Use &quot;insert (id, firstname, ...) values (1, 2, ...)&quot;.
+            </summary>
+        </member>
+        <member name="P:FileCabinetApp.res.insertLog">
+            <summary>
+              Ищет локализованную строку, похожую на {0} - Calling Insert() with FirstName = &apos;{1}&apos;, LastName = &apos;{2}&apos;, DateOfBirth = &apos;{3}&apos;, Sex = &apos;{4}&apos;, Weight = &apos;{5}&apos;, Height = &apos;{6}&apos;.
+            </summary>
+        </member>
+        <member name="P:FileCabinetApp.res.insertResultLog">
+            <summary>
+              Ищет локализованную строку, похожую на {0} - Insert() completed.
+            </summary>
+        </member>
+        <member name="P:FileCabinetApp.res.insertTime">
+            <summary>
+              Ищет локализованную строку, похожую на Insert method execution duration is {0}..
+            </summary>
+        </member>
         <member name="P:FileCabinetApp.res.invalidArgument">
             <summary>
               Ищет локализованную строку, похожую на Invalid argument..
@@ -785,6 +800,11 @@
         <member name="P:FileCabinetApp.res.invalidInputMessage">
             <summary>
               Ищет локализованную строку, похожую на Invalid input: {0}..
+            </summary>
+        </member>
+        <member name="P:FileCabinetApp.res.invalidInsertInput">
+            <summary>
+              Ищет локализованную строку, похожую на Invalid input format.
             </summary>
         </member>
         <member name="P:FileCabinetApp.res.invalidJsonData">
@@ -959,94 +979,41 @@
             <param name="fileStream">Source stream.</param>
             <param name="recordValidator">Source validator.</param>
         </member>
-        <member name="M:FileCabinetApp.Services.FileCabinetFilesystemService.CreateRecord(System.Int16,System.Decimal,System.Char,System.String,System.String,System.DateTime)">
-            <summary>
-            Creates new record.
-            </summary>
-            <exception cref="T:System.ArgumentException">Throws when any value does not meet the requirements.</exception>
-            <param name="height">Persong height.</param>
-            <param name="weight">Person weight.</param>
-            <param name="sex">Sex of a person.</param>
-            <param name="firstName">Person first name.</param>
-            <param name="lastName">Person last name.</param>
-            <param name="dateOfBirth">Person date of birth.</param>
-            <returns>Id of created record.</returns>
-        </member>
         <member name="M:FileCabinetApp.Services.FileCabinetFilesystemService.EditRecord(System.Int32,System.String,System.String,System.DateTime,System.Char,System.Int16,System.Decimal)">
-            <summary>
-            Edits an existing record.
-            </summary>
-            <exception cref="T:System.ArgumentException">Throws when record with this id does not exist.</exception>
-            <param name="id">Existing record id.</param>
-            <param name="firstName">New first name of person.</param>
-            <param name="lastName">New last name of person.</param>
-            <param name="dateOfBirth">New date of birth of person.</param>
-            <param name="sex">New sex of a person.</param>
-            <param name="height">New height of person.</param>
-            <param name="weight">New weight of person.</param>
+            <inheritdoc/>
         </member>
         <member name="M:FileCabinetApp.Services.FileCabinetFilesystemService.FindByDateOfBirth(System.String)">
-            <summary>
-            Finds all records with this date of birth.
-            </summary>
-            <param name="dateOfBirth">Date of birth to search.</param>
-            <returns>Array of records with this date of birth.</returns>
+            <inheritdoc/>
         </member>
         <member name="M:FileCabinetApp.Services.FileCabinetFilesystemService.FindByFirstName(System.String)">
-            <summary>
-            Finds all records with this first name.
-            </summary>
-            <param name="firstName">First name to search.</param>
-            <returns>Array of records with this first name.</returns>
+            <inheritdoc/>
         </member>
         <member name="M:FileCabinetApp.Services.FileCabinetFilesystemService.FindByLastName(System.String)">
-            <summary>
-            Finds all records with this last name.
-            </summary>
-            <param name="lastName">Last name to search.</param>
-            <returns>Array of records with this last name.</returns>
+            <inheritdoc/>
         </member>
         <member name="M:FileCabinetApp.Services.FileCabinetFilesystemService.GetRecords">
-            <summary>
-            Gets array of records.
-            </summary>
-            <returns>Array of records.</returns>
+            <inheritdoc/>
         </member>
         <member name="M:FileCabinetApp.Services.FileCabinetFilesystemService.GetStat">
-            <summary>
-            Gets count of records.
-            </summary>
-            <returns>Count of records.</returns>
+            <inheritdoc/>
         </member>
         <member name="M:FileCabinetApp.Services.FileCabinetFilesystemService.MakeSnapshot">
-            <summary>
-            Captures the status of the service.
-            </summary>
-            <returns>Returns snapshot.</returns>
+            <inheritdoc/>
         </member>
         <member name="M:FileCabinetApp.Services.FileCabinetFilesystemService.Dispose">
-            <summary>
-            Implementation of IDisposable interface.
-            </summary>
+            <inheritdoc/>
         </member>
         <member name="M:FileCabinetApp.Services.FileCabinetFilesystemService.Restore(FileCabinetApp.Snapshots.FileCabinetServiceSnapshot)">
-            <summary>
-            Restore records from snapshot.
-            </summary>
-            <param name="snapshot">Source snapshot.</param>
-            <returns>Number of imported records.</returns>
+            <inheritdoc/>
         </member>
         <member name="M:FileCabinetApp.Services.FileCabinetFilesystemService.RemoveRecord(System.Int32)">
-            <summary>
-            Remove record.
-            </summary>
-            <param name="id">Source id.</param>
-            <returns>True if record with source id is exist.</returns>
+            <inheritdoc/>
         </member>
         <member name="M:FileCabinetApp.Services.FileCabinetFilesystemService.Purge">
-            <summary>
-            Do defragmentation.
-            </summary>
+            <inheritdoc/>
+        </member>
+        <member name="M:FileCabinetApp.Services.FileCabinetFilesystemService.Insert(FileCabinetApp.FileCabinetRecord)">
+            <inheritdoc/>
         </member>
         <member name="M:FileCabinetApp.Services.FileCabinetFilesystemService.Dispose(System.Boolean)">
             <summary>
@@ -1066,50 +1033,16 @@
             <param name="recordValidator">Source validator.</param>
         </member>
         <member name="M:FileCabinetApp.Services.FileCabinetMemoryService.MakeSnapshot">
-            <summary>
-            Captures the status of the service.
-            </summary>
-            <returns>Returns snapshot.</returns>
-        </member>
-        <member name="M:FileCabinetApp.Services.FileCabinetMemoryService.CreateRecord(System.Int16,System.Decimal,System.Char,System.String,System.String,System.DateTime)">
-            <summary>
-            Creates new record.
-            </summary>
-            <exception cref="T:System.ArgumentException">Throws when any value does not meet the requirements.</exception>
-            <param name="height">Persong height.</param>
-            <param name="weight">Person weight.</param>
-            <param name="sex">Sex of a person.</param>
-            <param name="firstName">Person first name.</param>
-            <param name="lastName">Person last name.</param>
-            <param name="dateOfBirth">Person date of birth.</param>
-            <returns>Id of created record.</returns>
+            <inheritdoc/>
         </member>
         <member name="M:FileCabinetApp.Services.FileCabinetMemoryService.RemoveRecord(System.Int32)">
-            <summary>
-            Remove record.
-            </summary>
-            <param name="id">Source id.</param>
-            <returns>True if record with source id is exist.</returns>
+            <inheritdoc/>
         </member>
         <member name="M:FileCabinetApp.Services.FileCabinetMemoryService.EditRecord(System.Int32,System.String,System.String,System.DateTime,System.Char,System.Int16,System.Decimal)">
-            <summary>
-            Edits an existing record.
-            </summary>
-            <exception cref="T:System.ArgumentException">Throws when record with this id does not exist.</exception>
-            <param name="id">Existing record id.</param>
-            <param name="firstName">New first name of person.</param>
-            <param name="lastName">New last name of person.</param>
-            <param name="dateOfBirth">New date of birth of person.</param>
-            <param name="sex">New sex of a person.</param>
-            <param name="height">New height of person.</param>
-            <param name="weight">New weight of person.</param>
+            <inheritdoc/>
         </member>
         <member name="M:FileCabinetApp.Services.FileCabinetMemoryService.FindByFirstName(System.String)">
-            <summary>
-            Finds all records with this first name.
-            </summary>
-            <param name="firstName">First name to search.</param>
-            <returns>Array of records with this first name.</returns>
+            <inheritdoc/>
         </member>
         <member name="M:FileCabinetApp.Services.FileCabinetMemoryService.FindByLastName(System.String)">
             <summary>
@@ -1119,17 +1052,10 @@
             <returns>Array of records with this last name.</returns>
         </member>
         <member name="M:FileCabinetApp.Services.FileCabinetMemoryService.FindByDateOfBirth(System.String)">
-            <summary>
-            Finds all records with this date of birth.
-            </summary>
-            <param name="dateOfBirth">Date of birth to search.</param>
-            <returns>Array of records with this date of birth.</returns>
+            <inheritdoc/>
         </member>
         <member name="M:FileCabinetApp.Services.FileCabinetMemoryService.GetRecords">
-            <summary>
-            Gets array of records.
-            </summary>
-            <returns>Array of records.</returns>
+            <inheritdoc/>
         </member>
         <member name="M:FileCabinetApp.Services.FileCabinetMemoryService.GetStat">
             <summary>
@@ -1138,16 +1064,13 @@
             <returns>Count of records.</returns>
         </member>
         <member name="M:FileCabinetApp.Services.FileCabinetMemoryService.Restore(FileCabinetApp.Snapshots.FileCabinetServiceSnapshot)">
-            <summary>
-            Import records from file.
-            </summary>
-            <param name="snapshot">Source snapshot.</param>
-            <returns>Number of stored.</returns>
+            <inheritdoc/>
         </member>
         <member name="M:FileCabinetApp.Services.FileCabinetMemoryService.Purge">
-            <summary>
-            Do defragmetation.
-            </summary>
+            <inheritdoc/>
+        </member>
+        <member name="M:FileCabinetApp.Services.FileCabinetMemoryService.Insert(FileCabinetApp.FileCabinetRecord)">
+            <inheritdoc/>
         </member>
         <member name="T:FileCabinetApp.Services.IFileCabinetService">
             <summary>
@@ -1160,18 +1083,12 @@
             </summary>
             <returns>Returns snapshot.</returns>
         </member>
-        <member name="M:FileCabinetApp.Services.IFileCabinetService.CreateRecord(System.Int16,System.Decimal,System.Char,System.String,System.String,System.DateTime)">
+        <member name="M:FileCabinetApp.Services.IFileCabinetService.Insert(FileCabinetApp.FileCabinetRecord)">
             <summary>
             Creates new record.
             </summary>
-            <exception cref="T:System.ArgumentException">Throws when any value does not meet the requirements.</exception>
-            <param name="height">Persong height.</param>
-            <param name="weight">Person weight.</param>
-            <param name="sex">Sex of a person.</param>
-            <param name="firstName">Person first name.</param>
-            <param name="lastName">Person last name.</param>
-            <param name="dateOfBirth">Person date of birth.</param>
-            <returns>Id of created record.</returns>
+            <param name="record">Source record.</param>
+            <returns>True if complete.</returns>
         </member>
         <member name="M:FileCabinetApp.Services.IFileCabinetService.RemoveRecord(System.Int32)">
             <summary>
@@ -1252,9 +1169,6 @@
         <member name="M:FileCabinetApp.Services.ServiceMeter.MakeSnapshot">
             <inheritdoc/>
         </member>
-        <member name="M:FileCabinetApp.Services.ServiceMeter.CreateRecord(System.Int16,System.Decimal,System.Char,System.String,System.String,System.DateTime)">
-            <inheritdoc/>
-        </member>
         <member name="M:FileCabinetApp.Services.ServiceMeter.RemoveRecord(System.Int32)">
             <inheritdoc/>
         </member>
@@ -1277,6 +1191,9 @@
             <inheritdoc/>
         </member>
         <member name="M:FileCabinetApp.Services.ServiceMeter.GetStat">
+            <inheritdoc/>
+        </member>
+        <member name="M:FileCabinetApp.Services.ServiceMeter.Insert(FileCabinetApp.FileCabinetRecord)">
             <inheritdoc/>
         </member>
         <member name="M:FileCabinetApp.Services.ServiceMeter.Restore(FileCabinetApp.Snapshots.FileCabinetServiceSnapshot)">
@@ -1338,6 +1255,12 @@
             Gets resource manager.
             </summary>
             <value>Resource manager.</value>
+        </member>
+        <member name="P:FileCabinetApp.Source.FieldsCount">
+            <summary>
+            Gets count of fields.
+            </summary>
+            <value>Fields count.</value>
         </member>
         <member name="T:FileCabinetApp.Validators.CompositeValidator">
             <summary>

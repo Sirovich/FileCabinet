@@ -79,33 +79,6 @@ namespace FileCabinetApp {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на {0} - Calling Create() with FirstName = &apos;{1}&apos;, LastName = &apos;{2}&apos;, DateOfBirth = &apos;{3}&apos;, Sex = &apos;{4}&apos;, Weight = &apos;{5}&apos;, Height = &apos;{6}&apos;.
-        /// </summary>
-        internal static string createLog {
-            get {
-                return ResourceManager.GetString("createLog", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на {0} - Create() returned &apos;{1}&apos;.
-        /// </summary>
-        internal static string createResultLog {
-            get {
-                return ResourceManager.GetString("createResultLog", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Create method execution duration is {0}..
-        /// </summary>
-        internal static string createTime {
-            get {
-                return ResourceManager.GetString("createTime", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Ищет локализованную строку, похожую на Using custom validation rules..
         /// </summary>
         internal static string customRule {
@@ -457,6 +430,15 @@ namespace FileCabinetApp {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Not valid id.
+        /// </summary>
+        internal static string idException {
+            get {
+                return ResourceManager.GetString("idException", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Invalid parameters.
         /// </summary>
         internal static string importException {
@@ -520,6 +502,51 @@ namespace FileCabinetApp {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на {0} - Insert() failed.
+        /// </summary>
+        internal static string insertFailedResultLog {
+            get {
+                return ResourceManager.GetString("insertFailedResultLog", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Use &quot;insert (id, firstname, ...) values (1, 2, ...)&quot;.
+        /// </summary>
+        internal static string insertFormat {
+            get {
+                return ResourceManager.GetString("insertFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на {0} - Calling Insert() with FirstName = &apos;{1}&apos;, LastName = &apos;{2}&apos;, DateOfBirth = &apos;{3}&apos;, Sex = &apos;{4}&apos;, Weight = &apos;{5}&apos;, Height = &apos;{6}&apos;.
+        /// </summary>
+        internal static string insertLog {
+            get {
+                return ResourceManager.GetString("insertLog", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на {0} - Insert() completed.
+        /// </summary>
+        internal static string insertResultLog {
+            get {
+                return ResourceManager.GetString("insertResultLog", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Insert method execution duration is {0}..
+        /// </summary>
+        internal static string insertTime {
+            get {
+                return ResourceManager.GetString("insertTime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Invalid argument..
         /// </summary>
         internal static string invalidArgument {
@@ -534,6 +561,15 @@ namespace FileCabinetApp {
         internal static string invalidInputMessage {
             get {
                 return ResourceManager.GetString("invalidInputMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Invalid input format.
+        /// </summary>
+        internal static string invalidInsertInput {
+            get {
+                return ResourceManager.GetString("invalidInsertInput", resourceCulture);
             }
         }
         
