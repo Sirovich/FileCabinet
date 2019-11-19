@@ -223,6 +223,15 @@ namespace FileCabinetApp {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Unknown file format {0}.
+        /// </summary>
+        internal static string exportUnknownFormat {
+            get {
+                return ResourceManager.GetString("exportUnknownFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на File is exist - rewrite {0}? [Y/n].
         /// </summary>
         internal static string fileExistMessage {
@@ -237,6 +246,24 @@ namespace FileCabinetApp {
         internal static string fileHeader {
             get {
                 return ResourceManager.GetString("fileHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Create new file? (Y/N).
+        /// </summary>
+        internal static string fileNew {
+            get {
+                return ResourceManager.GetString("fileNew", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на File doesn&apos;t exists.
+        /// </summary>
+        internal static string fileNotFound {
+            get {
+                return ResourceManager.GetString("fileNotFound", resourceCulture);
             }
         }
         
@@ -466,7 +493,7 @@ namespace FileCabinetApp {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Use export *type of result file* *file name*.
+        ///   Ищет локализованную строку, похожую на Use import *type of import file* *file name*.
         /// </summary>
         internal static string importFormat {
             get {
@@ -480,6 +507,15 @@ namespace FileCabinetApp {
         internal static string importUnknownArgument {
             get {
                 return ResourceManager.GetString("importUnknownArgument", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Unknown file format {0}.
+        /// </summary>
+        internal static string importUnknownFormat {
+            get {
+                return ResourceManager.GetString("importUnknownFormat", resourceCulture);
             }
         }
         

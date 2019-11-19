@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using FileCabinetApp.Snapshots;
 
@@ -58,21 +59,21 @@ namespace FileCabinetApp.Services
         /// </summary>
         /// <param name="firstName">First name to search.</param>
         /// <returns>Array of records with this first name.</returns>
-        ReadOnlyCollection<FileCabinetRecord> FindByFirstName(string firstName);
+        IEnumerable<FileCabinetRecord> FindByFirstName(string firstName);
 
         /// <summary>
         /// Finds all records with this last name.
         /// </summary>
         /// <param name="lastName">Last name to search.</param>
         /// <returns>Array of records with this last name.</returns>
-        ReadOnlyCollection<FileCabinetRecord> FindByLastName(string lastName);
+        IEnumerable<FileCabinetRecord> FindByLastName(string lastName);
 
         /// <summary>
         /// Finds all records with this date of birth.
         /// </summary>
         /// <param name="dateOfBirth">Date of birth to search.</param>
         /// <returns>Array of records with this date of birth.</returns>
-        ReadOnlyCollection<FileCabinetRecord> FindByDateOfBirth(string dateOfBirth);
+        IEnumerable<FileCabinetRecord> FindByDateOfBirth(string dateOfBirth);
 
         /// <summary>
         /// Gets array of records.

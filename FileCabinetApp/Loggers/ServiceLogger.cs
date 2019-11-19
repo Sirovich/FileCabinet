@@ -46,7 +46,7 @@ namespace FileCabinetApp.Loggers
         }
 
         /// <inheritdoc/>
-        public ReadOnlyCollection<FileCabinetRecord> FindByDateOfBirth(string dateOfBirth)
+        public IEnumerable<FileCabinetRecord> FindByDateOfBirth(string dateOfBirth)
         {
             this.writer.WriteLine(Source.Resource.GetString("findDateLog", CultureInfo.InvariantCulture), DateTime.Now, dateOfBirth);
             var result = this.service.FindByDateOfBirth(dateOfBirth);
@@ -55,7 +55,7 @@ namespace FileCabinetApp.Loggers
         }
 
         /// <inheritdoc/>
-        public ReadOnlyCollection<FileCabinetRecord> FindByFirstName(string firstName)
+        public IEnumerable<FileCabinetRecord> FindByFirstName(string firstName)
         {
             this.writer.WriteLine(Source.Resource.GetString("findFirstNameLog", CultureInfo.InvariantCulture), DateTime.Now, firstName);
             var result = this.service.FindByFirstName(firstName);
@@ -64,7 +64,7 @@ namespace FileCabinetApp.Loggers
         }
 
         /// <inheritdoc/>
-        public ReadOnlyCollection<FileCabinetRecord> FindByLastName(string lastName)
+        public IEnumerable<FileCabinetRecord> FindByLastName(string lastName)
         {
             this.writer.WriteLine(Source.Resource.GetString("findLastNameLog", CultureInfo.InvariantCulture), DateTime.Now, lastName);
             var result = this.service.FindByLastName(lastName);

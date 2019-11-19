@@ -156,55 +156,47 @@ namespace FileCabinetApp.Services
         /// </summary>
         /// <param name="dateOfBirth">Date of birth to search.</param>
         /// <returns>Array of records with this date of birth.</returns>
-        public ReadOnlyCollection<FileCabinetRecord> FindByDateOfBirth(string dateOfBirth)
+        public IEnumerable<FileCabinetRecord> FindByDateOfBirth(string dateOfBirth)
         {
             DateTime date;
-            if (!DateTime.TryParse(dateOfBirth, out date))
+            if (DateTime.TryParse(dateOfBirth, out date))
             {
-                return null;
-            }
+                const int datePosition = ShortSize + IntSize + StringSize + StringSize;
+                int fileLength = Convert.ToInt32(this.fileReader.BaseStream.Length);
+                int localOffset = 0;
 
-            const int datePosition = ShortSize + IntSize + StringSize + StringSize;
-            int currentId = 1;
-            int fileLength = Convert.ToInt32(this.fileReader.BaseStream.Length);
-            int localOffset = 0;
-            var list = new List<FileCabinetRecord>();
+                int dayDefault = 1;
+                int monthDefault = 1;
+                int yearDefault = 0001;
 
-            int dayDefault = 1;
-            int monthDefault = 1;
-            int yearDefault = 0001;
-
-            while (localOffset < fileLength)
-            {
-                DateTime temp = new DateTime(yearDefault, monthDefault, dayDefault);
-                this.fileReader.BaseStream.Seek(localOffset, 0);
-
-                if (this.fileReader.ReadBoolean())
+                while (localOffset < fileLength)
                 {
+                    DateTime temp = new DateTime(yearDefault, monthDefault, dayDefault);
+                    this.fileReader.BaseStream.Seek(localOffset, 0);
+
+                    if (this.fileReader.ReadBoolean())
+                    {
+                        localOffset += RecordSize;
+                        continue;
+                    }
+
+                    this.fileReader.BaseStream.Seek(localOffset + datePosition, 0);
+                    int day = this.fileReader.ReadInt32();
+                    int month = this.fileReader.ReadInt32();
+                    int year = this.fileReader.ReadInt32();
+
+                    temp = temp.AddDays(day - 1);
+                    temp = temp.AddMonths(month - 1);
+                    temp = temp.AddYears(year - 1);
+
+                    if (DateTime.Compare(temp, date) == 0)
+                    {
+                        yield return this.GetRecord(localOffset);
+                    }
+
                     localOffset += RecordSize;
-                    continue;
                 }
-
-                this.fileReader.BaseStream.Seek(localOffset + ShortSize, 0);
-                currentId = this.fileReader.ReadInt32();
-                this.fileReader.BaseStream.Seek(localOffset + datePosition, 0);
-                int day = this.fileReader.ReadInt32();
-                int month = this.fileReader.ReadInt32();
-                int year = this.fileReader.ReadInt32();
-
-                temp = temp.AddDays(day - 1);
-                temp = temp.AddMonths(month - 1);
-                temp = temp.AddYears(year - 1);
-
-                if (DateTime.Compare(temp, date) == 0)
-                {
-                    list.Add(this.GetRecord(localOffset));
-                }
-
-                localOffset += RecordSize;
             }
-
-            return list.AsReadOnly();
         }
 
         /// <summary>
@@ -212,13 +204,10 @@ namespace FileCabinetApp.Services
         /// </summary>
         /// <param name="firstName">First name to search.</param>
         /// <returns>Array of records with this first name.</returns>
-        public ReadOnlyCollection<FileCabinetRecord> FindByFirstName(string firstName)
+        public IEnumerable<FileCabinetRecord> FindByFirstName(string firstName)
         {
-            int currentId;
             int fileLength = Convert.ToInt32(this.fileReader.BaseStream.Length);
             int localOffset = 0;
-            var list = new List<FileCabinetRecord>();
-            string temp = null;
 
             while (localOffset < fileLength)
             {
@@ -230,19 +219,15 @@ namespace FileCabinetApp.Services
                     continue;
                 }
 
-                this.fileReader.BaseStream.Seek(localOffset + ShortSize, 0);
-                currentId = this.fileReader.ReadInt32();
-                temp = this.fileReader.ReadString();
+                this.fileReader.BaseStream.Seek(localOffset + ShortSize + IntSize, 0);
 
-                if (temp.Equals(firstName, StringComparison.InvariantCultureIgnoreCase))
+                if (this.fileReader.ReadString().Equals(firstName, StringComparison.InvariantCultureIgnoreCase))
                 {
-                    list.Add(this.GetRecord(localOffset));
+                    yield return this.GetRecord(localOffset);
                 }
 
                 localOffset += RecordSize;
             }
-
-            return list.AsReadOnly();
         }
 
         /// <summary>
@@ -250,14 +235,11 @@ namespace FileCabinetApp.Services
         /// </summary>
         /// <param name="lastName">Last name to search.</param>
         /// <returns>Array of records with this last name.</returns>
-        public ReadOnlyCollection<FileCabinetRecord> FindByLastName(string lastName)
+        public IEnumerable<FileCabinetRecord> FindByLastName(string lastName)
         {
             const int lastNamePosition = ShortSize + IntSize + StringSize;
-            int currentId;
             int fileLength = Convert.ToInt32(this.fileReader.BaseStream.Length);
             int localOffset = 0;
-            var list = new List<FileCabinetRecord>();
-            string temp = null;
 
             while (localOffset < fileLength)
             {
@@ -269,19 +251,14 @@ namespace FileCabinetApp.Services
                     continue;
                 }
 
-                this.fileReader.BaseStream.Seek(localOffset + ShortSize, 0);
-                currentId = this.fileReader.ReadInt32();
                 this.fileReader.BaseStream.Seek(localOffset + lastNamePosition, 0);
-                temp = this.fileReader.ReadString();
-                if (temp.Equals(lastName, StringComparison.InvariantCultureIgnoreCase))
+                if (this.fileReader.ReadString().Equals(lastName, StringComparison.InvariantCultureIgnoreCase))
                 {
-                    list.Add(this.GetRecord(localOffset));
+                    yield return this.GetRecord(localOffset);
                 }
 
                 localOffset += RecordSize;
             }
-
-            return list.AsReadOnly();
         }
 
         /// <summary>

@@ -103,6 +103,10 @@ namespace FileCabinetApp.CommandHandlers.Handlers
                         Console.WriteLine(Source.Resource.GetString("exportFileComplete", CultureInfo.InvariantCulture), arguments[pathIndex]);
                     }
                 }
+                else
+                {
+                    Console.WriteLine(Source.Resource.GetString("exportUnknownFormat", CultureInfo.InvariantCulture), arguments[typeIndex]);
+                }
             }
             else
             {
