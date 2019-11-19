@@ -57,11 +57,11 @@ namespace FileCabinetApp.CommandHandlers.Handlers
                 return;
             }
 
-            var methods = new Tuple<string, Func<string, ReadOnlyCollection<FileCabinetRecord>>>[]
+            var methods = new Tuple<string, Func<string, IEnumerable<FileCabinetRecord>>>[]
             {
-                 new Tuple<string, Func<string, ReadOnlyCollection<FileCabinetRecord>>>("firstname", this.Service.FindByFirstName),
-                 new Tuple<string, Func<string, ReadOnlyCollection<FileCabinetRecord>>>("lastname", this.Service.FindByLastName),
-                 new Tuple<string, Func<string, ReadOnlyCollection<FileCabinetRecord>>>("dateofbirth", this.Service.FindByDateOfBirth),
+                 new Tuple<string, Func<string, IEnumerable<FileCabinetRecord>>>("firstname", this.Service.FindByFirstName),
+                 new Tuple<string, Func<string, IEnumerable<FileCabinetRecord>>>("lastname", this.Service.FindByLastName),
+                 new Tuple<string, Func<string, IEnumerable<FileCabinetRecord>>>("dateofbirth", this.Service.FindByDateOfBirth),
             };
 
             var arguments = parameters.Split(' ', 2);
@@ -77,7 +77,7 @@ namespace FileCabinetApp.CommandHandlers.Handlers
             if (index >= 0)
             {
                 var records = methods[index].Item2(arguments[argumentIndex]);
-                if (records is null || records.Count == 0)
+                if (records is null)
                 {
                     Console.WriteLine(Source.Resource.GetString("noRecordsMessage", CultureInfo.InvariantCulture));
                 }

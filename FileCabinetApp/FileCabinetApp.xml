@@ -612,6 +612,11 @@
               Ищет локализованную строку, похожую на Unknow argument {0}.
             </summary>
         </member>
+        <member name="P:FileCabinetApp.res.exportUnknownFormat">
+            <summary>
+              Ищет локализованную строку, похожую на Unknown file format {0}.
+            </summary>
+        </member>
         <member name="P:FileCabinetApp.res.fileExistMessage">
             <summary>
               Ищет локализованную строку, похожую на File is exist - rewrite {0}? [Y/n].
@@ -620,6 +625,16 @@
         <member name="P:FileCabinetApp.res.fileHeader">
             <summary>
               Ищет локализованную строку, похожую на Id,First Name,Last Name,Date of Birth,Sex,Weight,Height.
+            </summary>
+        </member>
+        <member name="P:FileCabinetApp.res.fileNew">
+            <summary>
+              Ищет локализованную строку, похожую на Create new file? (Y/N).
+            </summary>
+        </member>
+        <member name="P:FileCabinetApp.res.fileNotFound">
+            <summary>
+              Ищет локализованную строку, похожую на File doesn&apos;t exists.
             </summary>
         </member>
         <member name="P:FileCabinetApp.res.fileStorage">
@@ -749,12 +764,17 @@
         </member>
         <member name="P:FileCabinetApp.res.importFormat">
             <summary>
-              Ищет локализованную строку, похожую на Use export *type of result file* *file name*.
+              Ищет локализованную строку, похожую на Use import *type of import file* *file name*.
             </summary>
         </member>
         <member name="P:FileCabinetApp.res.importUnknownArgument">
             <summary>
               Ищет локализованную строку, похожую на Unknow argument {0}.
+            </summary>
+        </member>
+        <member name="P:FileCabinetApp.res.importUnknownFormat">
+            <summary>
+              Ищет локализованную строку, похожую на Unknown file format {0}.
             </summary>
         </member>
         <member name="P:FileCabinetApp.res.invalidArgument">

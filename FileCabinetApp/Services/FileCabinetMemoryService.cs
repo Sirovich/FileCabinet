@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Globalization;
+using System.Linq;
 using System.Resources;
 using FileCabinetApp.Snapshots;
 using FileCabinetApp.Validators;
@@ -21,9 +23,13 @@ namespace FileCabinetApp.Services
 
         private readonly Dictionary<DateTime, List<FileCabinetRecord>> dateOfBirthDictionary = new Dictionary<DateTime, List<FileCabinetRecord>>();
 
+        private readonly List<int> idсache = new List<int>();
+
         private List<FileCabinetRecord> list = new List<FileCabinetRecord>();
 
         private IRecordValidator recordValidator;
+
+        private int maxId;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="FileCabinetMemoryService"/> class.
@@ -32,6 +38,7 @@ namespace FileCabinetApp.Services
         public FileCabinetMemoryService(IRecordValidator recordValidator)
         {
             this.recordValidator = recordValidator;
+            this.maxId = 0;
         }
 
         /// <summary>
@@ -58,7 +65,7 @@ namespace FileCabinetApp.Services
         {
             var temp = new FileCabinetRecord
             {
-                Id = this.list.Count + 1,
+                Id = this.maxId,
                 Sex = sex,
                 Weight = weight,
                 Height = height,
@@ -67,11 +74,12 @@ namespace FileCabinetApp.Services
                 DateOfBirth = dateOfBirth,
             };
 
-            if (this.recordValidator.ValidateParameters(temp).Item1)
+            if (!this.recordValidator.ValidateParameters(temp).Item1)
             {
                 throw new ArgumentException(this.recordValidator.ValidateParameters(temp).Item2);
             }
 
+            this.idсache.Add(temp.Id);
             var record = temp;
             this.AddToDictionaries(record);
             this.list.Add(record);
@@ -93,6 +101,7 @@ namespace FileCabinetApp.Services
                 if (record.Id == id)
                 {
                     temp = record;
+                    this.idсache.Remove(temp.Id);
                     this.list.Remove(record);
                     break;
                 }
@@ -160,14 +169,15 @@ namespace FileCabinetApp.Services
         /// </summary>
         /// <param name="firstName">First name to search.</param>
         /// <returns>Array of records with this first name.</returns>
-        public ReadOnlyCollection<FileCabinetRecord> FindByFirstName(string firstName)
+        public IEnumerable<FileCabinetRecord> FindByFirstName(string firstName)
         {
             if (this.firstNameDictionary.ContainsKey(firstName))
             {
-                return new ReadOnlyCollection<FileCabinetRecord>(this.firstNameDictionary[firstName]);
+                foreach (var record in this.firstNameDictionary[firstName])
+                {
+                    yield return record;
+                }
             }
-
-            return null;
         }
 
         /// <summary>
@@ -175,14 +185,15 @@ namespace FileCabinetApp.Services
         /// </summary>
         /// <param name="lastName">Last name to search.</param>
         /// <returns>Array of records with this last name.</returns>
-        public ReadOnlyCollection<FileCabinetRecord> FindByLastName(string lastName)
+        public IEnumerable<FileCabinetRecord> FindByLastName(string lastName)
         {
             if (this.lastNameDictionary.ContainsKey(lastName))
             {
-                return new ReadOnlyCollection<FileCabinetRecord>(this.lastNameDictionary[lastName]);
+                foreach (var record in this.lastNameDictionary[lastName])
+                {
+                    yield return record;
+                }
             }
-
-            return null;
         }
 
         /// <summary>
@@ -190,18 +201,19 @@ namespace FileCabinetApp.Services
         /// </summary>
         /// <param name="dateOfBirth">Date of birth to search.</param>
         /// <returns>Array of records with this date of birth.</returns>
-        public ReadOnlyCollection<FileCabinetRecord> FindByDateOfBirth(string dateOfBirth)
+        public IEnumerable<FileCabinetRecord> FindByDateOfBirth(string dateOfBirth)
         {
             DateTime date = default;
             if (DateTime.TryParse(dateOfBirth, out date))
             {
                 if (this.dateOfBirthDictionary.ContainsKey(date))
                 {
-                    return new ReadOnlyCollection<FileCabinetRecord>(this.dateOfBirthDictionary[date]);
+                    foreach (var record in this.dateOfBirthDictionary[date])
+                    {
+                        yield return record;
+                    }
                 }
             }
-
-            return null;
         }
 
         /// <summary>
@@ -234,83 +246,45 @@ namespace FileCabinetApp.Services
                 throw new ArgumentNullException(nameof(snapshot));
             }
 
-            var list = new List<FileCabinetRecord>();
+            int count = 0;
             var importData = snapshot.Records;
-            int sourceIndex = 0;
-            int importIndex = 0;
 
-            for (; sourceIndex < this.list.Count && importIndex < importData.Count;)
+            foreach (var record in importData)
             {
-                if (this.list[sourceIndex].Id < importData[importIndex].Id)
+                var validationResult = this.recordValidator.ValidateParameters(record);
+                if (!validationResult.Item1)
                 {
-                    list.Add(this.list[sourceIndex]);
-                    sourceIndex++;
+                    Console.WriteLine(Resource.GetString("importFailValidation", CultureInfo.InvariantCulture), record.Id, validationResult.Item2);
+                    continue;
                 }
-                else if (this.list[sourceIndex].Id == importData[importIndex].Id)
+
+                if (this.idсache.Contains(record.Id))
                 {
-                    try
-                    {
-                        this.recordValidator.ValidateParameters(importData[importIndex]);
-                        list.Add(importData[importIndex]);
-
-                        this.firstNameDictionary[this.list[sourceIndex].FirstName].Remove(this.list[sourceIndex]);
-                        this.lastNameDictionary[this.list[sourceIndex].LastName].Remove(this.list[sourceIndex]);
-                        this.dateOfBirthDictionary[this.list[sourceIndex].DateOfBirth].Remove(this.list[sourceIndex]);
-
-                        this.AddToDictionaries(importData[importIndex]);
-
-                        importIndex++;
-                        sourceIndex++;
-                    }
-                    catch (ArgumentException ex)
-                    {
-                        Console.WriteLine(Resource.GetString("importFailValidation", CultureInfo.InvariantCulture), importData[importIndex].Id, ex.Message);
-                        importIndex++;
-                        sourceIndex++;
-                        continue;
-                    }
+                    var temp = this.list.Find(x => x.Id == record.Id);
+                    this.RemoveRecordFromDictionaries(temp);
+                    temp.FirstName = record.FirstName;
+                    temp.LastName = record.LastName;
+                    temp.Sex = record.Sex;
+                    temp.Weight = record.Weight;
+                    temp.Height = record.Height;
+                    this.AddToDictionaries(temp);
+                    count++;
                 }
                 else
                 {
-                    try
+                    if (record.Id > this.maxId)
                     {
-                        this.recordValidator.ValidateParameters(importData[importIndex]);
-                        this.AddToDictionaries(importData[importIndex]);
-                        list.Add(importData[importIndex]);
-                        importIndex++;
+                        this.maxId = record.Id;
                     }
-                    catch (ArgumentException ex)
-                    {
-                        Console.WriteLine(Resource.GetString("importFailValidation", CultureInfo.InvariantCulture), importData[importIndex].Id, ex.Message);
-                        importIndex++;
-                        continue;
-                    }
+
+                    this.idсache.Add(record.Id);
+                    this.list.Add(record);
+                    this.AddToDictionaries(record);
+                    count++;
                 }
             }
 
-            for (; importIndex < importData.Count; importIndex++)
-            {
-                try
-                {
-                    this.recordValidator.ValidateParameters(importData[importIndex]);
-                    list.Add(importData[importIndex]);
-                    this.AddToDictionaries(importData[importIndex]);
-                }
-                catch (ArgumentException ex)
-                {
-                    Console.WriteLine(Resource.GetString("importFailValidation", CultureInfo.InvariantCulture), importData[importIndex].Id, ex.Message);
-                    continue;
-                }
-            }
-
-            for (; sourceIndex < this.list.Count; sourceIndex++)
-            {
-                list.Add(this.list[sourceIndex]);
-            }
-
-            this.list = list;
-
-            return this.list.Count;
+            return count;
         }
 
         /// <summary>

@@ -171,11 +171,20 @@
   <data name="exportUnknownArgument" xml:space="preserve">
     <value>Unknow argument {0}</value>
   </data>
+  <data name="exportUnknownFormat" xml:space="preserve">
+    <value>Unknown file format {0}</value>
+  </data>
   <data name="fileExistMessage" xml:space="preserve">
     <value>File is exist - rewrite {0}? [Y/n]</value>
   </data>
   <data name="fileHeader" xml:space="preserve">
     <value>Id,First Name,Last Name,Date of Birth,Sex,Weight,Height</value>
+  </data>
+  <data name="fileNew" xml:space="preserve">
+    <value>Create new file? (Y/N)</value>
+  </data>
+  <data name="fileNotFound" xml:space="preserve">
+    <value>File doesn't exists</value>
   </data>
   <data name="fileStorage" xml:space="preserve">
     <value>Using file storage</value>
@@ -253,10 +262,13 @@
     <value>{0} records were imported from {1}</value>
   </data>
   <data name="importFormat" xml:space="preserve">
-    <value>Use export *type of result file* *file name*</value>
+    <value>Use import *type of import file* *file name*</value>
   </data>
   <data name="importUnknownArgument" xml:space="preserve">
     <value>Unknow argument {0}</value>
+  </data>
+  <data name="importUnknownFormat" xml:space="preserve">
+    <value>Unknown file format {0}</value>
   </data>
   <data name="invalidArgument" xml:space="preserve">
     <value>Invalid argument.</value>

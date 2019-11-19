@@ -72,6 +72,12 @@ namespace FileCabinetApp.CommandHandlers.Handlers
 
                 if (arguments[typeIndex].Equals("csv", StringComparison.InvariantCultureIgnoreCase))
                 {
+                    if (!File.Exists(arguments[pathIndex]))
+                    {
+                        Console.WriteLine(Source.Resource.GetString("fileNotFound", CultureInfo.InvariantCulture));
+                        return;
+                    }
+
                     using (var fileStream = new StreamReader(arguments[pathIndex]))
                     {
                         try
@@ -99,6 +105,10 @@ namespace FileCabinetApp.CommandHandlers.Handlers
                         int numberOfImported = this.Service.Restore(snapshot);
                         Console.WriteLine(Source.Resource.GetString("importFileComplete", CultureInfo.InvariantCulture), numberOfImported, arguments[pathIndex]);
                     }
+                }
+                else
+                {
+                    Console.WriteLine(Source.Resource.GetString("importUnknownFormat", CultureInfo.InvariantCulture), arguments[typeIndex]);
                 }
             }
             else

@@ -68,7 +68,7 @@ namespace FileCabinetApp.Services
         }
 
         /// <inheritdoc/>
-        public ReadOnlyCollection<FileCabinetRecord> FindByFirstName(string firstName)
+        public IEnumerable<FileCabinetRecord> FindByFirstName(string firstName)
         {
             var watch = Stopwatch.StartNew();
             var result = this.service.FindByFirstName(firstName);
@@ -77,7 +77,7 @@ namespace FileCabinetApp.Services
         }
 
         /// <inheritdoc/>
-        public ReadOnlyCollection<FileCabinetRecord> FindByLastName(string lastName)
+        public IEnumerable<FileCabinetRecord> FindByLastName(string lastName)
         {
             var watch = Stopwatch.StartNew();
             var result = this.service.FindByLastName(lastName);
@@ -86,7 +86,7 @@ namespace FileCabinetApp.Services
         }
 
         /// <inheritdoc/>
-        public ReadOnlyCollection<FileCabinetRecord> FindByDateOfBirth(string dateOfBirth)
+        public IEnumerable<FileCabinetRecord> FindByDateOfBirth(string dateOfBirth)
         {
             var watch = Stopwatch.StartNew();
             var result = this.service.FindByDateOfBirth(dateOfBirth);
