@@ -48,28 +48,17 @@ namespace FileCabinetApp.Services
         }
 
         /// <inheritdoc/>
-        public bool RemoveRecord(int id)
+        public void Delete(IEnumerable<FileCabinetRecord> records)
         {
-            FileCabinetRecord temp = null;
-
-            foreach (var record in this.list)
+            if (records is null)
             {
-                if (record.Id == id)
-                {
-                    temp = record;
-                    this.idсache.Remove(temp.Id);
-                    this.list.Remove(record);
-                    break;
-                }
+                throw new ArgumentNullException(nameof(records));
             }
 
-            if (temp != null)
+            foreach (var record in records)
             {
-                this.RemoveRecordFromDictionaries(temp);
-                return true;
+                this.RemoveRecord(record.Id);
             }
-
-            return false;
         }
 
         /// <inheritdoc/>
@@ -92,9 +81,7 @@ namespace FileCabinetApp.Services
             {
                 if (record.Id == id)
                 {
-                    this.firstNameDictionary[record.FirstName].Remove(record);
-                    this.lastNameDictionary[record.LastName].Remove(record);
-                    this.dateOfBirthDictionary[record.DateOfBirth].Remove(record);
+                    this.RemoveRecordFromDictionaries(record);
                     record.FirstName = firstName;
                     record.LastName = lastName;
                     record.Sex = sex;
@@ -245,15 +232,16 @@ namespace FileCabinetApp.Services
             }
 
             this.list.Add(record);
+            this.AddToDictionaries(record);
             this.idсache.Add(record.Id);
             return true;
         }
 
         private void RemoveRecordFromDictionaries(FileCabinetRecord record)
         {
-            this.firstNameDictionary[record.FirstName].Remove(record);
-            this.lastNameDictionary[record.LastName].Remove(record);
-            this.dateOfBirthDictionary[record.DateOfBirth].Remove(record);
+            this.firstNameDictionary[record.FirstName]?.Remove(record);
+            this.lastNameDictionary[record.LastName]?.Remove(record);
+            this.dateOfBirthDictionary[record.DateOfBirth]?.Remove(record);
         }
 
         private void AddToDictionaries(FileCabinetRecord record)
@@ -276,6 +264,30 @@ namespace FileCabinetApp.Services
             this.dateOfBirthDictionary[record.DateOfBirth].Add(record);
             this.lastNameDictionary[record.LastName].Add(record);
             this.firstNameDictionary[record.FirstName].Add(record);
+        }
+
+        private bool RemoveRecord(int id)
+        {
+            FileCabinetRecord temp = null;
+
+            foreach (var record in this.list)
+            {
+                if (record.Id == id)
+                {
+                    temp = record;
+                    this.idсache.Remove(temp.Id);
+                    this.list.Remove(record);
+                    break;
+                }
+            }
+
+            if (temp != null)
+            {
+                this.RemoveRecordFromDictionaries(temp);
+                return true;
+            }
+
+            return false;
         }
     }
 }

@@ -185,16 +185,16 @@ namespace FileCabinetApp
             var findHandler = new FindCommandHandler(fileCabinetService, Print);
             var listHandler = new ListCommandHandler(fileCabinetService, Print);
             var purgeHandler = new PurgeCommandHandler(fileCabinetService);
-            var removeHandler = new RemoveCommandHandler(fileCabinetService);
             var statHandler = new StatCommandHandler(fileCabinetService);
             var exitHandler = new ExitCommandHandler(IsRunning);
             var insertHandler = new InsertCommandHandler(recordValidator, fileCabinetService);
             var editHandler = new EditCommandHandler(inputValidator, fileCabinetService);
+            var deleteHandler = new DeleteCommandHandler(recordValidator, fileCabinetService);
 
-            helpHandler.SetNext(importHandler).SetNext(exportHandler).
-                SetNext(findHandler).SetNext(listHandler).SetNext(purgeHandler).
-                SetNext(removeHandler).SetNext(statHandler).SetNext(exitHandler).
-                SetNext(insertHandler).SetNext(editHandler);
+            helpHandler.SetNext(importHandler).SetNext(exportHandler)
+                .SetNext(findHandler).SetNext(listHandler).SetNext(purgeHandler)
+                .SetNext(statHandler).SetNext(exitHandler)
+                .SetNext(insertHandler).SetNext(editHandler).SetNext(deleteHandler);
 
             return helpHandler;
         }

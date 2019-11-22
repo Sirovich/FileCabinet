@@ -45,6 +45,7 @@ namespace FileCabinetApp.Services
         {
             var temp = new FileCabinetRecord
             {
+                Id = id,
                 Sex = sex,
                 Weight = weight,
                 Height = height,
@@ -58,7 +59,7 @@ namespace FileCabinetApp.Services
                 throw new ArgumentException(this.recordValidator.ValidateParameters(temp).Item2);
             }
 
-            int localOffset = (id - 1) * RecordSize;
+            int localOffset = this.idсache[id];
 
             this.fileWriter.Seek(localOffset, 0);
             if (this.fileReader.ReadBoolean())
@@ -66,21 +67,7 @@ namespace FileCabinetApp.Services
                 return;
             }
 
-            this.fileWriter.Seek(localOffset + ShortSize, 0);
-            this.fileWriter.Write(id);
-            localOffset += IntSize;
-            this.fileWriter.Write(firstName);
-            localOffset += StringSize;
-            this.fileWriter.Seek(localOffset, 0);
-            this.fileWriter.Write(lastName);
-            localOffset += StringSize;
-            this.fileWriter.Seek(localOffset, 0);
-            this.fileWriter.Write(dateOfBirth.Day);
-            this.fileWriter.Write(dateOfBirth.Month);
-            this.fileWriter.Write(dateOfBirth.Year);
-            this.fileWriter.Write(sex);
-            this.fileWriter.Write(weight);
-            this.fileWriter.Write(height);
+            this.WriteToFile(temp, localOffset);
         }
 
         /// <inheritdoc/>
@@ -280,16 +267,17 @@ namespace FileCabinetApp.Services
         }
 
         /// <inheritdoc/>
-        public bool RemoveRecord(int id)
+        public void Delete(IEnumerable<FileCabinetRecord> records)
         {
-            if (this.idсache.ContainsKey(id))
+            if (records is null)
             {
-                this.fileReader.BaseStream.Seek(this.idсache[id], 0);
-                this.fileWriter.Write(true);
-                return true;
+                throw new ArgumentNullException(nameof(records));
             }
 
-            return false;
+            foreach (var record in records)
+            {
+                this.RemoveRecord(record.Id);
+            }
         }
 
         /// <inheritdoc/>
@@ -427,22 +415,17 @@ namespace FileCabinetApp.Services
             this.fileWriter.Write(record.Height);
         }
 
-        private int FindRecordById(int id)
+        private bool RemoveRecord(int id)
         {
-            int localOffset = ShortSize;
-            this.fileReader.BaseStream.Seek(localOffset, 0);
-
-            while (this.fileReader.BaseStream.Length > this.fileReader.BaseStream.Position)
+            if (this.idсache.ContainsKey(id))
             {
-                if (this.fileReader.ReadInt32() == id)
-                {
-                    return localOffset;
-                }
-
-                localOffset += RecordSize;
+                this.fileReader.BaseStream.Seek(this.idсache[id], 0);
+                this.fileWriter.Write(true);
+                this.idсache.Remove(id);
+                return true;
             }
 
-            return localOffset;
+            return false;
         }
     }
 }

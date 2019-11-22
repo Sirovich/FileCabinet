@@ -16,19 +16,14 @@ namespace FileCabinetApp.Services
         /// <returns>Returns snapshot.</returns>
         FileCabinetServiceSnapshot MakeSnapshot();
 
+        void Delete(IEnumerable<FileCabinetRecord> records);
+
         /// <summary>
         /// Creates new record.
         /// </summary>
         /// <param name="record">Source record.</param>
         /// <returns>True if complete.</returns>
         bool Insert(FileCabinetRecord record);
-
-        /// <summary>
-        /// Remove record.
-        /// </summary>
-        /// <param name="id">Source id.</param>
-        /// <returns>True if record with source id is exist.</returns>
-        bool RemoveRecord(int id);
 
         /// <summary>
         /// Do defragmentation.
@@ -38,7 +33,7 @@ namespace FileCabinetApp.Services
         /// <summary>
         /// Edits an existing record.
         /// </summary>
-        /// <exception cref="ArgumentException">Throws when record with this id does not exist.</exception>
+        /// <exception c="ArgumentException">Throws when record with this id does not exist.</exception>
         /// <param name="id">Existing record id.</param>
         /// <param name="firstName">New first name of person.</param>
         /// <param name="lastName">New last name of person.</param>

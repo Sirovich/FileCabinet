@@ -50,5 +50,49 @@ namespace FileCabinetApp
         /// </summary>
         /// <value>Person date of birth.</value>
         public DateTime DateOfBirth { get; set; }
+
+        public static bool operator ==(FileCabinetRecord a, FileCabinetRecord b)
+        {
+            return a?.Id == b?.Id && a.FirstName.Equals(b.FirstName, StringComparison.InvariantCulture)
+                && a.LastName.Equals(b.LastName, StringComparison.InvariantCulture) && a.DateOfBirth.Equals(b.DateOfBirth)
+                && a.Sex == b.Sex && a.Weight == b.Weight && a.Height == b.Height;
+        }
+
+        public static bool operator !=(FileCabinetRecord a, FileCabinetRecord b)
+        {
+            return !(a == b);
+        }
+
+        /// <summary>
+        /// Compares two records.
+        /// </summary>
+        /// <param name="record">Source record.</param>
+        /// <returns>True if all fields is equal.</returns>
+        public bool Equals(FileCabinetRecord record)
+        {
+            return this == record;
+        }
+
+        /// <inheritdoc/>
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(this, obj))
+            {
+                return true;
+            }
+
+            if (ReferenceEquals(obj, null))
+            {
+                return false;
+            }
+
+            return false;
+        }
+
+        /// <inheritdoc/>
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
     }
 }

@@ -378,6 +378,9 @@
   <data name="sexInputMessage" xml:space="preserve">
     <value>Sex: </value>
   </data>
+  <data name="unknownArgument" xml:space="preserve">
+    <value>Unknown argument {0}</value>
+  </data>
   <data name="weightException" xml:space="preserve">
     <value>Not valid weight</value>
   </data>

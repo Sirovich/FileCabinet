@@ -844,6 +844,15 @@ namespace FileCabinetApp {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Unknown argument {0}.
+        /// </summary>
+        internal static string unknownArgument {
+            get {
+                return ResourceManager.GetString("unknownArgument", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Not valid weight.
         /// </summary>
         internal static string weightException {

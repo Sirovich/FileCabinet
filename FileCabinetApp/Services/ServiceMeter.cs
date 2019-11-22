@@ -34,15 +34,6 @@ namespace FileCabinetApp.Services
         }
 
         /// <inheritdoc/>
-        public bool RemoveRecord(int id)
-        {
-            var watch = Stopwatch.StartNew();
-            bool result = this.service.RemoveRecord(id);
-            this.ShowTime(Source.Resource.GetString("removeTime", CultureInfo.InvariantCulture), watch.ElapsedTicks);
-            return result;
-        }
-
-        /// <inheritdoc/>
         public void Purge()
         {
             var watch = Stopwatch.StartNew();
@@ -124,6 +115,13 @@ namespace FileCabinetApp.Services
         private void ShowTime(string message, long milliseconds)
         {
             Console.WriteLine(message, milliseconds);
+        }
+
+        public void Delete(IEnumerable<FileCabinetRecord> records)
+        {
+            var watch = Stopwatch.StartNew();
+            this.service.Delete(records);
+            this.ShowTime(Source.Resource.GetString("removeTime", CultureInfo.InvariantCulture), watch.ElapsedTicks);
         }
     }
 }

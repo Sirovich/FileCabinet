@@ -39,6 +39,21 @@
         <member name="M:FileCabinetApp.CommandHandlers.CommandHandlerBase.SetNext(FileCabinetApp.CommandHandlers.ICommandHandler)">
             <inheritdoc/>
         </member>
+        <member name="T:FileCabinetApp.CommandHandlers.Handlers.DeleteCommandHandler">
+            <summary>
+            Delete command handler.
+            </summary>
+        </member>
+        <member name="M:FileCabinetApp.CommandHandlers.Handlers.DeleteCommandHandler.#ctor(FileCabinetApp.Validators.IRecordValidator,FileCabinetApp.Services.IFileCabinetService)">
+            <summary>
+            Initializes a new instance of the <see cref="T:FileCabinetApp.CommandHandlers.Handlers.DeleteCommandHandler"/> class.
+            </summary>
+            <param name="recordValidator">Source record validator.</param>
+            <param name="fileCabinetService">Source service.</param>
+        </member>
+        <member name="M:FileCabinetApp.CommandHandlers.Handlers.DeleteCommandHandler.Handle(FileCabinetApp.CommandHandlers.AppCommandRequest)">
+            <inheritdoc/>
+        </member>
         <member name="T:FileCabinetApp.CommandHandlers.Handlers.EditCommandHandler">
             <summary>
             Command handler for edit.
@@ -161,20 +176,6 @@
             <param name="fileCabinetService">Source service.</param>
         </member>
         <member name="M:FileCabinetApp.CommandHandlers.Handlers.PurgeCommandHandler.Handle(FileCabinetApp.CommandHandlers.AppCommandRequest)">
-            <inheritdoc/>
-        </member>
-        <member name="T:FileCabinetApp.CommandHandlers.Handlers.RemoveCommandHandler">
-            <summary>
-            Command handler for remove.
-            </summary>
-        </member>
-        <member name="M:FileCabinetApp.CommandHandlers.Handlers.RemoveCommandHandler.#ctor(FileCabinetApp.Services.IFileCabinetService)">
-            <summary>
-            Initializes a new instance of the <see cref="T:FileCabinetApp.CommandHandlers.Handlers.RemoveCommandHandler"/> class.
-            </summary>
-            <param name="fileCabinetService">Source service.</param>
-        </member>
-        <member name="M:FileCabinetApp.CommandHandlers.Handlers.RemoveCommandHandler.Handle(FileCabinetApp.CommandHandlers.AppCommandRequest)">
             <inheritdoc/>
         </member>
         <member name="T:FileCabinetApp.CommandHandlers.Handlers.StatCommandHandler">
@@ -349,9 +350,6 @@
             <inheritdoc/>
         </member>
         <member name="M:FileCabinetApp.Loggers.ServiceLogger.Purge">
-            <inheritdoc/>
-        </member>
-        <member name="M:FileCabinetApp.Loggers.ServiceLogger.RemoveRecord(System.Int32)">
             <inheritdoc/>
         </member>
         <member name="M:FileCabinetApp.Loggers.ServiceLogger.Restore(FileCabinetApp.Snapshots.FileCabinetServiceSnapshot)">
@@ -957,6 +955,11 @@
               Ищет локализованную строку, похожую на Sex: .
             </summary>
         </member>
+        <member name="P:FileCabinetApp.res.unknownArgument">
+            <summary>
+              Ищет локализованную строку, похожую на Unknown argument {0}.
+            </summary>
+        </member>
         <member name="P:FileCabinetApp.res.weightException">
             <summary>
               Ищет локализованную строку, похожую на Not valid weight.
@@ -1006,7 +1009,7 @@
         <member name="M:FileCabinetApp.Services.FileCabinetFilesystemService.Restore(FileCabinetApp.Snapshots.FileCabinetServiceSnapshot)">
             <inheritdoc/>
         </member>
-        <member name="M:FileCabinetApp.Services.FileCabinetFilesystemService.RemoveRecord(System.Int32)">
+        <member name="M:FileCabinetApp.Services.FileCabinetFilesystemService.Delete(System.Collections.Generic.IEnumerable{FileCabinetApp.FileCabinetRecord})">
             <inheritdoc/>
         </member>
         <member name="M:FileCabinetApp.Services.FileCabinetFilesystemService.Purge">
@@ -1035,7 +1038,7 @@
         <member name="M:FileCabinetApp.Services.FileCabinetMemoryService.MakeSnapshot">
             <inheritdoc/>
         </member>
-        <member name="M:FileCabinetApp.Services.FileCabinetMemoryService.RemoveRecord(System.Int32)">
+        <member name="M:FileCabinetApp.Services.FileCabinetMemoryService.Delete(System.Collections.Generic.IEnumerable{FileCabinetApp.FileCabinetRecord})">
             <inheritdoc/>
         </member>
         <member name="M:FileCabinetApp.Services.FileCabinetMemoryService.EditRecord(System.Int32,System.String,System.String,System.DateTime,System.Char,System.Int16,System.Decimal)">
@@ -1090,13 +1093,6 @@
             <param name="record">Source record.</param>
             <returns>True if complete.</returns>
         </member>
-        <member name="M:FileCabinetApp.Services.IFileCabinetService.RemoveRecord(System.Int32)">
-            <summary>
-            Remove record.
-            </summary>
-            <param name="id">Source id.</param>
-            <returns>True if record with source id is exist.</returns>
-        </member>
         <member name="M:FileCabinetApp.Services.IFileCabinetService.Purge">
             <summary>
             Do defragmentation.
@@ -1106,7 +1102,7 @@
             <summary>
             Edits an existing record.
             </summary>
-            <exception cref="T:System.ArgumentException">Throws when record with this id does not exist.</exception>
+            <exception c="ArgumentException">Throws when record with this id does not exist.</exception>
             <param name="id">Existing record id.</param>
             <param name="firstName">New first name of person.</param>
             <param name="lastName">New last name of person.</param>
@@ -1167,9 +1163,6 @@
             <param name="service">Source service.</param>
         </member>
         <member name="M:FileCabinetApp.Services.ServiceMeter.MakeSnapshot">
-            <inheritdoc/>
-        </member>
-        <member name="M:FileCabinetApp.Services.ServiceMeter.RemoveRecord(System.Int32)">
             <inheritdoc/>
         </member>
         <member name="M:FileCabinetApp.Services.ServiceMeter.Purge">
