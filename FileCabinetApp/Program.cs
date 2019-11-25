@@ -2,15 +2,11 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
-using System.Resources;
-using System.Xml;
 using CommandLine;
 using FileCabinetApp.CommandHandlers;
 using FileCabinetApp.CommandHandlers.Handlers;
-using FileCabinetApp.Converters;
 using FileCabinetApp.Loggers;
 using FileCabinetApp.Services;
-using FileCabinetApp.Snapshots;
 using FileCabinetApp.Validators;
 using Microsoft.Extensions.Configuration;
 
@@ -185,16 +181,16 @@ namespace FileCabinetApp
             var findHandler = new FindCommandHandler(fileCabinetService, Print);
             var listHandler = new ListCommandHandler(fileCabinetService, Print);
             var purgeHandler = new PurgeCommandHandler(fileCabinetService);
-            var removeHandler = new RemoveCommandHandler(fileCabinetService);
             var statHandler = new StatCommandHandler(fileCabinetService);
             var exitHandler = new ExitCommandHandler(IsRunning);
-            var createHandler = new CreateCommandHandler(inputValidator, fileCabinetService);
-            var editHandler = new EditCommandHandler(inputValidator, fileCabinetService);
+            var insertHandler = new InsertCommandHandler(recordValidator, fileCabinetService);
+            var deleteHandler = new DeleteCommandHandler(recordValidator, fileCabinetService);
+            var updateHandler = new UpdateCommandHandler(fileCabinetService);
 
-            helpHandler.SetNext(importHandler).SetNext(exportHandler).
-                SetNext(findHandler).SetNext(listHandler).SetNext(purgeHandler).
-                SetNext(removeHandler).SetNext(statHandler).SetNext(exitHandler).
-                SetNext(createHandler).SetNext(editHandler);
+            helpHandler.SetNext(importHandler).SetNext(exportHandler)
+                .SetNext(findHandler).SetNext(listHandler).SetNext(purgeHandler)
+                .SetNext(statHandler).SetNext(exitHandler)
+                .SetNext(insertHandler).SetNext(deleteHandler).SetNext(updateHandler);
 
             return helpHandler;
         }

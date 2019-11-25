@@ -35,7 +35,14 @@
     <EmbeddedResource Update="res.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>res.Designer.cs</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Validators\validation-rules.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>

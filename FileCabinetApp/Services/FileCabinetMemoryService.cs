@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Globalization;
@@ -29,8 +28,6 @@ namespace FileCabinetApp.Services
 
         private IRecordValidator recordValidator;
 
-        private int maxId;
-
         /// <summary>
         /// Initializes a new instance of the <see cref="FileCabinetMemoryService"/> class.
         /// </summary>
@@ -38,95 +35,29 @@ namespace FileCabinetApp.Services
         public FileCabinetMemoryService(IRecordValidator recordValidator)
         {
             this.recordValidator = recordValidator;
-            this.maxId = 0;
         }
 
-        /// <summary>
-        /// Captures the status of the service.
-        /// </summary>
-        /// <returns>Returns snapshot.</returns>
+        /// <inheritdoc/>
         public FileCabinetServiceSnapshot MakeSnapshot()
         {
             return new FileCabinetServiceSnapshot(this.list.ToArray());
         }
 
-        /// <summary>
-        /// Creates new record.
-        /// </summary>
-        /// <exception cref="ArgumentException">Throws when any value does not meet the requirements.</exception>
-        /// <param name="height">Persong height.</param>
-        /// <param name="weight">Person weight.</param>
-        /// <param name="sex">Sex of a person.</param>
-        /// <param name="firstName">Person first name.</param>
-        /// <param name="lastName">Person last name.</param>
-        /// <param name="dateOfBirth">Person date of birth.</param>
-        /// <returns>Id of created record.</returns>
-        public int CreateRecord(short height, decimal weight, char sex, string firstName, string lastName, DateTime dateOfBirth)
+        /// <inheritdoc/>
+        public void Delete(IEnumerable<FileCabinetRecord> records)
         {
-            var temp = new FileCabinetRecord
+            if (records is null)
             {
-                Id = this.maxId,
-                Sex = sex,
-                Weight = weight,
-                Height = height,
-                FirstName = firstName,
-                LastName = lastName,
-                DateOfBirth = dateOfBirth,
-            };
-
-            if (!this.recordValidator.ValidateParameters(temp).Item1)
-            {
-                throw new ArgumentException(this.recordValidator.ValidateParameters(temp).Item2);
+                throw new ArgumentNullException(nameof(records));
             }
 
-            this.idсache.Add(temp.Id);
-            var record = temp;
-            this.AddToDictionaries(record);
-            this.list.Add(record);
-
-            return record.Id;
+            foreach (var record in records)
+            {
+                this.RemoveRecord(record.Id);
+            }
         }
 
-        /// <summary>
-        /// Remove record.
-        /// </summary>
-        /// <param name="id">Source id.</param>
-        /// <returns>True if record with source id is exist.</returns>
-        public bool RemoveRecord(int id)
-        {
-            FileCabinetRecord temp = null;
-
-            foreach (var record in this.list)
-            {
-                if (record.Id == id)
-                {
-                    temp = record;
-                    this.idсache.Remove(temp.Id);
-                    this.list.Remove(record);
-                    break;
-                }
-            }
-
-            if (temp != null)
-            {
-                this.RemoveRecordFromDictionaries(temp);
-                return true;
-            }
-
-            return false;
-        }
-
-        /// <summary>
-        /// Edits an existing record.
-        /// </summary>
-        /// <exception cref="ArgumentException">Throws when record with this id does not exist.</exception>
-        /// <param name="id">Existing record id.</param>
-        /// <param name="firstName">New first name of person.</param>
-        /// <param name="lastName">New last name of person.</param>
-        /// <param name="dateOfBirth">New date of birth of person.</param>
-        /// <param name="sex">New sex of a person.</param>
-        /// <param name="height">New height of person.</param>
-        /// <param name="weight">New weight of person.</param>
+        /// <inheritdoc/>
         public void EditRecord(int id, string firstName, string lastName, DateTime dateOfBirth, char sex, short height, decimal weight)
         {
             var temp = new FileCabinetRecord
@@ -146,9 +77,7 @@ namespace FileCabinetApp.Services
             {
                 if (record.Id == id)
                 {
-                    this.firstNameDictionary[record.FirstName].Remove(record);
-                    this.lastNameDictionary[record.LastName].Remove(record);
-                    this.dateOfBirthDictionary[record.DateOfBirth].Remove(record);
+                    this.RemoveRecordFromDictionaries(record);
                     record.FirstName = firstName;
                     record.LastName = lastName;
                     record.Sex = sex;
@@ -164,11 +93,7 @@ namespace FileCabinetApp.Services
             throw new ArgumentException($"{id} record is not found.");
         }
 
-        /// <summary>
-        /// Finds all records with this first name.
-        /// </summary>
-        /// <param name="firstName">First name to search.</param>
-        /// <returns>Array of records with this first name.</returns>
+        /// <inheritdoc/>
         public IEnumerable<FileCabinetRecord> FindByFirstName(string firstName)
         {
             if (this.firstNameDictionary.ContainsKey(firstName))
@@ -196,11 +121,7 @@ namespace FileCabinetApp.Services
             }
         }
 
-        /// <summary>
-        /// Finds all records with this date of birth.
-        /// </summary>
-        /// <param name="dateOfBirth">Date of birth to search.</param>
-        /// <returns>Array of records with this date of birth.</returns>
+        /// <inheritdoc/>
         public IEnumerable<FileCabinetRecord> FindByDateOfBirth(string dateOfBirth)
         {
             DateTime date = default;
@@ -216,10 +137,7 @@ namespace FileCabinetApp.Services
             }
         }
 
-        /// <summary>
-        /// Gets array of records.
-        /// </summary>
-        /// <returns>Array of records.</returns>
+        /// <inheritdoc/>
         public ReadOnlyCollection<FileCabinetRecord> GetRecords()
         {
             return new ReadOnlyCollection<FileCabinetRecord>(this.list);
@@ -234,11 +152,7 @@ namespace FileCabinetApp.Services
             return this.list.Count;
         }
 
-        /// <summary>
-        /// Import records from file.
-        /// </summary>
-        /// <param name="snapshot">Source snapshot.</param>
-        /// <returns>Number of stored.</returns>
+        /// <inheritdoc/>
         public int Restore(FileCabinetServiceSnapshot snapshot)
         {
             if (snapshot is null || snapshot.Records is null)
@@ -272,11 +186,6 @@ namespace FileCabinetApp.Services
                 }
                 else
                 {
-                    if (record.Id > this.maxId)
-                    {
-                        this.maxId = record.Id;
-                    }
-
                     this.idсache.Add(record.Id);
                     this.list.Add(record);
                     this.AddToDictionaries(record);
@@ -287,19 +196,70 @@ namespace FileCabinetApp.Services
             return count;
         }
 
-        /// <summary>
-        /// Do defragmetation.
-        /// </summary>
+        /// <inheritdoc/>
         public void Purge()
         {
             return;
         }
 
+        /// <inheritdoc/>
+        public void Update(IEnumerable<FileCabinetRecord> records, IEnumerable<IEnumerable<string>> fieldsAndValuesToReplace)
+        {
+            if (records is null)
+            {
+                throw new ArgumentNullException(nameof(records));
+            }
+
+            if (fieldsAndValuesToReplace is null)
+            {
+                throw new ArgumentNullException(nameof(fieldsAndValuesToReplace));
+            }
+
+            foreach (var record in records)
+            {
+                for (int i = 0; i < this.list.Count; i++)
+                {
+                    if (record.Id == this.list[i].Id)
+                    {
+                        this.RemoveRecordFromDictionaries(record);
+                        this.UpdateFields(record, fieldsAndValuesToReplace);
+                        this.AddToDictionaries(record);
+                    }
+                }
+            }
+        }
+
+        /// <inheritdoc/>
+        public bool Insert(FileCabinetRecord record)
+        {
+            if (record is null)
+            {
+                throw new ArgumentNullException(nameof(record));
+            }
+
+            if (!this.recordValidator.ValidateParameters(record).Item1)
+            {
+                Console.WriteLine(this.recordValidator.ValidateParameters(record).Item2);
+                return false;
+            }
+
+            if (this.idсache.Contains(record.Id))
+            {
+                Console.WriteLine(Source.Resource.GetString("idAlreadyExists", CultureInfo.InvariantCulture));
+                return false;
+            }
+
+            this.list.Add(record);
+            this.AddToDictionaries(record);
+            this.idсache.Add(record.Id);
+            return true;
+        }
+
         private void RemoveRecordFromDictionaries(FileCabinetRecord record)
         {
-            this.firstNameDictionary[record.FirstName].Remove(record);
-            this.lastNameDictionary[record.LastName].Remove(record);
-            this.dateOfBirthDictionary[record.DateOfBirth].Remove(record);
+            this.firstNameDictionary[record.FirstName]?.Remove(record);
+            this.lastNameDictionary[record.LastName]?.Remove(record);
+            this.dateOfBirthDictionary[record.DateOfBirth]?.Remove(record);
         }
 
         private void AddToDictionaries(FileCabinetRecord record)
@@ -322,6 +282,163 @@ namespace FileCabinetApp.Services
             this.dateOfBirthDictionary[record.DateOfBirth].Add(record);
             this.lastNameDictionary[record.LastName].Add(record);
             this.firstNameDictionary[record.FirstName].Add(record);
+        }
+
+        private bool RemoveRecord(int id)
+        {
+            FileCabinetRecord temp = null;
+
+            foreach (var record in this.list)
+            {
+                if (record.Id == id)
+                {
+                    temp = record;
+                    this.idсache.Remove(temp.Id);
+                    this.list.Remove(record);
+                    break;
+                }
+            }
+
+            if (temp != null)
+            {
+                this.RemoveRecordFromDictionaries(temp);
+                return true;
+            }
+
+            return false;
+        }
+
+        private void UpdateFields(FileCabinetRecord record, IEnumerable<IEnumerable<string>> fieldsAndValuesToReplace)
+        {
+            foreach (var pair in fieldsAndValuesToReplace)
+            {
+                var key = pair.First();
+                var value = pair.Last();
+
+                if (key.Equals("id", StringComparison.InvariantCultureIgnoreCase))
+                {
+                    Console.WriteLine(Source.Resource.GetString("idChange", CultureInfo.InvariantCulture));
+                    return;
+                }
+
+                if (key.Equals("firstname", StringComparison.InvariantCultureIgnoreCase))
+                {
+                    var source = record.FirstName;
+                    record.FirstName = value;
+                    var validationResult = this.recordValidator.ValidateParameters(record);
+                    if (!validationResult.Item1)
+                    {
+                        record.FirstName = source;
+                        Console.WriteLine(validationResult.Item2, CultureInfo.InvariantCulture);
+                        return;
+                    }
+
+                    continue;
+                }
+
+                if (key.Equals("lastname", StringComparison.InvariantCultureIgnoreCase))
+                {
+                    var source = record.LastName;
+                    record.LastName = value;
+                    var validationResult = this.recordValidator.ValidateParameters(record);
+                    if (!validationResult.Item1)
+                    {
+                        record.LastName = source;
+                        Console.WriteLine(validationResult.Item2, CultureInfo.InvariantCulture);
+                        return;
+                    }
+
+                    continue;
+                }
+
+                if (key.Equals("dateofbirth", StringComparison.InvariantCultureIgnoreCase))
+                {
+                    DateTime temp;
+                    if (!DateTime.TryParse(value, out temp))
+                    {
+                        Console.WriteLine(Source.Resource.GetString("dateOfBirthException", CultureInfo.InvariantCulture));
+                        return;
+                    }
+
+                    var source = record.DateOfBirth;
+                    record.DateOfBirth = temp;
+                    var validationResult = this.recordValidator.ValidateParameters(record);
+                    if (!validationResult.Item1)
+                    {
+                        record.DateOfBirth = source;
+                        Console.WriteLine(validationResult.Item2, CultureInfo.InvariantCulture);
+                        return;
+                    }
+
+                    continue;
+                }
+
+                if (key.Equals("sex", StringComparison.InvariantCultureIgnoreCase))
+                {
+                    char temp;
+                    if (!char.TryParse(value, out temp))
+                    {
+                        Console.WriteLine(Source.Resource.GetString("sexException", CultureInfo.InvariantCulture));
+                        return;
+                    }
+
+                    var source = record.Sex;
+                    record.Sex = temp;
+                    var validationResult = this.recordValidator.ValidateParameters(record);
+                    if (!validationResult.Item1)
+                    {
+                        record.Sex = source;
+                        Console.WriteLine(validationResult.Item2, CultureInfo.InvariantCulture);
+                        return;
+                    }
+
+                    continue;
+                }
+
+                if (key.Equals("weight", StringComparison.InvariantCultureIgnoreCase))
+                {
+                    decimal temp;
+                    if (!decimal.TryParse(value, out temp))
+                    {
+                        Console.WriteLine(Source.Resource.GetString("weightException", CultureInfo.InvariantCulture));
+                        return;
+                    }
+
+                    var source = record.Weight;
+                    record.Weight = temp;
+                    var validationResult = this.recordValidator.ValidateParameters(record);
+                    if (!validationResult.Item1)
+                    {
+                        record.Weight = source;
+                        Console.WriteLine(validationResult.Item2, CultureInfo.InvariantCulture);
+                        return;
+                    }
+
+                    continue;
+                }
+
+                if (key.Equals("height", StringComparison.InvariantCultureIgnoreCase))
+                {
+                    short temp;
+                    if (!short.TryParse(value, out temp))
+                    {
+                        Console.WriteLine(Source.Resource.GetString("heightException", CultureInfo.InvariantCulture));
+                        return;
+                    }
+
+                    var source = record.Height;
+                    record.Height = temp;
+                    var validationResult = this.recordValidator.ValidateParameters(record);
+                    if (!validationResult.Item1)
+                    {
+                        record.Height = source;
+                        Console.WriteLine(validationResult.Item2, CultureInfo.InvariantCulture);
+                        return;
+                    }
+
+                    continue;
+                }
+            }
         }
     }
 }

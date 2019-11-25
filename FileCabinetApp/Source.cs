@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Resources;
-using System.Text;
+﻿using System.Resources;
 
 namespace FileCabinetApp
 {
@@ -13,6 +10,7 @@ namespace FileCabinetApp
         static Source()
         {
             Resource = new ResourceManager("FileCabinetApp.res", typeof(Program).Assembly);
+            FieldsCount = 7;
         }
 
         /// <summary>
@@ -20,5 +18,11 @@ namespace FileCabinetApp
         /// </summary>
         /// <value>Resource manager.</value>
         public static ResourceManager Resource { get; private set; }
+
+        /// <summary>
+        /// Gets count of fields.
+        /// </summary>
+        /// <value>Fields count.</value>
+        public static int FieldsCount { get; private set; }
     }
 }

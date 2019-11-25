@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Globalization;
-using System.Text;
 using FileCabinetApp.Snapshots;
 
 namespace FileCabinetApp.Services
@@ -30,24 +29,6 @@ namespace FileCabinetApp.Services
             var watch = Stopwatch.StartNew();
             var result = this.service.MakeSnapshot();
             this.ShowTime(Source.Resource.GetString("makeSnapshotTime", CultureInfo.InvariantCulture), watch.ElapsedTicks);
-            return result;
-        }
-
-        /// <inheritdoc/>
-        public int CreateRecord(short height, decimal weight, char sex, string firstName, string lastName, DateTime dateOfBirth)
-        {
-            var watch = Stopwatch.StartNew();
-            int id = this.service.CreateRecord(height, weight, sex, firstName, lastName, dateOfBirth);
-            this.ShowTime(Source.Resource.GetString("createTime", CultureInfo.InvariantCulture), watch.ElapsedTicks);
-            return id;
-        }
-
-        /// <inheritdoc/>
-        public bool RemoveRecord(int id)
-        {
-            var watch = Stopwatch.StartNew();
-            bool result = this.service.RemoveRecord(id);
-            this.ShowTime(Source.Resource.GetString("removeTime", CultureInfo.InvariantCulture), watch.ElapsedTicks);
             return result;
         }
 
@@ -113,12 +94,37 @@ namespace FileCabinetApp.Services
         }
 
         /// <inheritdoc/>
+        public bool Insert(FileCabinetRecord record)
+        {
+            var watch = Stopwatch.StartNew();
+            var result = this.service.Insert(record);
+            this.ShowTime(Source.Resource.GetString("insertTime", CultureInfo.InvariantCulture), watch.ElapsedTicks);
+            return result;
+        }
+
+        /// <inheritdoc/>
         public int Restore(FileCabinetServiceSnapshot snapshot)
         {
             var watch = Stopwatch.StartNew();
             var result = this.service.Restore(snapshot);
             this.ShowTime(Source.Resource.GetString("restoreTime", CultureInfo.InvariantCulture), watch.ElapsedTicks);
             return result;
+        }
+
+        /// <inheritdoc/>
+        public void Delete(IEnumerable<FileCabinetRecord> records)
+        {
+            var watch = Stopwatch.StartNew();
+            this.service.Delete(records);
+            this.ShowTime(Source.Resource.GetString("deleteTime", CultureInfo.InvariantCulture), watch.ElapsedTicks);
+        }
+
+        /// <inheritdoc/>
+        public void Update(IEnumerable<FileCabinetRecord> records, IEnumerable<IEnumerable<string>> fieldsAndValuesToReplace)
+        {
+            var watch = Stopwatch.StartNew();
+            this.service.Update(records, fieldsAndValuesToReplace);
+            this.ShowTime(Source.Resource.GetString("updateTime", CultureInfo.InvariantCulture), watch.ElapsedTicks);
         }
 
         private void ShowTime(string message, long milliseconds)

@@ -123,15 +123,6 @@
   <data name="badCsvFile" xml:space="preserve">
     <value>There is an error in csv file</value>
   </data>
-  <data name="createLog" xml:space="preserve">
-    <value>{0} - Calling Create() with FirstName = '{1}', LastName = '{2}', DateOfBirth = '{3}', Sex = '{4}', Weight = '{5}', Height = '{6}'</value>
-  </data>
-  <data name="createResultLog" xml:space="preserve">
-    <value>{0} - Create() returned '{1}'</value>
-  </data>
-  <data name="createTime" xml:space="preserve">
-    <value>Create method execution duration is {0}.</value>
-  </data>
   <data name="customRule" xml:space="preserve">
     <value>Using custom validation rules.</value>
   </data>
@@ -144,6 +135,9 @@
   <data name="defaultRule" xml:space="preserve">
     <value>Using default validation rules.</value>
   </data>
+  <data name="deleteTime" xml:space="preserve">
+    <value>Delete method execution duration is {0}.</value>
+  </data>
   <data name="developerNameMessage" xml:space="preserve">
     <value>File Cabinet Application, developed by {0}</value>
   </data>
@@ -152,9 +146,6 @@
   </data>
   <data name="editResultLog" xml:space="preserve">
     <value>{0} - Edit() completed</value>
-  </data>
-  <data name="editTime" xml:space="preserve">
-    <value>Edit method execution duration is {0}.</value>
   </data>
   <data name="exitMessage" xml:space="preserve">
     <value>Exiting an application...</value>
@@ -249,6 +240,12 @@
   <data name="hintMessage" xml:space="preserve">
     <value>Enter your command, or enter 'help' to get help.</value>
   </data>
+  <data name="idChange" xml:space="preserve">
+    <value>Cannot change id</value>
+  </data>
+  <data name="idException" xml:space="preserve">
+    <value>Not valid id</value>
+  </data>
   <data name="importException" xml:space="preserve">
     <value>Invalid parameters</value>
   </data>
@@ -270,11 +267,29 @@
   <data name="importUnknownFormat" xml:space="preserve">
     <value>Unknown file format {0}</value>
   </data>
+  <data name="insertFailedResultLog" xml:space="preserve">
+    <value>{0} - Insert() failed</value>
+  </data>
+  <data name="insertFormat" xml:space="preserve">
+    <value>Use "insert (id, firstname, ...) values (1, 2, ...)"</value>
+  </data>
+  <data name="insertLog" xml:space="preserve">
+    <value>{0} - Calling Insert() with FirstName = '{1}', LastName = '{2}', DateOfBirth = '{3}', Sex = '{4}', Weight = '{5}', Height = '{6}'</value>
+  </data>
+  <data name="insertResultLog" xml:space="preserve">
+    <value>{0} - Insert() completed</value>
+  </data>
+  <data name="insertTime" xml:space="preserve">
+    <value>Insert method execution duration is {0}.</value>
+  </data>
   <data name="invalidArgument" xml:space="preserve">
     <value>Invalid argument.</value>
   </data>
   <data name="invalidInputMessage" xml:space="preserve">
     <value>Invalid input: {0}.</value>
+  </data>
+  <data name="invalidInsertInput" xml:space="preserve">
+    <value>Invalid input format</value>
   </data>
   <data name="invalidJsonData" xml:space="preserve">
     <value>Invalid configuration data</value>
@@ -348,9 +363,6 @@
   <data name="removeSuccess" xml:space="preserve">
     <value>Record #{0} is removed.</value>
   </data>
-  <data name="removeTime" xml:space="preserve">
-    <value>Remove method execution duration is {0}.</value>
-  </data>
   <data name="restoreLog" xml:space="preserve">
     <value>{0} - Calling Restore()</value>
   </data>
@@ -365,6 +377,24 @@
   </data>
   <data name="sexInputMessage" xml:space="preserve">
     <value>Sex: </value>
+  </data>
+  <data name="similarCommand" xml:space="preserve">
+    <value>The most similar command is</value>
+  </data>
+  <data name="similarCommands" xml:space="preserve">
+    <value>The most similar commands are</value>
+  </data>
+  <data name="unknownArgument" xml:space="preserve">
+    <value>Unknown argument {0}</value>
+  </data>
+  <data name="updateLog" xml:space="preserve">
+    <value>{0} - Calling Update()</value>
+  </data>
+  <data name="updateResultLog" xml:space="preserve">
+    <value>{0} - Update() completed</value>
+  </data>
+  <data name="updateTime" xml:space="preserve">
+    <value>Update method execution duration is {0}.</value>
   </data>
   <data name="weightException" xml:space="preserve">
     <value>Not valid weight</value>

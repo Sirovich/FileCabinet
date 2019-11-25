@@ -17,24 +17,17 @@ namespace FileCabinetApp.Services
         FileCabinetServiceSnapshot MakeSnapshot();
 
         /// <summary>
-        /// Creates new record.
+        /// Deletes records from service.
         /// </summary>
-        /// <exception cref="ArgumentException">Throws when any value does not meet the requirements.</exception>
-        /// <param name="height">Persong height.</param>
-        /// <param name="weight">Person weight.</param>
-        /// <param name="sex">Sex of a person.</param>
-        /// <param name="firstName">Person first name.</param>
-        /// <param name="lastName">Person last name.</param>
-        /// <param name="dateOfBirth">Person date of birth.</param>
-        /// <returns>Id of created record.</returns>
-        int CreateRecord(short height, decimal weight, char sex, string firstName, string lastName, DateTime dateOfBirth);
+        /// <param name="records">Source records.</param>
+        void Delete(IEnumerable<FileCabinetRecord> records);
 
         /// <summary>
-        /// Remove record.
+        /// Creates new record.
         /// </summary>
-        /// <param name="id">Source id.</param>
-        /// <returns>True if record with source id is exist.</returns>
-        bool RemoveRecord(int id);
+        /// <param name="record">Source record.</param>
+        /// <returns>True if complete.</returns>
+        bool Insert(FileCabinetRecord record);
 
         /// <summary>
         /// Do defragmentation.
@@ -44,7 +37,7 @@ namespace FileCabinetApp.Services
         /// <summary>
         /// Edits an existing record.
         /// </summary>
-        /// <exception cref="ArgumentException">Throws when record with this id does not exist.</exception>
+        /// <exception c="ArgumentException">Throws when record with this id does not exist.</exception>
         /// <param name="id">Existing record id.</param>
         /// <param name="firstName">New first name of person.</param>
         /// <param name="lastName">New last name of person.</param>
@@ -53,6 +46,13 @@ namespace FileCabinetApp.Services
         /// <param name="height">New height of person.</param>
         /// <param name="weight">New weight of person.</param>
         void EditRecord(int id, string firstName, string lastName, DateTime dateOfBirth, char sex, short height, decimal weight);
+
+        /// <summary>
+        /// Updates records.
+        /// </summary>
+        /// <param name="records">Records to update.</param>
+        /// <param name="fieldsAndValuesToReplace">Fields and values to update.</param>
+        void Update(IEnumerable<FileCabinetRecord> records, IEnumerable<IEnumerable<string>> fieldsAndValuesToReplace);
 
         /// <summary>
         /// Finds all records with this first name.

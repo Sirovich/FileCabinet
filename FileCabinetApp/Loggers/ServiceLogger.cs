@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Globalization;
 using System.IO;
-using System.Text;
 using FileCabinetApp.Services;
 using FileCabinetApp.Snapshots;
 
@@ -29,19 +28,10 @@ namespace FileCabinetApp.Loggers
         }
 
         /// <inheritdoc/>
-        public int CreateRecord(short height, decimal weight, char sex, string firstName, string lastName, DateTime dateOfBirth)
-        {
-            this.writer.WriteLine(Source.Resource.GetString("createLog", CultureInfo.InvariantCulture), DateTime.Now, firstName, lastName, dateOfBirth, sex, weight, height);
-            var id = this.service.CreateRecord(height, weight, sex, firstName, lastName, dateOfBirth);
-            this.writer.WriteLine(Source.Resource.GetString("createResultLog", CultureInfo.InvariantCulture), DateTime.Now, id);
-            return id;
-        }
-
-        /// <inheritdoc/>
         public void EditRecord(int id, string firstName, string lastName, DateTime dateOfBirth, char sex, short height, decimal weight)
         {
-            this.writer.WriteLine(Source.Resource.GetString("editLog", CultureInfo.InvariantCulture), DateTime.Now, firstName, lastName, dateOfBirth, sex, weight, height);
-            this.service.CreateRecord(height, weight, sex, firstName, lastName, dateOfBirth);
+            this.writer.WriteLine(Source.Resource.GetString("editLog", CultureInfo.InvariantCulture), DateTime.Now, id, firstName, lastName, dateOfBirth, sex, weight, height);
+            this.service.EditRecord(id, firstName, lastName, dateOfBirth, sex, height, weight);
             this.writer.WriteLine(Source.Resource.GetString("editResultLog", CultureInfo.InvariantCulture), DateTime.Now);
         }
 
@@ -108,23 +98,6 @@ namespace FileCabinetApp.Loggers
         }
 
         /// <inheritdoc/>
-        public bool RemoveRecord(int id)
-        {
-            this.writer.WriteLine(Source.Resource.GetString("removeLog", CultureInfo.InvariantCulture), DateTime.Now, id);
-            var result = this.service.RemoveRecord(id);
-            if (result)
-            {
-                this.writer.WriteLine(Source.Resource.GetString("removeResultLog", CultureInfo.InvariantCulture), DateTime.Now);
-            }
-            else
-            {
-                this.writer.WriteLine(Source.Resource.GetString("removeFailedResultLog", CultureInfo.InvariantCulture), DateTime.Now, id);
-            }
-
-            return result;
-        }
-
-        /// <inheritdoc/>
         public int Restore(FileCabinetServiceSnapshot snapshot)
         {
             this.writer.WriteLine(Source.Resource.GetString("restoreLog", CultureInfo.InvariantCulture), DateTime.Now);
@@ -137,6 +110,44 @@ namespace FileCabinetApp.Loggers
         public void Dispose()
         {
             this.writer.Close();
+        }
+
+        /// <inheritdoc/>
+        public bool Insert(FileCabinetRecord record)
+        {
+            if (record is null)
+            {
+                throw new ArgumentNullException(nameof(record));
+            }
+
+            this.writer.WriteLine(Source.Resource.GetString("insertLog", CultureInfo.InvariantCulture), DateTime.Now, record.Id, record.FirstName, record.LastName, record.Sex, record.Weight, record.Height);
+            var result = this.service.Insert(record);
+            if (result)
+            {
+                this.writer.WriteLine(Source.Resource.GetString("insertResultLog", CultureInfo.InvariantCulture), DateTime.Now);
+            }
+            else
+            {
+                this.writer.WriteLine(Source.Resource.GetString("insertFailedResultLog", CultureInfo.InvariantCulture), DateTime.Now);
+            }
+
+            return result;
+        }
+
+        /// <inheritdoc/>
+        public void Delete(IEnumerable<FileCabinetRecord> records)
+        {
+            this.writer.WriteLine(Source.Resource.GetString("removeLog", CultureInfo.InvariantCulture), DateTime.Now, 1);
+            this.service.Delete(records);
+            this.writer.WriteLine(Source.Resource.GetString("removeResultLog", CultureInfo.InvariantCulture), DateTime.Now);
+        }
+
+        /// <inheritdoc/>
+        public void Update(IEnumerable<FileCabinetRecord> records, IEnumerable<IEnumerable<string>> fieldsAndValuesToReplace)
+        {
+            this.writer.WriteLine(Source.Resource.GetString("updateLog", CultureInfo.InvariantCulture), DateTime.Now);
+            this.service.Update(records, fieldsAndValuesToReplace);
+            this.writer.WriteLine(Source.Resource.GetString("updateResultLog", CultureInfo.InvariantCulture), DateTime.Now);
         }
     }
 }
