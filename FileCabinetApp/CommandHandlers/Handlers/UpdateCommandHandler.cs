@@ -3,26 +3,21 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using FileCabinetApp.Services;
-using FileCabinetApp.Validators;
 
 namespace FileCabinetApp.CommandHandlers.Handlers
 {
     /// <summary>
-    /// Delete command handler.
+    /// Update command handler.
     /// </summary>
-    public class DeleteCommandHandler : ServiceCommandHandlerBase
+    public class UpdateCommandHandler : ServiceCommandHandlerBase
     {
-        private IRecordValidator recordValidator;
-
         /// <summary>
-        /// Initializes a new instance of the <see cref="DeleteCommandHandler"/> class.
+        /// Initializes a new instance of the <see cref="UpdateCommandHandler"/> class.
         /// </summary>
-        /// <param name="recordValidator">Source record validator.</param>
         /// <param name="fileCabinetService">Source service.</param>
-        public DeleteCommandHandler(IRecordValidator recordValidator, IFileCabinetService fileCabinetService)
+        public UpdateCommandHandler(IFileCabinetService fileCabinetService)
             : base(fileCabinetService)
         {
-            this.recordValidator = recordValidator;
         }
 
         /// <inheritdoc/>
@@ -40,9 +35,9 @@ namespace FileCabinetApp.CommandHandlers.Handlers
                 return;
             }
 
-            if (commandRequest.Command.Equals("delete", StringComparison.InvariantCultureIgnoreCase))
+            if (commandRequest.Command.Equals("update", StringComparison.InvariantCultureIgnoreCase))
             {
-                this.ParseArguments(commandRequest.Parameters);
+                this.Update(commandRequest.Parameters);
             }
             else
             {
@@ -168,11 +163,20 @@ namespace FileCabinetApp.CommandHandlers.Handlers
             return false;
         }
 
-        private void ParseArguments(string parameters)
+        private void Update(string parameters)
         {
             if (parameters is null)
             {
                 throw new ArgumentNullException(nameof(parameters));
+            }
+
+            if (parameters.Substring(0, 3).Equals("set", StringComparison.InvariantCulture))
+            {
+                parameters = parameters.Remove(0, 3);
+            }
+            else
+            {
+                Console.WriteLine();
             }
 
             var arguments = parameters.Split("where ", 2);
@@ -184,6 +188,9 @@ namespace FileCabinetApp.CommandHandlers.Handlers
             }
             else
             {
+                var fieldsToReplace = arguments[0].Split(',');
+                var fieldsAndValuesToReplace = fieldsToReplace.Select(x => x.Split('=').Select(y => y.Trim('\'', ' ')));
+
                 var valuesAnd = arguments[1].Split("and");
                 var valuesOr = arguments[1].Split("or");
                 string[] values;
@@ -218,18 +225,28 @@ namespace FileCabinetApp.CommandHandlers.Handlers
                     }
                 }
 
+                IEnumerable<FileCabinetRecord> mustBeUpdated;
                 if (type.Equals("and", StringComparison.InvariantCulture))
                 {
-                    this.DeleteAnd(recordId, recordFirstName, recordLastName, recordDate, recordSex, recordWeight, recordHeight);
+                    mustBeUpdated = this.SelectAnd(recordId, recordFirstName, recordLastName, recordDate, recordSex, recordWeight, recordHeight);
                 }
                 else
                 {
-                    this.DeleteOr(recordId, recordFirstName, recordLastName, recordDate, recordSex, recordWeight, recordHeight);
+                    mustBeUpdated = this.SelectOr(recordId, recordFirstName, recordLastName, recordDate, recordSex, recordWeight, recordHeight);
+                }
+
+                if (mustBeUpdated is null)
+                {
+                    return;
+                }
+                else
+                {
+                    this.Service.Update(mustBeUpdated, fieldsAndValuesToReplace);
                 }
             }
         }
 
-        private bool DeleteAnd(List<int> recordId, List<string> recordFirstName, List<string> recordLastName, List<DateTime> recordDate, List<char> recordSex, List<decimal> recordWeight, List<short> recordHeight)
+        private IEnumerable<FileCabinetRecord> SelectAnd(List<int> recordId, List<string> recordFirstName, List<string> recordLastName, List<DateTime> recordDate, List<char> recordSex, List<decimal> recordWeight, List<short> recordHeight)
         {
             var mustBeDeleted = new List<FileCabinetRecord>(this.Service.GetRecords());
 
@@ -237,7 +254,7 @@ namespace FileCabinetApp.CommandHandlers.Handlers
             {
                 if (recordId.Count > 1)
                 {
-                    return true;
+                    return null;
                 }
 
                 mustBeDeleted.RemoveAll(x => x.Id != recordId[0]);
@@ -247,7 +264,7 @@ namespace FileCabinetApp.CommandHandlers.Handlers
             {
                 if (recordFirstName.Count > 1)
                 {
-                    return true;
+                    return null;
                 }
 
                 mustBeDeleted.RemoveAll(x => !recordFirstName.Contains(x.FirstName, StringComparer.InvariantCultureIgnoreCase));
@@ -257,7 +274,7 @@ namespace FileCabinetApp.CommandHandlers.Handlers
             {
                 if (recordLastName.Count > 1)
                 {
-                    return true;
+                    return null;
                 }
 
                 mustBeDeleted.RemoveAll(x => !recordLastName.Contains(x.LastName, StringComparer.InvariantCultureIgnoreCase));
@@ -267,7 +284,7 @@ namespace FileCabinetApp.CommandHandlers.Handlers
             {
                 if (recordDate.Count > 1)
                 {
-                    return true;
+                    return null;
                 }
 
                 mustBeDeleted.RemoveAll(x => !recordDate.Contains(x.DateOfBirth));
@@ -277,7 +294,7 @@ namespace FileCabinetApp.CommandHandlers.Handlers
             {
                 if (recordWeight.Count > 1)
                 {
-                    return true;
+                    return null;
                 }
 
                 mustBeDeleted.RemoveAll(x => !recordWeight.Contains(x.Weight));
@@ -287,7 +304,7 @@ namespace FileCabinetApp.CommandHandlers.Handlers
             {
                 if (recordHeight.Count > 1)
                 {
-                    return true;
+                    return null;
                 }
 
                 mustBeDeleted.RemoveAll(x => !recordHeight.Contains(x.Height));
@@ -297,17 +314,16 @@ namespace FileCabinetApp.CommandHandlers.Handlers
             {
                 if (recordSex.Count > 1)
                 {
-                    return true;
+                    return null;
                 }
 
                 mustBeDeleted.RemoveAll(x => !recordSex.Contains(x.Sex));
             }
 
-            this.Service.Delete(mustBeDeleted);
-            return true;
+            return mustBeDeleted;
         }
 
-        private bool DeleteOr(List<int> recordId, List<string> recordFirstName, List<string> recordLastName, List<DateTime> recordDate, List<char> recordSex, List<decimal> recordWeight, List<short> recordHeight)
+        private IEnumerable<FileCabinetRecord> SelectOr(List<int> recordId, List<string> recordFirstName, List<string> recordLastName, List<DateTime> recordDate, List<char> recordSex, List<decimal> recordWeight, List<short> recordHeight)
         {
             var sourceRecords = this.Service.GetRecords();
             var mustBeDeleted = new List<FileCabinetRecord>();
@@ -347,8 +363,7 @@ namespace FileCabinetApp.CommandHandlers.Handlers
                 mustBeDeleted.AddRange(sourceRecords.Where(x => recordSex.Contains(x.Sex)).Where(y => !mustBeDeleted.Contains(y)));
             }
 
-            this.Service.Delete(mustBeDeleted);
-            return true;
+            return mustBeDeleted;
         }
     }
 }

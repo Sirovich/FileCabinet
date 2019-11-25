@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace FileCabinetApp.Writers
+﻿namespace FileCabinetApp.Writers
 {
     /// <summary>
     /// Provides method for writing record to file.

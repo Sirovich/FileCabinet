@@ -135,6 +135,9 @@
   <data name="defaultRule" xml:space="preserve">
     <value>Using default validation rules.</value>
   </data>
+  <data name="deleteTime" xml:space="preserve">
+    <value>Delete method execution duration is {0}.</value>
+  </data>
   <data name="developerNameMessage" xml:space="preserve">
     <value>File Cabinet Application, developed by {0}</value>
   </data>
@@ -143,9 +146,6 @@
   </data>
   <data name="editResultLog" xml:space="preserve">
     <value>{0} - Edit() completed</value>
-  </data>
-  <data name="editTime" xml:space="preserve">
-    <value>Edit method execution duration is {0}.</value>
   </data>
   <data name="exitMessage" xml:space="preserve">
     <value>Exiting an application...</value>
@@ -239,6 +239,9 @@
   </data>
   <data name="hintMessage" xml:space="preserve">
     <value>Enter your command, or enter 'help' to get help.</value>
+  </data>
+  <data name="idChange" xml:space="preserve">
+    <value>Cannot change id</value>
   </data>
   <data name="idException" xml:space="preserve">
     <value>Not valid id</value>
@@ -360,9 +363,6 @@
   <data name="removeSuccess" xml:space="preserve">
     <value>Record #{0} is removed.</value>
   </data>
-  <data name="removeTime" xml:space="preserve">
-    <value>Remove method execution duration is {0}.</value>
-  </data>
   <data name="restoreLog" xml:space="preserve">
     <value>{0} - Calling Restore()</value>
   </data>
@@ -378,8 +378,23 @@
   <data name="sexInputMessage" xml:space="preserve">
     <value>Sex: </value>
   </data>
+  <data name="similarCommand" xml:space="preserve">
+    <value>The most similar command is</value>
+  </data>
+  <data name="similarCommands" xml:space="preserve">
+    <value>The most similar commands are</value>
+  </data>
   <data name="unknownArgument" xml:space="preserve">
     <value>Unknown argument {0}</value>
+  </data>
+  <data name="updateLog" xml:space="preserve">
+    <value>{0} - Calling Update()</value>
+  </data>
+  <data name="updateResultLog" xml:space="preserve">
+    <value>{0} - Update() completed</value>
+  </data>
+  <data name="updateTime" xml:space="preserve">
+    <value>Update method execution duration is {0}.</value>
   </data>
   <data name="weightException" xml:space="preserve">
     <value>Not valid weight</value>

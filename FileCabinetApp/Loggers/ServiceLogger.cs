@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Globalization;
 using System.IO;
-using System.Text;
 using FileCabinetApp.Services;
 using FileCabinetApp.Snapshots;
 
@@ -135,11 +134,20 @@ namespace FileCabinetApp.Loggers
             return result;
         }
 
+        /// <inheritdoc/>
         public void Delete(IEnumerable<FileCabinetRecord> records)
         {
             this.writer.WriteLine(Source.Resource.GetString("removeLog", CultureInfo.InvariantCulture), DateTime.Now, 1);
             this.service.Delete(records);
             this.writer.WriteLine(Source.Resource.GetString("removeResultLog", CultureInfo.InvariantCulture), DateTime.Now);
+        }
+
+        /// <inheritdoc/>
+        public void Update(IEnumerable<FileCabinetRecord> records, IEnumerable<IEnumerable<string>> fieldsAndValuesToReplace)
+        {
+            this.writer.WriteLine(Source.Resource.GetString("updateLog", CultureInfo.InvariantCulture), DateTime.Now);
+            this.service.Update(records, fieldsAndValuesToReplace);
+            this.writer.WriteLine(Source.Resource.GetString("updateResultLog", CultureInfo.InvariantCulture), DateTime.Now);
         }
     }
 }

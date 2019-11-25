@@ -2,15 +2,11 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
-using System.Resources;
-using System.Xml;
 using CommandLine;
 using FileCabinetApp.CommandHandlers;
 using FileCabinetApp.CommandHandlers.Handlers;
-using FileCabinetApp.Converters;
 using FileCabinetApp.Loggers;
 using FileCabinetApp.Services;
-using FileCabinetApp.Snapshots;
 using FileCabinetApp.Validators;
 using Microsoft.Extensions.Configuration;
 
@@ -188,13 +184,13 @@ namespace FileCabinetApp
             var statHandler = new StatCommandHandler(fileCabinetService);
             var exitHandler = new ExitCommandHandler(IsRunning);
             var insertHandler = new InsertCommandHandler(recordValidator, fileCabinetService);
-            var editHandler = new EditCommandHandler(inputValidator, fileCabinetService);
             var deleteHandler = new DeleteCommandHandler(recordValidator, fileCabinetService);
+            var updateHandler = new UpdateCommandHandler(fileCabinetService);
 
             helpHandler.SetNext(importHandler).SetNext(exportHandler)
                 .SetNext(findHandler).SetNext(listHandler).SetNext(purgeHandler)
                 .SetNext(statHandler).SetNext(exitHandler)
-                .SetNext(insertHandler).SetNext(editHandler).SetNext(deleteHandler);
+                .SetNext(insertHandler).SetNext(deleteHandler).SetNext(updateHandler);
 
             return helpHandler;
         }

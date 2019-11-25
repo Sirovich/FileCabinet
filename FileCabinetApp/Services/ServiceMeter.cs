@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Globalization;
-using System.Text;
 using FileCabinetApp.Snapshots;
 
 namespace FileCabinetApp.Services
@@ -112,16 +111,25 @@ namespace FileCabinetApp.Services
             return result;
         }
 
-        private void ShowTime(string message, long milliseconds)
-        {
-            Console.WriteLine(message, milliseconds);
-        }
-
+        /// <inheritdoc/>
         public void Delete(IEnumerable<FileCabinetRecord> records)
         {
             var watch = Stopwatch.StartNew();
             this.service.Delete(records);
-            this.ShowTime(Source.Resource.GetString("removeTime", CultureInfo.InvariantCulture), watch.ElapsedTicks);
+            this.ShowTime(Source.Resource.GetString("deleteTime", CultureInfo.InvariantCulture), watch.ElapsedTicks);
+        }
+
+        /// <inheritdoc/>
+        public void Update(IEnumerable<FileCabinetRecord> records, IEnumerable<IEnumerable<string>> fieldsAndValuesToReplace)
+        {
+            var watch = Stopwatch.StartNew();
+            this.service.Update(records, fieldsAndValuesToReplace);
+            this.ShowTime(Source.Resource.GetString("updateTime", CultureInfo.InvariantCulture), watch.ElapsedTicks);
+        }
+
+        private void ShowTime(string message, long milliseconds)
+        {
+            Console.WriteLine(message, milliseconds);
         }
     }
 }

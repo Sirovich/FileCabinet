@@ -115,6 +115,15 @@ namespace FileCabinetApp {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Delete method execution duration is {0}..
+        /// </summary>
+        internal static string deleteTime {
+            get {
+                return ResourceManager.GetString("deleteTime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на File Cabinet Application, developed by {0}.
         /// </summary>
         internal static string developerNameMessage {
@@ -138,15 +147,6 @@ namespace FileCabinetApp {
         internal static string editResultLog {
             get {
                 return ResourceManager.GetString("editResultLog", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Edit method execution duration is {0}..
-        /// </summary>
-        internal static string editTime {
-            get {
-                return ResourceManager.GetString("editTime", resourceCulture);
             }
         }
         
@@ -426,6 +426,15 @@ namespace FileCabinetApp {
         internal static string hintMessage {
             get {
                 return ResourceManager.GetString("hintMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Cannot change id.
+        /// </summary>
+        internal static string idChange {
+            get {
+                return ResourceManager.GetString("idChange", resourceCulture);
             }
         }
         
@@ -790,15 +799,6 @@ namespace FileCabinetApp {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Remove method execution duration is {0}..
-        /// </summary>
-        internal static string removeTime {
-            get {
-                return ResourceManager.GetString("removeTime", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Ищет локализованную строку, похожую на {0} - Calling Restore().
         /// </summary>
         internal static string restoreLog {
@@ -844,11 +844,56 @@ namespace FileCabinetApp {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на The most similar command is.
+        /// </summary>
+        internal static string similarCommand {
+            get {
+                return ResourceManager.GetString("similarCommand", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на The most similar commands are.
+        /// </summary>
+        internal static string similarCommands {
+            get {
+                return ResourceManager.GetString("similarCommands", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Unknown argument {0}.
         /// </summary>
         internal static string unknownArgument {
             get {
                 return ResourceManager.GetString("unknownArgument", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на {0} - Calling Update().
+        /// </summary>
+        internal static string updateLog {
+            get {
+                return ResourceManager.GetString("updateLog", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на {0} - Update() completed.
+        /// </summary>
+        internal static string updateResultLog {
+            get {
+                return ResourceManager.GetString("updateResultLog", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Update method execution duration is {0}..
+        /// </summary>
+        internal static string updateTime {
+            get {
+                return ResourceManager.GetString("updateTime", resourceCulture);
             }
         }
         

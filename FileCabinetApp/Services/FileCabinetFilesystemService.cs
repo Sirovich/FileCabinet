@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Globalization;
 using System.IO;
-using System.Resources;
-using System.Text;
+using System.Linq;
 using FileCabinetApp.Snapshots;
 using FileCabinetApp.Validators;
 
@@ -257,6 +256,7 @@ namespace FileCabinetApp.Services
                 }
                 else
                 {
+                    this.idсache.Add(record.Id, this.offset);
                     this.WriteToFile(record, this.offset);
                     this.offset += RecordSize;
                     count++;
@@ -322,6 +322,26 @@ namespace FileCabinetApp.Services
         }
 
         /// <inheritdoc/>
+        public void Update(IEnumerable<FileCabinetRecord> records, IEnumerable<IEnumerable<string>> fieldsAndValuesToReplace)
+        {
+            if (records is null)
+            {
+                throw new ArgumentNullException(nameof(records));
+            }
+
+            if (fieldsAndValuesToReplace is null)
+            {
+                throw new ArgumentNullException(nameof(fieldsAndValuesToReplace));
+            }
+
+            foreach (var record in records)
+            {
+                this.UpdateFields(record, fieldsAndValuesToReplace);
+                this.WriteToFile(record, this.idсache[record.Id]);
+            }
+        }
+
+        /// <inheritdoc/>
         public bool Insert(FileCabinetRecord record)
         {
             if (record is null)
@@ -365,6 +385,139 @@ namespace FileCabinetApp.Services
             {
                 this.fileWriter.Close();
                 this.fileReader.Close();
+            }
+        }
+
+        private void UpdateFields(FileCabinetRecord record, IEnumerable<IEnumerable<string>> fieldsAndValuesToReplace)
+        {
+            foreach (var pair in fieldsAndValuesToReplace)
+            {
+                var key = pair.First();
+                var value = pair.Last();
+
+                if (key.Equals("id", StringComparison.InvariantCultureIgnoreCase))
+                {
+                    Console.WriteLine(Source.Resource.GetString("idChange", CultureInfo.InvariantCulture));
+                    return;
+                }
+
+                if (key.Equals("firstname", StringComparison.InvariantCultureIgnoreCase))
+                {
+                    var source = record.FirstName;
+                    record.FirstName = value;
+                    var validationResult = this.recordValidator.ValidateParameters(record);
+                    if (!validationResult.Item1)
+                    {
+                        record.FirstName = source;
+                        Console.WriteLine(validationResult.Item2, CultureInfo.InvariantCulture);
+                        return;
+                    }
+
+                    continue;
+                }
+
+                if (key.Equals("lastname", StringComparison.InvariantCultureIgnoreCase))
+                {
+                    var source = record.LastName;
+                    record.LastName = value;
+                    var validationResult = this.recordValidator.ValidateParameters(record);
+                    if (!validationResult.Item1)
+                    {
+                        record.LastName = source;
+                        Console.WriteLine(validationResult.Item2, CultureInfo.InvariantCulture);
+                        return;
+                    }
+
+                    continue;
+                }
+
+                if (key.Equals("dateofbirth", StringComparison.InvariantCultureIgnoreCase))
+                {
+                    DateTime temp;
+                    if (!DateTime.TryParse(value, out temp))
+                    {
+                        Console.WriteLine(Source.Resource.GetString("dateOfBirthException", CultureInfo.InvariantCulture));
+                        return;
+                    }
+
+                    var source = record.DateOfBirth;
+                    record.DateOfBirth = temp;
+                    var validationResult = this.recordValidator.ValidateParameters(record);
+                    if (!validationResult.Item1)
+                    {
+                        record.DateOfBirth = source;
+                        Console.WriteLine(validationResult.Item2, CultureInfo.InvariantCulture);
+                        return;
+                    }
+
+                    continue;
+                }
+
+                if (key.Equals("sex", StringComparison.InvariantCultureIgnoreCase))
+                {
+                    char temp;
+                    if (!char.TryParse(value, out temp))
+                    {
+                        Console.WriteLine(Source.Resource.GetString("sexException", CultureInfo.InvariantCulture));
+                        return;
+                    }
+
+                    var source = record.Sex;
+                    record.Sex = temp;
+                    var validationResult = this.recordValidator.ValidateParameters(record);
+                    if (!validationResult.Item1)
+                    {
+                        record.Sex = source;
+                        Console.WriteLine(validationResult.Item2, CultureInfo.InvariantCulture);
+                        return;
+                    }
+
+                    continue;
+                }
+
+                if (key.Equals("weight", StringComparison.InvariantCultureIgnoreCase))
+                {
+                    decimal temp;
+                    if (!decimal.TryParse(value, out temp))
+                    {
+                        Console.WriteLine(Source.Resource.GetString("weightException", CultureInfo.InvariantCulture));
+                        return;
+                    }
+
+                    var source = record.Weight;
+                    record.Weight = temp;
+                    var validationResult = this.recordValidator.ValidateParameters(record);
+                    if (!validationResult.Item1)
+                    {
+                        record.Weight = source;
+                        Console.WriteLine(validationResult.Item2, CultureInfo.InvariantCulture);
+                        return;
+                    }
+
+                    continue;
+                }
+
+                if (key.Equals("height", StringComparison.InvariantCultureIgnoreCase))
+                {
+                    short temp;
+                    if (!short.TryParse(value, out temp))
+                    {
+                        Console.WriteLine(Source.Resource.GetString("heightException", CultureInfo.InvariantCulture));
+                        return;
+                    }
+
+                    var source = record.Height;
+                    record.Height = temp;
+                    var validationResult = this.recordValidator.ValidateParameters(record);
+                    if (!validationResult.Item1)
+                    {
+                        record.Height = source;
+                        Console.WriteLine(validationResult.Item2, CultureInfo.InvariantCulture);
+                        return;
+                    }
+
+                    continue;
+                }
             }
         }
 

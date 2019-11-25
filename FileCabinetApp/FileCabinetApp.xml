@@ -54,21 +54,6 @@
         <member name="M:FileCabinetApp.CommandHandlers.Handlers.DeleteCommandHandler.Handle(FileCabinetApp.CommandHandlers.AppCommandRequest)">
             <inheritdoc/>
         </member>
-        <member name="T:FileCabinetApp.CommandHandlers.Handlers.EditCommandHandler">
-            <summary>
-            Command handler for edit.
-            </summary>
-        </member>
-        <member name="M:FileCabinetApp.CommandHandlers.Handlers.EditCommandHandler.#ctor(FileCabinetApp.Validators.IInputValidator,FileCabinetApp.Services.IFileCabinetService)">
-            <summary>
-            Initializes a new instance of the <see cref="T:FileCabinetApp.CommandHandlers.Handlers.EditCommandHandler"/> class.
-            </summary>
-            <param name="recordValidator">Source record validator.</param>
-            <param name="fileCabinetService">Source service.</param>
-        </member>
-        <member name="M:FileCabinetApp.CommandHandlers.Handlers.EditCommandHandler.Handle(FileCabinetApp.CommandHandlers.AppCommandRequest)">
-            <inheritdoc/>
-        </member>
         <member name="T:FileCabinetApp.CommandHandlers.Handlers.ExitCommandHandler">
             <summary>
             Command handler for exit.
@@ -190,6 +175,20 @@
             <param name="fileCabinetService">Source service.</param>
         </member>
         <member name="M:FileCabinetApp.CommandHandlers.Handlers.StatCommandHandler.Handle(FileCabinetApp.CommandHandlers.AppCommandRequest)">
+            <inheritdoc/>
+        </member>
+        <member name="T:FileCabinetApp.CommandHandlers.Handlers.UpdateCommandHandler">
+            <summary>
+            Update command handler.
+            </summary>
+        </member>
+        <member name="M:FileCabinetApp.CommandHandlers.Handlers.UpdateCommandHandler.#ctor(FileCabinetApp.Services.IFileCabinetService)">
+            <summary>
+            Initializes a new instance of the <see cref="T:FileCabinetApp.CommandHandlers.Handlers.UpdateCommandHandler"/> class.
+            </summary>
+            <param name="fileCabinetService">Source service.</param>
+        </member>
+        <member name="M:FileCabinetApp.CommandHandlers.Handlers.UpdateCommandHandler.Handle(FileCabinetApp.CommandHandlers.AppCommandRequest)">
             <inheritdoc/>
         </member>
         <member name="T:FileCabinetApp.CommandHandlers.ICommandHandler">
@@ -317,6 +316,19 @@
             </summary>
             <value>Person date of birth.</value>
         </member>
+        <member name="M:FileCabinetApp.FileCabinetRecord.Equals(FileCabinetApp.FileCabinetRecord)">
+            <summary>
+            Compares two records.
+            </summary>
+            <param name="record">Source record.</param>
+            <returns>True if all fields is equal.</returns>
+        </member>
+        <member name="M:FileCabinetApp.FileCabinetRecord.Equals(System.Object)">
+            <inheritdoc/>
+        </member>
+        <member name="M:FileCabinetApp.FileCabinetRecord.GetHashCode">
+            <inheritdoc/>
+        </member>
         <member name="T:FileCabinetApp.Loggers.ServiceLogger">
             <summary>
             Service logger.
@@ -359,6 +371,12 @@
             <inheritdoc/>
         </member>
         <member name="M:FileCabinetApp.Loggers.ServiceLogger.Insert(FileCabinetApp.FileCabinetRecord)">
+            <inheritdoc/>
+        </member>
+        <member name="M:FileCabinetApp.Loggers.ServiceLogger.Delete(System.Collections.Generic.IEnumerable{FileCabinetApp.FileCabinetRecord})">
+            <inheritdoc/>
+        </member>
+        <member name="M:FileCabinetApp.Loggers.ServiceLogger.Update(System.Collections.Generic.IEnumerable{FileCabinetApp.FileCabinetRecord},System.Collections.Generic.IEnumerable{System.Collections.Generic.IEnumerable{System.String}})">
             <inheritdoc/>
         </member>
         <member name="T:FileCabinetApp.Options">
@@ -550,6 +568,11 @@
               Ищет локализованную строку, похожую на Using default validation rules..
             </summary>
         </member>
+        <member name="P:FileCabinetApp.res.deleteTime">
+            <summary>
+              Ищет локализованную строку, похожую на Delete method execution duration is {0}..
+            </summary>
+        </member>
         <member name="P:FileCabinetApp.res.developerNameMessage">
             <summary>
               Ищет локализованную строку, похожую на File Cabinet Application, developed by {0}.
@@ -563,11 +586,6 @@
         <member name="P:FileCabinetApp.res.editResultLog">
             <summary>
               Ищет локализованную строку, похожую на {0} - Edit() completed.
-            </summary>
-        </member>
-        <member name="P:FileCabinetApp.res.editTime">
-            <summary>
-              Ищет локализованную строку, похожую на Edit method execution duration is {0}..
             </summary>
         </member>
         <member name="P:FileCabinetApp.res.exitMessage">
@@ -723,6 +741,11 @@
         <member name="P:FileCabinetApp.res.hintMessage">
             <summary>
               Ищет локализованную строку, похожую на Enter your command, or enter &apos;help&apos; to get help..
+            </summary>
+        </member>
+        <member name="P:FileCabinetApp.res.idChange">
+            <summary>
+              Ищет локализованную строку, похожую на Cannot change id.
             </summary>
         </member>
         <member name="P:FileCabinetApp.res.idException">
@@ -925,11 +948,6 @@
               Ищет локализованную строку, похожую на Record #{0} is removed..
             </summary>
         </member>
-        <member name="P:FileCabinetApp.res.removeTime">
-            <summary>
-              Ищет локализованную строку, похожую на Remove method execution duration is {0}..
-            </summary>
-        </member>
         <member name="P:FileCabinetApp.res.restoreLog">
             <summary>
               Ищет локализованную строку, похожую на {0} - Calling Restore().
@@ -955,9 +973,34 @@
               Ищет локализованную строку, похожую на Sex: .
             </summary>
         </member>
+        <member name="P:FileCabinetApp.res.similarCommand">
+            <summary>
+              Ищет локализованную строку, похожую на The most similar command is.
+            </summary>
+        </member>
+        <member name="P:FileCabinetApp.res.similarCommands">
+            <summary>
+              Ищет локализованную строку, похожую на The most similar commands are.
+            </summary>
+        </member>
         <member name="P:FileCabinetApp.res.unknownArgument">
             <summary>
               Ищет локализованную строку, похожую на Unknown argument {0}.
+            </summary>
+        </member>
+        <member name="P:FileCabinetApp.res.updateLog">
+            <summary>
+              Ищет локализованную строку, похожую на {0} - Calling Update().
+            </summary>
+        </member>
+        <member name="P:FileCabinetApp.res.updateResultLog">
+            <summary>
+              Ищет локализованную строку, похожую на {0} - Update() completed.
+            </summary>
+        </member>
+        <member name="P:FileCabinetApp.res.updateTime">
+            <summary>
+              Ищет локализованную строку, похожую на Update method execution duration is {0}..
             </summary>
         </member>
         <member name="P:FileCabinetApp.res.weightException">
@@ -1013,6 +1056,9 @@
             <inheritdoc/>
         </member>
         <member name="M:FileCabinetApp.Services.FileCabinetFilesystemService.Purge">
+            <inheritdoc/>
+        </member>
+        <member name="M:FileCabinetApp.Services.FileCabinetFilesystemService.Update(System.Collections.Generic.IEnumerable{FileCabinetApp.FileCabinetRecord},System.Collections.Generic.IEnumerable{System.Collections.Generic.IEnumerable{System.String}})">
             <inheritdoc/>
         </member>
         <member name="M:FileCabinetApp.Services.FileCabinetFilesystemService.Insert(FileCabinetApp.FileCabinetRecord)">
@@ -1072,6 +1118,9 @@
         <member name="M:FileCabinetApp.Services.FileCabinetMemoryService.Purge">
             <inheritdoc/>
         </member>
+        <member name="M:FileCabinetApp.Services.FileCabinetMemoryService.Update(System.Collections.Generic.IEnumerable{FileCabinetApp.FileCabinetRecord},System.Collections.Generic.IEnumerable{System.Collections.Generic.IEnumerable{System.String}})">
+            <inheritdoc/>
+        </member>
         <member name="M:FileCabinetApp.Services.FileCabinetMemoryService.Insert(FileCabinetApp.FileCabinetRecord)">
             <inheritdoc/>
         </member>
@@ -1085,6 +1134,12 @@
             Captures the status of the service.
             </summary>
             <returns>Returns snapshot.</returns>
+        </member>
+        <member name="M:FileCabinetApp.Services.IFileCabinetService.Delete(System.Collections.Generic.IEnumerable{FileCabinetApp.FileCabinetRecord})">
+            <summary>
+            Deletes records from service.
+            </summary>
+            <param name="records">Source records.</param>
         </member>
         <member name="M:FileCabinetApp.Services.IFileCabinetService.Insert(FileCabinetApp.FileCabinetRecord)">
             <summary>
@@ -1110,6 +1165,13 @@
             <param name="sex">New sex of a person.</param>
             <param name="height">New height of person.</param>
             <param name="weight">New weight of person.</param>
+        </member>
+        <member name="M:FileCabinetApp.Services.IFileCabinetService.Update(System.Collections.Generic.IEnumerable{FileCabinetApp.FileCabinetRecord},System.Collections.Generic.IEnumerable{System.Collections.Generic.IEnumerable{System.String}})">
+            <summary>
+            Updates records.
+            </summary>
+            <param name="records">Records to update.</param>
+            <param name="fieldsAndValuesToReplace">Fields and values to update.</param>
         </member>
         <member name="M:FileCabinetApp.Services.IFileCabinetService.FindByFirstName(System.String)">
             <summary>
@@ -1190,6 +1252,12 @@
             <inheritdoc/>
         </member>
         <member name="M:FileCabinetApp.Services.ServiceMeter.Restore(FileCabinetApp.Snapshots.FileCabinetServiceSnapshot)">
+            <inheritdoc/>
+        </member>
+        <member name="M:FileCabinetApp.Services.ServiceMeter.Delete(System.Collections.Generic.IEnumerable{FileCabinetApp.FileCabinetRecord})">
+            <inheritdoc/>
+        </member>
+        <member name="M:FileCabinetApp.Services.ServiceMeter.Update(System.Collections.Generic.IEnumerable{FileCabinetApp.FileCabinetRecord},System.Collections.Generic.IEnumerable{System.Collections.Generic.IEnumerable{System.String}})">
             <inheritdoc/>
         </member>
         <member name="T:FileCabinetApp.Snapshots.FileCabinetServiceSnapshot">

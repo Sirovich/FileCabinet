@@ -16,6 +16,10 @@ namespace FileCabinetApp.Services
         /// <returns>Returns snapshot.</returns>
         FileCabinetServiceSnapshot MakeSnapshot();
 
+        /// <summary>
+        /// Deletes records from service.
+        /// </summary>
+        /// <param name="records">Source records.</param>
         void Delete(IEnumerable<FileCabinetRecord> records);
 
         /// <summary>
@@ -42,6 +46,13 @@ namespace FileCabinetApp.Services
         /// <param name="height">New height of person.</param>
         /// <param name="weight">New weight of person.</param>
         void EditRecord(int id, string firstName, string lastName, DateTime dateOfBirth, char sex, short height, decimal weight);
+
+        /// <summary>
+        /// Updates records.
+        /// </summary>
+        /// <param name="records">Records to update.</param>
+        /// <param name="fieldsAndValuesToReplace">Fields and values to update.</param>
+        void Update(IEnumerable<FileCabinetRecord> records, IEnumerable<IEnumerable<string>> fieldsAndValuesToReplace);
 
         /// <summary>
         /// Finds all records with this first name.

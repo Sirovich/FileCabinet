@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Globalization;
 using System.Linq;
-using FileCabinetApp.Converters;
 using FileCabinetApp.Services;
 using FileCabinetApp.Validators;
 
@@ -92,7 +91,7 @@ namespace FileCabinetApp.CommandHandlers.Handlers
                 var fields = arguments[0].Split(',', ')', '(').ToList();
                 var values = arguments[1].Split(',', ')', '(').ToList();
 
-                fields.RemoveAll(x => x.Trim().Length == 0);
+                fields.RemoveAll(x => x.Trim(')', '(', ' ').Length == 0);
                 values.RemoveAll(x => x.Trim().Length == 0);
 
                 for (int i = 0; i < fields.Count; i++)
@@ -113,7 +112,7 @@ namespace FileCabinetApp.CommandHandlers.Handlers
 
                 for (int i = 0; i < values.Count; i++)
                 {
-                    values[i] = values[i].Trim();
+                    values[i] = values[i].Trim('\'', ' ');
                 }
 
                 if (values.Count == Source.FieldsCount && fields.Count == Source.FieldsCount)
