@@ -67,10 +67,10 @@ namespace FileCabinetApp.CommandHandlers
             string[] commands = new string[]
             {
               "help",
-              "remove",
-              "edit",
+              "delete",
+              "update",
               "purge",
-              "find",
+              "select",
               "list",
               "stat",
               "export",

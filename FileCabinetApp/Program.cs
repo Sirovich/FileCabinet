@@ -52,7 +52,6 @@ namespace FileCabinetApp
                 }
 
                 var parameters = inputs.Length > 1 ? inputs[argumentIndex] : string.Empty;
-
                 commands.Handle(new AppCommandRequest(command, parameters));
             }
         }
@@ -186,11 +185,13 @@ namespace FileCabinetApp
             var insertHandler = new InsertCommandHandler(recordValidator, fileCabinetService);
             var deleteHandler = new DeleteCommandHandler(recordValidator, fileCabinetService);
             var updateHandler = new UpdateCommandHandler(fileCabinetService);
+            var selectCommand = new SelectCommandHandler(fileCabinetService, Print);
 
             helpHandler.SetNext(importHandler).SetNext(exportHandler)
                 .SetNext(findHandler).SetNext(listHandler).SetNext(purgeHandler)
                 .SetNext(statHandler).SetNext(exitHandler)
-                .SetNext(insertHandler).SetNext(deleteHandler).SetNext(updateHandler);
+                .SetNext(insertHandler).SetNext(deleteHandler).SetNext(updateHandler)
+                .SetNext(selectCommand);
 
             return helpHandler;
         }
