@@ -163,6 +163,21 @@
         <member name="M:FileCabinetApp.CommandHandlers.Handlers.PurgeCommandHandler.Handle(FileCabinetApp.CommandHandlers.AppCommandRequest)">
             <inheritdoc/>
         </member>
+        <member name="T:FileCabinetApp.CommandHandlers.Handlers.SelectCommandHandler">
+            <summary>
+            Select command handler.
+            </summary>
+        </member>
+        <member name="M:FileCabinetApp.CommandHandlers.Handlers.SelectCommandHandler.#ctor(FileCabinetApp.Services.IFileCabinetService,System.Action{System.Collections.Generic.IEnumerable{FileCabinetApp.FileCabinetRecord}})">
+            <summary>
+            Initializes a new instance of the <see cref="T:FileCabinetApp.CommandHandlers.Handlers.SelectCommandHandler"/> class.
+            </summary>
+            <param name="fileCabinetService">Source service.</param>
+            <param name="printer">Source printer.</param>
+        </member>
+        <member name="M:FileCabinetApp.CommandHandlers.Handlers.SelectCommandHandler.Handle(FileCabinetApp.CommandHandlers.AppCommandRequest)">
+            <inheritdoc/>
+        </member>
         <member name="T:FileCabinetApp.CommandHandlers.Handlers.StatCommandHandler">
             <summary>
             Command handler for stat.
@@ -208,6 +223,32 @@
             Handle request and try process command.
             </summary>
             <param name="commandRequest">Source command request.</param>
+        </member>
+        <member name="T:FileCabinetApp.CommandHandlers.SelectCommandHandlerBase">
+            <summary>
+            Select command handler base.
+            </summary>
+        </member>
+        <member name="M:FileCabinetApp.CommandHandlers.SelectCommandHandlerBase.#ctor(FileCabinetApp.Services.IFileCabinetService)">
+            <summary>
+            Initializes a new instance of the <see cref="T:FileCabinetApp.CommandHandlers.SelectCommandHandlerBase"/> class.
+            </summary>
+            <param name="service">Source service.</param>
+        </member>
+        <member name="M:FileCabinetApp.CommandHandlers.SelectCommandHandlerBase.RefreshMemoization">
+            <summary>
+            Refreshe memoization.
+            </summary>
+        </member>
+        <member name="M:FileCabinetApp.CommandHandlers.SelectCommandHandlerBase.Handle(FileCabinetApp.CommandHandlers.AppCommandRequest)">
+            <inheritdoc/>
+        </member>
+        <member name="M:FileCabinetApp.CommandHandlers.SelectCommandHandlerBase.GetRecords(System.String)">
+            <summary>
+            Gets records with source arguments.
+            </summary>
+            <param name="arguments">Source arguments.</param>
+            <returns>Records comparable with arguments.</returns>
         </member>
         <member name="T:FileCabinetApp.CommandHandlers.ServiceCommandHandlerBase">
             <summary>
