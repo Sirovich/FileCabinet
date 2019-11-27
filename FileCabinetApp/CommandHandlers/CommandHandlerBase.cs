@@ -71,7 +71,6 @@ namespace FileCabinetApp.CommandHandlers
               "update",
               "purge",
               "select",
-              "list",
               "stat",
               "export",
               "import",

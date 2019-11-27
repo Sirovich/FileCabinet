@@ -871,6 +871,15 @@ namespace FileCabinetApp {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Unsupported syntaxis.
+        /// </summary>
+        internal static string unsupportedSyntaxis {
+            get {
+                return ResourceManager.GetString("unsupportedSyntaxis", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на {0} - Calling Update().
         /// </summary>
         internal static string updateLog {

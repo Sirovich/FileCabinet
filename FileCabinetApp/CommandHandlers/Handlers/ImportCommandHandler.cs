@@ -94,6 +94,12 @@ namespace FileCabinetApp.CommandHandlers.Handlers
                 }
                 else if (arguments[typeIndex].Equals("xml", StringComparison.InvariantCultureIgnoreCase))
                 {
+                    if (!File.Exists(arguments[pathIndex]))
+                    {
+                        Console.WriteLine(Source.Resource.GetString("fileNotFound", CultureInfo.InvariantCulture));
+                        return;
+                    }
+
                     XmlWriterSettings settings = new XmlWriterSettings();
                     settings.Indent = true;
                     settings.IndentChars = "\t";

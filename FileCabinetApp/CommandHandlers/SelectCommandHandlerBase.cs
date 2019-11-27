@@ -47,6 +47,12 @@ namespace FileCabinetApp.CommandHandlers
                 throw new ArgumentNullException(nameof(arguments));
             }
 
+            if (arguments.Contains(" or ", StringComparison.InvariantCultureIgnoreCase) && arguments.Contains(" and ", StringComparison.InvariantCultureIgnoreCase))
+            {
+                Console.WriteLine(Source.Resource.GetString("unsupportedSyntaxis", CultureInfo.InvariantCulture));
+                return null;
+            }
+
             var valuesAnd = arguments.Split("and");
             var valuesOr = arguments.Split("or");
             string[] values;

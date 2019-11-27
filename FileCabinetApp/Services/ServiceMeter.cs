@@ -41,41 +41,6 @@ namespace FileCabinetApp.Services
         }
 
         /// <inheritdoc/>
-        public void EditRecord(int id, string firstName, string lastName, DateTime dateOfBirth, char sex, short height, decimal weight)
-        {
-            var watch = Stopwatch.StartNew();
-            this.service.EditRecord(id, firstName, lastName, dateOfBirth, sex, height, weight);
-            this.ShowTime(Source.Resource.GetString("editTime", CultureInfo.InvariantCulture), watch.ElapsedTicks);
-        }
-
-        /// <inheritdoc/>
-        public IEnumerable<FileCabinetRecord> FindByFirstName(string firstName)
-        {
-            var watch = Stopwatch.StartNew();
-            var result = this.service.FindByFirstName(firstName);
-            this.ShowTime(Source.Resource.GetString("findFirstNameTime", CultureInfo.InvariantCulture), watch.ElapsedTicks);
-            return result;
-        }
-
-        /// <inheritdoc/>
-        public IEnumerable<FileCabinetRecord> FindByLastName(string lastName)
-        {
-            var watch = Stopwatch.StartNew();
-            var result = this.service.FindByLastName(lastName);
-            this.ShowTime(Source.Resource.GetString("findLastNameTime", CultureInfo.InvariantCulture), watch.ElapsedTicks);
-            return result;
-        }
-
-        /// <inheritdoc/>
-        public IEnumerable<FileCabinetRecord> FindByDateOfBirth(string dateOfBirth)
-        {
-            var watch = Stopwatch.StartNew();
-            var result = this.service.FindByDateOfBirth(dateOfBirth);
-            this.ShowTime(Source.Resource.GetString("findDateTime", CultureInfo.InvariantCulture), watch.ElapsedTicks);
-            return result;
-        }
-
-        /// <inheritdoc/>
         public ReadOnlyCollection<FileCabinetRecord> GetRecords()
         {
             var watch = Stopwatch.StartNew();

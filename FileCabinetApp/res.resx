@@ -387,6 +387,9 @@
   <data name="unknownArgument" xml:space="preserve">
     <value>Unknown argument {0}</value>
   </data>
+  <data name="unsupportedSyntaxis" xml:space="preserve">
+    <value>Unsupported syntaxis</value>
+  </data>
   <data name="updateLog" xml:space="preserve">
     <value>{0} - Calling Update()</value>
   </data>

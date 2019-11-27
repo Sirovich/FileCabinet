@@ -15,13 +15,12 @@ namespace FileCabinetApp.CommandHandlers.Handlers
         private static string[][] helpMessages = new string[][]
         {
             new string[] { "help", "prints the help screen", "The 'help' command prints the help screen." },
-            new string[] { "create", "creates new record", "The 'create' command creates new record." },
-            new string[] { "remove", "removes record", "The 'remove' command removes record." },
-            new string[] { "edit", "updates record", "The 'edit' command updates record." },
+            new string[] { "insert", "creates new record", "The 'insert' command creates new record." },
+            new string[] { "delete", "removes records", "The 'delete' command removes records." },
+            new string[] { "update", "updates records", "The 'update' command updates records." },
             new string[] { "purge", "do defragmenation", "The 'purge' command does defragmenation." },
-            new string[] { "find", "finds records by parameter", "The 'find' command finds records by parameter." },
-            new string[] { "list", "prints all records", "The 'list' command prints all records." },
             new string[] { "stat", "prints count of records", "The 'stat' command prints count of records." },
+            new string[] { "select", "prints records", "The 'select' command prints records." },
             new string[] { "export", "saves records in file", "The 'export' command saves records in file." },
             new string[] { "import", "imports records in file", "The 'import' command imports records in file." },
             new string[] { "exit", "exits the application", "The 'exit' command exits the application." },

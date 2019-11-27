@@ -12,17 +12,13 @@ namespace FileCabinetApp.CommandHandlers.Handlers
     /// </summary>
     public class SelectCommandHandler : SelectCommandHandlerBase
     {
-        private Action<IEnumerable<FileCabinetRecord>> printer;
-
         /// <summary>
         /// Initializes a new instance of the <see cref="SelectCommandHandler"/> class.
         /// </summary>
         /// <param name="fileCabinetService">Source service.</param>
-        /// <param name="printer">Source printer.</param>
-        public SelectCommandHandler(IFileCabinetService fileCabinetService, Action<IEnumerable<FileCabinetRecord>> printer)
+        public SelectCommandHandler(IFileCabinetService fileCabinetService)
             : base(fileCabinetService)
         {
-            this.printer = printer;
         }
 
         /// <inheritdoc/>
@@ -137,7 +133,20 @@ namespace FileCabinetApp.CommandHandlers.Handlers
 
             if (arguments.Length == 1)
             {
-                PrintResult(this.Service.GetRecords(), parameters.Split(',').Select(x => x.Trim()));
+                var fieldsToFind = parameters.Split(',').Select(x => x.Trim());
+                foreach (var field in fieldsToFind)
+                {
+                    if (!field.Equals("id", StringComparison.InvariantCultureIgnoreCase) || !field.Equals("firstname", StringComparison.InvariantCultureIgnoreCase) ||
+                        !field.Equals("lastname", StringComparison.InvariantCultureIgnoreCase) || !field.Equals("dateofbirth", StringComparison.InvariantCultureIgnoreCase) ||
+                        !field.Equals("sex", StringComparison.InvariantCultureIgnoreCase) || !field.Equals("weight", StringComparison.InvariantCultureIgnoreCase) ||
+                        !field.Equals("height", StringComparison.InvariantCultureIgnoreCase))
+                    {
+                        Console.WriteLine(Source.Resource.GetString("unknownArgument", CultureInfo.InvariantCulture), field);
+                        return;
+                    }
+                }
+
+                PrintResult(this.Service.GetRecords(), fieldsToFind);
             }
             else
             {
