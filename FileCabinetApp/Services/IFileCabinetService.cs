@@ -35,45 +35,11 @@ namespace FileCabinetApp.Services
         void Purge();
 
         /// <summary>
-        /// Edits an existing record.
-        /// </summary>
-        /// <exception c="ArgumentException">Throws when record with this id does not exist.</exception>
-        /// <param name="id">Existing record id.</param>
-        /// <param name="firstName">New first name of person.</param>
-        /// <param name="lastName">New last name of person.</param>
-        /// <param name="dateOfBirth">New date of birth of person.</param>
-        /// <param name="sex">New sex of a person.</param>
-        /// <param name="height">New height of person.</param>
-        /// <param name="weight">New weight of person.</param>
-        void EditRecord(int id, string firstName, string lastName, DateTime dateOfBirth, char sex, short height, decimal weight);
-
-        /// <summary>
         /// Updates records.
         /// </summary>
         /// <param name="records">Records to update.</param>
         /// <param name="fieldsAndValuesToReplace">Fields and values to update.</param>
         void Update(IEnumerable<FileCabinetRecord> records, IEnumerable<IEnumerable<string>> fieldsAndValuesToReplace);
-
-        /// <summary>
-        /// Finds all records with this first name.
-        /// </summary>
-        /// <param name="firstName">First name to search.</param>
-        /// <returns>Array of records with this first name.</returns>
-        IEnumerable<FileCabinetRecord> FindByFirstName(string firstName);
-
-        /// <summary>
-        /// Finds all records with this last name.
-        /// </summary>
-        /// <param name="lastName">Last name to search.</param>
-        /// <returns>Array of records with this last name.</returns>
-        IEnumerable<FileCabinetRecord> FindByLastName(string lastName);
-
-        /// <summary>
-        /// Finds all records with this date of birth.
-        /// </summary>
-        /// <param name="dateOfBirth">Date of birth to search.</param>
-        /// <returns>Array of records with this date of birth.</returns>
-        IEnumerable<FileCabinetRecord> FindByDateOfBirth(string dateOfBirth);
 
         /// <summary>
         /// Gets array of records.

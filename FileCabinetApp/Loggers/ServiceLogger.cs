@@ -28,41 +28,6 @@ namespace FileCabinetApp.Loggers
         }
 
         /// <inheritdoc/>
-        public void EditRecord(int id, string firstName, string lastName, DateTime dateOfBirth, char sex, short height, decimal weight)
-        {
-            this.writer.WriteLine(Source.Resource.GetString("editLog", CultureInfo.InvariantCulture), DateTime.Now, id, firstName, lastName, dateOfBirth, sex, weight, height);
-            this.service.EditRecord(id, firstName, lastName, dateOfBirth, sex, height, weight);
-            this.writer.WriteLine(Source.Resource.GetString("editResultLog", CultureInfo.InvariantCulture), DateTime.Now);
-        }
-
-        /// <inheritdoc/>
-        public IEnumerable<FileCabinetRecord> FindByDateOfBirth(string dateOfBirth)
-        {
-            this.writer.WriteLine(Source.Resource.GetString("findDateLog", CultureInfo.InvariantCulture), DateTime.Now, dateOfBirth);
-            var result = this.service.FindByDateOfBirth(dateOfBirth);
-            this.writer.WriteLine(Source.Resource.GetString("findDateResultLog", CultureInfo.InvariantCulture), DateTime.Now);
-            return result;
-        }
-
-        /// <inheritdoc/>
-        public IEnumerable<FileCabinetRecord> FindByFirstName(string firstName)
-        {
-            this.writer.WriteLine(Source.Resource.GetString("findFirstNameLog", CultureInfo.InvariantCulture), DateTime.Now, firstName);
-            var result = this.service.FindByFirstName(firstName);
-            this.writer.WriteLine(Source.Resource.GetString("findFirstNameResultLog", CultureInfo.InvariantCulture), DateTime.Now);
-            return result;
-        }
-
-        /// <inheritdoc/>
-        public IEnumerable<FileCabinetRecord> FindByLastName(string lastName)
-        {
-            this.writer.WriteLine(Source.Resource.GetString("findLastNameLog", CultureInfo.InvariantCulture), DateTime.Now, lastName);
-            var result = this.service.FindByLastName(lastName);
-            this.writer.WriteLine(Source.Resource.GetString("findLastNameResultLog", CultureInfo.InvariantCulture), DateTime.Now);
-            return result;
-        }
-
-        /// <inheritdoc/>
         public ReadOnlyCollection<FileCabinetRecord> GetRecords()
         {
             this.writer.WriteLine(Source.Resource.GetString("getRecordsLog", CultureInfo.InvariantCulture), DateTime.Now);

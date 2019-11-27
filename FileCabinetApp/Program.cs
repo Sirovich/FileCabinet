@@ -20,7 +20,6 @@ namespace FileCabinetApp
         private const string DeveloperName = "Ivan Sarokvashin";
 
         private static IRecordValidator recordValidator;
-        private static IInputValidator inputValidator;
         private static IFileCabinetService fileCabinetService;
         private static bool isRunning = true;
 
@@ -85,7 +84,6 @@ namespace FileCabinetApp
             if (args is null)
             {
                 recordValidator = new ValidatorBuilder().CreateValidator(configuration.GetSection("default"));
-                inputValidator = new DefaultInputValidator();
                 return;
             }
 
@@ -103,13 +101,11 @@ namespace FileCabinetApp
             if (opts.Rule.Equals("Default", StringComparison.InvariantCultureIgnoreCase))
             {
                 recordValidator = new ValidatorBuilder().CreateValidator(configuration.GetSection("default"));
-                inputValidator = new DefaultInputValidator();
                 Console.WriteLine(Source.Resource.GetString("defaultRule", CultureInfo.InvariantCulture));
             }
             else if (opts.Rule.Equals("Custom", StringComparison.InvariantCultureIgnoreCase))
             {
                 recordValidator = new ValidatorBuilder().CreateValidator(configuration.GetSection("default"));
-                inputValidator = new CustomInputValidator();
                 Console.WriteLine(Source.Resource.GetString("customRule", CultureInfo.InvariantCulture));
             }
             else
@@ -159,37 +155,21 @@ namespace FileCabinetApp
             isRunning = state;
         }
 
-        private static void Print(IEnumerable<FileCabinetRecord> records)
-        {
-            if (records is null)
-            {
-                throw new ArgumentNullException(nameof(records));
-            }
-
-            foreach (var record in records)
-            {
-                Console.WriteLine($"#{record.Id}, {record.FirstName}, {record.LastName}, {record.Sex}, {record.Weight}, {record.Height}, {record.DateOfBirth.ToString("yyyy-MMM-dd", CultureInfo.InvariantCulture)}");
-            }
-        }
-
         private static ICommandHandler CreateCommandHandler()
         {
             var helpHandler = new HelpCommandHandler();
             var importHandler = new ImportCommandHandler(fileCabinetService);
             var exportHandler = new ExportCommandHandler(fileCabinetService);
-            var findHandler = new FindCommandHandler(fileCabinetService, Print);
-            var listHandler = new ListCommandHandler(fileCabinetService, Print);
             var purgeHandler = new PurgeCommandHandler(fileCabinetService);
             var statHandler = new StatCommandHandler(fileCabinetService);
             var exitHandler = new ExitCommandHandler(IsRunning);
             var insertHandler = new InsertCommandHandler(recordValidator, fileCabinetService);
             var deleteHandler = new DeleteCommandHandler(recordValidator, fileCabinetService);
             var updateHandler = new UpdateCommandHandler(fileCabinetService);
-            var selectCommand = new SelectCommandHandler(fileCabinetService, Print);
+            var selectCommand = new SelectCommandHandler(fileCabinetService);
 
             helpHandler.SetNext(importHandler).SetNext(exportHandler)
-                .SetNext(findHandler).SetNext(listHandler).SetNext(purgeHandler)
-                .SetNext(statHandler).SetNext(exitHandler)
+                .SetNext(purgeHandler).SetNext(statHandler).SetNext(exitHandler)
                 .SetNext(insertHandler).SetNext(deleteHandler).SetNext(updateHandler)
                 .SetNext(selectCommand);
 

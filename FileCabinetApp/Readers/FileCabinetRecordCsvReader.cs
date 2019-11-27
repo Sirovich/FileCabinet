@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
+using System.Linq;
 
 namespace FileCabinetApp.Readers
 {
@@ -49,6 +50,11 @@ namespace FileCabinetApp.Readers
                 try
                 {
                     var fields = this.fileReader.ReadLine()?.Split(',');
+                    for (int i = 0; i < fields.Length; i++)
+                    {
+                        fields[i] = fields[i].Trim(' ', '.');
+                    }
+
                     var record = new FileCabinetRecord();
                     record.Id = int.Parse(fields[idindex], CultureInfo.InvariantCulture);
                     record.FirstName = fields[firstNameIndex];

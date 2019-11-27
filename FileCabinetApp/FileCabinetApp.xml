@@ -82,21 +82,6 @@
         <member name="M:FileCabinetApp.CommandHandlers.Handlers.ExportCommandHandler.Handle(FileCabinetApp.CommandHandlers.AppCommandRequest)">
             <inheritdoc/>
         </member>
-        <member name="T:FileCabinetApp.CommandHandlers.Handlers.FindCommandHandler">
-            <summary>
-            Command handler for find.
-            </summary>
-        </member>
-        <member name="M:FileCabinetApp.CommandHandlers.Handlers.FindCommandHandler.#ctor(FileCabinetApp.Services.IFileCabinetService,System.Action{System.Collections.Generic.IEnumerable{FileCabinetApp.FileCabinetRecord}})">
-            <summary>
-            Initializes a new instance of the <see cref="T:FileCabinetApp.CommandHandlers.Handlers.FindCommandHandler"/> class.
-            </summary>
-            <param name="fileCabinetService">Source service.</param>
-            <param name="printer">Source printer.</param>
-        </member>
-        <member name="M:FileCabinetApp.CommandHandlers.Handlers.FindCommandHandler.Handle(FileCabinetApp.CommandHandlers.AppCommandRequest)">
-            <inheritdoc/>
-        </member>
         <member name="T:FileCabinetApp.CommandHandlers.Handlers.HelpCommandHandler">
             <summary>
             Command handler for help.
@@ -134,21 +119,6 @@
         <member name="M:FileCabinetApp.CommandHandlers.Handlers.InsertCommandHandler.Handle(FileCabinetApp.CommandHandlers.AppCommandRequest)">
             <inheritdoc/>
         </member>
-        <member name="T:FileCabinetApp.CommandHandlers.Handlers.ListCommandHandler">
-            <summary>
-            Command handler for list.
-            </summary>
-        </member>
-        <member name="M:FileCabinetApp.CommandHandlers.Handlers.ListCommandHandler.#ctor(FileCabinetApp.Services.IFileCabinetService,System.Action{System.Collections.Generic.IEnumerable{FileCabinetApp.FileCabinetRecord}})">
-            <summary>
-            Initializes a new instance of the <see cref="T:FileCabinetApp.CommandHandlers.Handlers.ListCommandHandler"/> class.
-            </summary>
-            <param name="fileCabinetService">Source service.</param>
-            <param name="printer">Source printer.</param>
-        </member>
-        <member name="M:FileCabinetApp.CommandHandlers.Handlers.ListCommandHandler.Handle(FileCabinetApp.CommandHandlers.AppCommandRequest)">
-            <inheritdoc/>
-        </member>
         <member name="T:FileCabinetApp.CommandHandlers.Handlers.PurgeCommandHandler">
             <summary>
             Command handler for purge.
@@ -168,12 +138,11 @@
             Select command handler.
             </summary>
         </member>
-        <member name="M:FileCabinetApp.CommandHandlers.Handlers.SelectCommandHandler.#ctor(FileCabinetApp.Services.IFileCabinetService,System.Action{System.Collections.Generic.IEnumerable{FileCabinetApp.FileCabinetRecord}})">
+        <member name="M:FileCabinetApp.CommandHandlers.Handlers.SelectCommandHandler.#ctor(FileCabinetApp.Services.IFileCabinetService)">
             <summary>
             Initializes a new instance of the <see cref="T:FileCabinetApp.CommandHandlers.Handlers.SelectCommandHandler"/> class.
             </summary>
             <param name="fileCabinetService">Source service.</param>
-            <param name="printer">Source printer.</param>
         </member>
         <member name="M:FileCabinetApp.CommandHandlers.Handlers.SelectCommandHandler.Handle(FileCabinetApp.CommandHandlers.AppCommandRequest)">
             <inheritdoc/>
@@ -270,46 +239,6 @@
         <member name="M:FileCabinetApp.CommandHandlers.ServiceCommandHandlerBase.Handle(FileCabinetApp.CommandHandlers.AppCommandRequest)">
             <inheritdoc/>
         </member>
-        <member name="T:FileCabinetApp.Converters.Converter">
-            <summary>
-            Provides methods to converte input from console.
-            </summary>
-        </member>
-        <member name="M:FileCabinetApp.Converters.Converter.StringConverter(System.String)">
-            <summary>
-            Converte string to string.
-            </summary>
-            <param name="source">Source string.</param>
-            <returns>True if posible to converte and result string.</returns>
-        </member>
-        <member name="M:FileCabinetApp.Converters.Converter.DateOfBirthConverter(System.String)">
-            <summary>
-            Converte string to DateTime.
-            </summary>
-            <param name="source">Source string.</param>
-            <returns>True if posible to converte and result date.</returns>
-        </member>
-        <member name="M:FileCabinetApp.Converters.Converter.SexConverter(System.String)">
-            <summary>
-            Converte string to char.
-            </summary>
-            <param name="source">Source string.</param>
-            <returns>True if posible to converte and result char.</returns>
-        </member>
-        <member name="M:FileCabinetApp.Converters.Converter.WeightConverter(System.String)">
-            <summary>
-            Converte string to decimal.
-            </summary>
-            <param name="source">Source string.</param>
-            <returns>True if posible to converte and result decimal.</returns>
-        </member>
-        <member name="M:FileCabinetApp.Converters.Converter.HeightConverter(System.String)">
-            <summary>
-            Converte string to short.
-            </summary>
-            <param name="source">Source string.</param>
-            <returns>True if posible to converte and result short.</returns>
-        </member>
         <member name="T:FileCabinetApp.FileCabinetRecord">
             <summary>
             Class contains record fields.
@@ -380,18 +309,6 @@
             Initializes a new instance of the <see cref="T:FileCabinetApp.Loggers.ServiceLogger"/> class.
             </summary>
             <param name="service">Source service.</param>
-        </member>
-        <member name="M:FileCabinetApp.Loggers.ServiceLogger.EditRecord(System.Int32,System.String,System.String,System.DateTime,System.Char,System.Int16,System.Decimal)">
-            <inheritdoc/>
-        </member>
-        <member name="M:FileCabinetApp.Loggers.ServiceLogger.FindByDateOfBirth(System.String)">
-            <inheritdoc/>
-        </member>
-        <member name="M:FileCabinetApp.Loggers.ServiceLogger.FindByFirstName(System.String)">
-            <inheritdoc/>
-        </member>
-        <member name="M:FileCabinetApp.Loggers.ServiceLogger.FindByLastName(System.String)">
-            <inheritdoc/>
         </member>
         <member name="M:FileCabinetApp.Loggers.ServiceLogger.GetRecords">
             <inheritdoc/>
@@ -1029,6 +946,11 @@
               Ищет локализованную строку, похожую на Unknown argument {0}.
             </summary>
         </member>
+        <member name="P:FileCabinetApp.res.unsupportedSyntaxis">
+            <summary>
+              Ищет локализованную строку, похожую на Unsupported syntaxis.
+            </summary>
+        </member>
         <member name="P:FileCabinetApp.res.updateLog">
             <summary>
               Ищет локализованную строку, похожую на {0} - Calling Update().
@@ -1065,18 +987,6 @@
             </summary>
             <param name="fileStream">Source stream.</param>
             <param name="recordValidator">Source validator.</param>
-        </member>
-        <member name="M:FileCabinetApp.Services.FileCabinetFilesystemService.EditRecord(System.Int32,System.String,System.String,System.DateTime,System.Char,System.Int16,System.Decimal)">
-            <inheritdoc/>
-        </member>
-        <member name="M:FileCabinetApp.Services.FileCabinetFilesystemService.FindByDateOfBirth(System.String)">
-            <inheritdoc/>
-        </member>
-        <member name="M:FileCabinetApp.Services.FileCabinetFilesystemService.FindByFirstName(System.String)">
-            <inheritdoc/>
-        </member>
-        <member name="M:FileCabinetApp.Services.FileCabinetFilesystemService.FindByLastName(System.String)">
-            <inheritdoc/>
         </member>
         <member name="M:FileCabinetApp.Services.FileCabinetFilesystemService.GetRecords">
             <inheritdoc/>
@@ -1126,22 +1036,6 @@
             <inheritdoc/>
         </member>
         <member name="M:FileCabinetApp.Services.FileCabinetMemoryService.Delete(System.Collections.Generic.IEnumerable{FileCabinetApp.FileCabinetRecord})">
-            <inheritdoc/>
-        </member>
-        <member name="M:FileCabinetApp.Services.FileCabinetMemoryService.EditRecord(System.Int32,System.String,System.String,System.DateTime,System.Char,System.Int16,System.Decimal)">
-            <inheritdoc/>
-        </member>
-        <member name="M:FileCabinetApp.Services.FileCabinetMemoryService.FindByFirstName(System.String)">
-            <inheritdoc/>
-        </member>
-        <member name="M:FileCabinetApp.Services.FileCabinetMemoryService.FindByLastName(System.String)">
-            <summary>
-            Finds all records with this last name.
-            </summary>
-            <param name="lastName">Last name to search.</param>
-            <returns>Array of records with this last name.</returns>
-        </member>
-        <member name="M:FileCabinetApp.Services.FileCabinetMemoryService.FindByDateOfBirth(System.String)">
             <inheritdoc/>
         </member>
         <member name="M:FileCabinetApp.Services.FileCabinetMemoryService.GetRecords">
@@ -1194,46 +1088,12 @@
             Do defragmentation.
             </summary>
         </member>
-        <member name="M:FileCabinetApp.Services.IFileCabinetService.EditRecord(System.Int32,System.String,System.String,System.DateTime,System.Char,System.Int16,System.Decimal)">
-            <summary>
-            Edits an existing record.
-            </summary>
-            <exception c="ArgumentException">Throws when record with this id does not exist.</exception>
-            <param name="id">Existing record id.</param>
-            <param name="firstName">New first name of person.</param>
-            <param name="lastName">New last name of person.</param>
-            <param name="dateOfBirth">New date of birth of person.</param>
-            <param name="sex">New sex of a person.</param>
-            <param name="height">New height of person.</param>
-            <param name="weight">New weight of person.</param>
-        </member>
         <member name="M:FileCabinetApp.Services.IFileCabinetService.Update(System.Collections.Generic.IEnumerable{FileCabinetApp.FileCabinetRecord},System.Collections.Generic.IEnumerable{System.Collections.Generic.IEnumerable{System.String}})">
             <summary>
             Updates records.
             </summary>
             <param name="records">Records to update.</param>
             <param name="fieldsAndValuesToReplace">Fields and values to update.</param>
-        </member>
-        <member name="M:FileCabinetApp.Services.IFileCabinetService.FindByFirstName(System.String)">
-            <summary>
-            Finds all records with this first name.
-            </summary>
-            <param name="firstName">First name to search.</param>
-            <returns>Array of records with this first name.</returns>
-        </member>
-        <member name="M:FileCabinetApp.Services.IFileCabinetService.FindByLastName(System.String)">
-            <summary>
-            Finds all records with this last name.
-            </summary>
-            <param name="lastName">Last name to search.</param>
-            <returns>Array of records with this last name.</returns>
-        </member>
-        <member name="M:FileCabinetApp.Services.IFileCabinetService.FindByDateOfBirth(System.String)">
-            <summary>
-            Finds all records with this date of birth.
-            </summary>
-            <param name="dateOfBirth">Date of birth to search.</param>
-            <returns>Array of records with this date of birth.</returns>
         </member>
         <member name="M:FileCabinetApp.Services.IFileCabinetService.GetRecords">
             <summary>
@@ -1269,18 +1129,6 @@
             <inheritdoc/>
         </member>
         <member name="M:FileCabinetApp.Services.ServiceMeter.Purge">
-            <inheritdoc/>
-        </member>
-        <member name="M:FileCabinetApp.Services.ServiceMeter.EditRecord(System.Int32,System.String,System.String,System.DateTime,System.Char,System.Int16,System.Decimal)">
-            <inheritdoc/>
-        </member>
-        <member name="M:FileCabinetApp.Services.ServiceMeter.FindByFirstName(System.String)">
-            <inheritdoc/>
-        </member>
-        <member name="M:FileCabinetApp.Services.ServiceMeter.FindByLastName(System.String)">
-            <inheritdoc/>
-        </member>
-        <member name="M:FileCabinetApp.Services.ServiceMeter.FindByDateOfBirth(System.String)">
             <inheritdoc/>
         </member>
         <member name="M:FileCabinetApp.Services.ServiceMeter.GetRecords">
@@ -1377,100 +1225,6 @@
         </member>
         <member name="M:FileCabinetApp.Validators.CompositeValidator.ValidateParameters(FileCabinetApp.FileCabinetRecord)">
             <inheritdoc/>
-        </member>
-        <member name="T:FileCabinetApp.Validators.CustomInputValidator">
-            <summary>
-            Input validator with custom rules.
-            </summary>
-        </member>
-        <member name="M:FileCabinetApp.Validators.CustomInputValidator.ValidateFirstName(System.String)">
-            <summary>
-            Checks input parameter according to default rule.
-            </summary>
-            <param name="firstName">Person first name.</param>
-            <returns>True if first name complies with the rules, false if not.</returns>
-        </member>
-        <member name="M:FileCabinetApp.Validators.CustomInputValidator.ValidateLastName(System.String)">
-            <summary>
-            Checks input parameter according to default rule.
-            </summary>
-            <param name="lastName">Person last name.</param>
-            <returns>True if first name complies with the rules, false if not.</returns>
-        </member>
-        <member name="M:FileCabinetApp.Validators.CustomInputValidator.ValidateDateOfBirth(System.DateTime)">
-            <summary>
-            Checks input parameter according to default rule.
-            </summary>
-            <param name="dateOfBirth">Person date of birth.</param>
-            <returns>True if first name complies with the rules, false if not.</returns>
-        </member>
-        <member name="M:FileCabinetApp.Validators.CustomInputValidator.ValidateSex(System.Char)">
-            <summary>
-            Checks input parameter according to default rule.
-            </summary>
-            <param name="sex">Person sex.</param>
-            <returns>True if first name complies with the rules, false if not.</returns>
-        </member>
-        <member name="M:FileCabinetApp.Validators.CustomInputValidator.ValidateWeight(System.Decimal)">
-            <summary>
-            Checks input parameter according to default rule.
-            </summary>
-            <param name="weight">Person weight.</param>
-            <returns>True if first name complies with the rules, false if not.</returns>
-        </member>
-        <member name="M:FileCabinetApp.Validators.CustomInputValidator.ValidateHeight(System.Int16)">
-            <summary>
-            Checks input parameter according to default rule.
-            </summary>
-            <param name="height">Person height.</param>
-            <returns>True if first name complies with the rules, false if not.</returns>
-        </member>
-        <member name="T:FileCabinetApp.Validators.DefaultInputValidator">
-            <summary>
-            Validator with default rules.
-            </summary>
-        </member>
-        <member name="M:FileCabinetApp.Validators.DefaultInputValidator.ValidateFirstName(System.String)">
-            <summary>
-            Checks input parameter according to default rule.
-            </summary>
-            <param name="firstName">Person first name.</param>
-            <returns>True if first name complies with the rules, false if not.</returns>
-        </member>
-        <member name="M:FileCabinetApp.Validators.DefaultInputValidator.ValidateLastName(System.String)">
-            <summary>
-            Checks input parameter according to default rule.
-            </summary>
-            <param name="lastName">Person last name.</param>
-            <returns>True if first name complies with the rules, false if not.</returns>
-        </member>
-        <member name="M:FileCabinetApp.Validators.DefaultInputValidator.ValidateDateOfBirth(System.DateTime)">
-            <summary>
-            Checks input parameter according to default rule.
-            </summary>
-            <param name="dateOfBirth">Person date of birth.</param>
-            <returns>True if first name complies with the rules, false if not.</returns>
-        </member>
-        <member name="M:FileCabinetApp.Validators.DefaultInputValidator.ValidateSex(System.Char)">
-            <summary>
-            Checks input parameter according to default rule.
-            </summary>
-            <param name="sex">Person sex.</param>
-            <returns>True if first name complies with the rules, false if not.</returns>
-        </member>
-        <member name="M:FileCabinetApp.Validators.DefaultInputValidator.ValidateWeight(System.Decimal)">
-            <summary>
-            Checks input parameter according to default rule.
-            </summary>
-            <param name="weight">Person weight.</param>
-            <returns>True if first name complies with the rules, false if not.</returns>
-        </member>
-        <member name="M:FileCabinetApp.Validators.DefaultInputValidator.ValidateHeight(System.Int16)">
-            <summary>
-            Checks input parameter according to default rule.
-            </summary>
-            <param name="height">Person height.</param>
-            <returns>True if first name complies with the rules, false if not.</returns>
         </member>
         <member name="T:FileCabinetApp.Validators.DefaultValidator">
             <summary>
@@ -1579,53 +1333,6 @@
         </member>
         <member name="M:FileCabinetApp.Validators.FieldValidators.WeightValidator.ValidateParameters(FileCabinetApp.FileCabinetRecord)">
             <inheritdoc/>
-        </member>
-        <member name="T:FileCabinetApp.Validators.IInputValidator">
-            <summary>
-            Input validator.
-            </summary>
-        </member>
-        <member name="M:FileCabinetApp.Validators.IInputValidator.ValidateFirstName(System.String)">
-            <summary>
-            Checks input parameter according to default rule.
-            </summary>
-            <param name="firstName">Person first name.</param>
-            <returns>True if first name complies with the rules, false if not.</returns>
-        </member>
-        <member name="M:FileCabinetApp.Validators.IInputValidator.ValidateLastName(System.String)">
-            <summary>
-            Checks input parameter according to default rule.
-            </summary>
-            <param name="lastName">Person last name.</param>
-            <returns>True if first name complies with the rules, false if not.</returns>
-        </member>
-        <member name="M:FileCabinetApp.Validators.IInputValidator.ValidateDateOfBirth(System.DateTime)">
-            <summary>
-            Checks input parameter according to default rule.
-            </summary>
-            <param name="dateOfBirth">Person date of birth.</param>
-            <returns>True if first name complies with the rules, false if not.</returns>
-        </member>
-        <member name="M:FileCabinetApp.Validators.IInputValidator.ValidateSex(System.Char)">
-            <summary>
-            Checks input parameter according to default rule.
-            </summary>
-            <param name="sex">Person sex.</param>
-            <returns>True if first name complies with the rules, false if not.</returns>
-        </member>
-        <member name="M:FileCabinetApp.Validators.IInputValidator.ValidateWeight(System.Decimal)">
-            <summary>
-            Checks input parameter according to default rule.
-            </summary>
-            <param name="weight">Person weight.</param>
-            <returns>True if first name complies with the rules, false if not.</returns>
-        </member>
-        <member name="M:FileCabinetApp.Validators.IInputValidator.ValidateHeight(System.Int16)">
-            <summary>
-            Checks input parameter according to default rule.
-            </summary>
-            <param name="height">Person height.</param>
-            <returns>True if first name complies with the rules, false if not.</returns>
         </member>
         <member name="T:FileCabinetApp.Validators.IRecordValidator">
             <summary>
