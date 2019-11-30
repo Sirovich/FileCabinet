@@ -57,7 +57,7 @@ namespace FileCabinetApp
 
         private static void GetCommandLineArguments(string[] args)
         {
-            if (!File.Exists(Directory.GetCurrentDirectory() + "\\validation-rules.json"))
+            if (!File.Exists(Directory.GetCurrentDirectory() + "\\Validators\\validation-rules.json"))
             {
                 Console.WriteLine(Source.Resource.GetString("missingJsonFile", CultureInfo.InvariantCulture));
                 Environment.Exit(1488);
@@ -66,7 +66,7 @@ namespace FileCabinetApp
             try
             {
                 var builder = new ConfigurationBuilder()
-                   .SetBasePath(Directory.GetCurrentDirectory())
+                   .SetBasePath(Directory.GetCurrentDirectory() + "\\Validators")
                    .AddJsonFile("validation-rules.json")
                    .Build();
             }
@@ -77,7 +77,7 @@ namespace FileCabinetApp
             }
 
             var configuration = new ConfigurationBuilder()
-                .SetBasePath(Directory.GetCurrentDirectory())
+                .SetBasePath(Directory.GetCurrentDirectory() + "\\Validators")
                 .AddJsonFile("validation-rules.json")
                 .Build();
 
