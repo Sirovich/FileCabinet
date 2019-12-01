@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Globalization;
 using System.IO;
+using System.Linq;
 using System.Xml;
 using FileCabinetApp.Services;
 
@@ -66,6 +67,22 @@ namespace FileCabinetApp.CommandHandlers.Handlers
             {
                 const int pathIndex = 1;
                 const int typeIndex = 0;
+
+                var drive = Path.GetPathRoot(arguments[pathIndex]);
+
+                if (drive.Trim(' ', '\\').Length != 0 && !Environment.GetLogicalDrives().Contains(drive, StringComparer.InvariantCultureIgnoreCase))
+                {
+                    Console.WriteLine(Source.Resource.GetString("missingDiskDrive", CultureInfo.InvariantCulture));
+                    return;
+                }
+
+                var path = Path.GetDirectoryName(arguments[pathIndex]);
+
+                if (!Directory.Exists(path) && path.Trim(' ', '\\').Length != 0)
+                {
+                    Directory.CreateDirectory(path);
+                }
+
                 if (File.Exists(arguments[pathIndex]))
                 {
                     Console.WriteLine(Source.Resource.GetString("fileExistMessage", CultureInfo.InvariantCulture), arguments[pathIndex]);
@@ -84,11 +101,19 @@ namespace FileCabinetApp.CommandHandlers.Handlers
 
                 if (arguments[typeIndex].Equals("csv", StringComparison.InvariantCultureIgnoreCase))
                 {
-                    using (var fileStream = new StreamWriter(arguments[pathIndex]))
+                    try
                     {
-                        fileStream.WriteLine(Source.Resource.GetString("fileHeader", CultureInfo.InvariantCulture));
-                        snapshot.SaveToCsv(fileStream);
-                        Console.WriteLine(Source.Resource.GetString("exportFileComplete", CultureInfo.InvariantCulture), arguments[pathIndex]);
+                        using (var fileStream = new StreamWriter(arguments[pathIndex]))
+                        {
+                            fileStream.WriteLine(Source.Resource.GetString("fileHeader", CultureInfo.InvariantCulture));
+                            snapshot.SaveToCsv(fileStream);
+                            Console.WriteLine(Source.Resource.GetString("exportFileComplete", CultureInfo.InvariantCulture), arguments[pathIndex]);
+                        }
+                    }
+                    catch (UnauthorizedAccessException ex)
+                    {
+                        Console.WriteLine(ex.Message);
+                        return;
                     }
                 }
                 else if (arguments[typeIndex].Equals("xml", StringComparison.InvariantCultureIgnoreCase))
@@ -96,11 +121,18 @@ namespace FileCabinetApp.CommandHandlers.Handlers
                     XmlWriterSettings settings = new XmlWriterSettings();
                     settings.Indent = true;
                     settings.IndentChars = "\t";
-
-                    using (var fileStream = XmlWriter.Create(arguments[pathIndex], settings))
+                    try
                     {
-                        snapshot.SaveToXml(fileStream);
-                        Console.WriteLine(Source.Resource.GetString("exportFileComplete", CultureInfo.InvariantCulture), arguments[pathIndex]);
+                        using (var fileStream = XmlWriter.Create(arguments[pathIndex], settings))
+                        {
+                            snapshot.SaveToXml(fileStream);
+                            Console.WriteLine(Source.Resource.GetString("exportFileComplete", CultureInfo.InvariantCulture), arguments[pathIndex]);
+                        }
+                    }
+                    catch (UnauthorizedAccessException ex)
+                    {
+                        Console.WriteLine(ex.Message);
+                        return;
                     }
                 }
                 else

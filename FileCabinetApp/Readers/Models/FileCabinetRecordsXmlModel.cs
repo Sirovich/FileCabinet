@@ -1,4 +1,5 @@
-﻿using System.Xml.Serialization;
+﻿using System.Collections.Generic;
+using System.Xml.Serialization;
 
 namespace FileCabinetApp.Readers.Models
 {
@@ -9,10 +10,18 @@ namespace FileCabinetApp.Readers.Models
     public class FileCabinetRecordsXmlModel
     {
         /// <summary>
-        /// Gets or sets records.
+        /// Initializes a new instance of the <see cref="FileCabinetRecordsXmlModel"/> class.
+        /// </summary>
+        public FileCabinetRecordsXmlModel()
+        {
+            this.Records = new List<FileCabinetRecordXmlModel>();
+        }
+
+        /// <summary>
+        /// Gets records.
         /// </summary>
         /// <value>Array of records.</value>
         [XmlElement("record")]
-        public FileCabinetRecordXmlModel[] Records { get; set; }
+        public List<FileCabinetRecordXmlModel> Records { get; private set; }
     }
 }

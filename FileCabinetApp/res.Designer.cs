@@ -664,6 +664,15 @@ namespace FileCabinetApp {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на No such disk drive.
+        /// </summary>
+        internal static string missingDiskDrive {
+            get {
+                return ResourceManager.GetString("missingDiskDrive", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Configuration file not found.
         /// </summary>
         internal static string missingJsonFile {

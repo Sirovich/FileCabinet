@@ -416,9 +416,14 @@
             FileCabinetRecordsXmlModel.
             </summary>
         </member>
+        <member name="M:FileCabinetApp.Readers.Models.FileCabinetRecordsXmlModel.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:FileCabinetApp.Readers.Models.FileCabinetRecordsXmlModel"/> class.
+            </summary>
+        </member>
         <member name="P:FileCabinetApp.Readers.Models.FileCabinetRecordsXmlModel.Records">
             <summary>
-            Gets or sets records.
+            Gets records.
             </summary>
             <value>Array of records.</value>
         </member>
@@ -829,6 +834,11 @@
         <member name="P:FileCabinetApp.res.memoryStorage">
             <summary>
               Ищет локализованную строку, похожую на Using memory storage.
+            </summary>
+        </member>
+        <member name="P:FileCabinetApp.res.missingDiskDrive">
+            <summary>
+              Ищет локализованную строку, похожую на No such disk drive.
             </summary>
         </member>
         <member name="P:FileCabinetApp.res.missingJsonFile">

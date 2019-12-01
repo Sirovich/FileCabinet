@@ -318,6 +318,9 @@
   <data name="memoryStorage" xml:space="preserve">
     <value>Using memory storage</value>
   </data>
+  <data name="missingDiskDrive" xml:space="preserve">
+    <value>No such disk drive</value>
+  </data>
   <data name="missingJsonFile" xml:space="preserve">
     <value>Configuration file not found</value>
   </data>

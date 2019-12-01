@@ -17,16 +17,23 @@ namespace FileCabinetApp
         /// <value>Id of record.</value>
         public int Id { get; set; }
 
+        /// <summary>
+        /// Name of a person.
+        /// </summary>
         [XmlElement("name")]
         public Name Name = new Name();
 
         [XmlIgnore]
         /// <summary>
-        /// Gets or sets persong date of birth.
+        /// Gets or sets person date of birth.
         /// </summary>
         /// <value>Person date of birth.</value>
         public DateTime DateOfBirth { get; set; }
 
+        /// <summary>
+        /// Gets or sets person date of birth in string format.
+        /// </summary>
+        /// <value>Person date of birth.</value>
         [XmlElement("DateOfBirth")]
         public string SomeDateString
         {
@@ -34,6 +41,10 @@ namespace FileCabinetApp
             set { this.DateOfBirth = DateTime.Parse(value, CultureInfo.InvariantCulture); }
         }
 
+        /// <summary>
+        /// Gets or sets sex of a person in string format.
+        /// </summary>
+        /// <value>Sex of a person.</value>
         [XmlElement("Sex")]
         public string SexString 
         {
@@ -71,6 +82,9 @@ namespace FileCabinetApp
 
     }
 
+    /// <summary>
+    /// Name of a person.
+    /// </summary>
     public class Name
     {
         [XmlAttribute("first")]
