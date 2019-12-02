@@ -24,6 +24,7 @@ namespace FileCabinetApp.Services
         private BinaryWriter fileWriter;
         private BinaryReader fileReader;
         private int offset = 0;
+        private int deletedNumber = 0;
 
         private IRecordValidator recordValidator;
 
@@ -81,9 +82,9 @@ namespace FileCabinetApp.Services
         }
 
         /// <inheritdoc/>
-        public int GetStat()
+        public Tuple<int, int> GetStat()
         {
-            return Convert.ToInt32(this.fileReader.BaseStream.Length) / RecordSize;
+            return new Tuple<int, int>(Convert.ToInt32(this.fileReader.BaseStream.Length) / RecordSize, this.deletedNumber);
         }
 
         /// <inheritdoc/>
@@ -190,6 +191,8 @@ namespace FileCabinetApp.Services
 
                 offset += RecordSize;
             }
+
+            this.deletedNumber = 0;
         }
 
         /// <inheritdoc/>
@@ -446,6 +449,7 @@ namespace FileCabinetApp.Services
                 this.fileReader.BaseStream.Seek(this.idсache[id], 0);
                 this.fileWriter.Write(true);
                 this.idсache.Remove(id);
+                this.deletedNumber++;
                 return true;
             }
 

@@ -60,7 +60,7 @@ namespace FileCabinetApp.CommandHandlers.Handlers
             var arguments = parameters.Split("where ", 2);
             if (arguments.Length < 2)
             {
-                Console.WriteLine();
+                Console.WriteLine(Source.Resource.GetString("unknownArgument", CultureInfo.InvariantCulture), arguments[0]);
                 return;
             }
             else

@@ -50,7 +50,7 @@ namespace FileCabinetApp.Services
         }
 
         /// <inheritdoc/>
-        public int GetStat()
+        public Tuple<int, int> GetStat()
         {
             var watch = Stopwatch.StartNew();
             var result = this.service.GetStat();

@@ -37,7 +37,7 @@ namespace FileCabinetApp.Loggers
         }
 
         /// <inheritdoc/>
-        public int GetStat()
+        public Tuple<int, int> GetStat()
         {
             this.writer.WriteLine(Source.Resource.GetString("getStatLog", CultureInfo.InvariantCulture), DateTime.Now);
             var result = this.service.GetStat();

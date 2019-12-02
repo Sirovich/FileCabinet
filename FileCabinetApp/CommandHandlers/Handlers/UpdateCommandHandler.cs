@@ -52,19 +52,26 @@ namespace FileCabinetApp.CommandHandlers.Handlers
                 throw new ArgumentNullException(nameof(parameters));
             }
 
+            if (parameters.Length < 3)
+            {
+                Console.WriteLine(Source.Resource.GetString("unknownArgument", CultureInfo.InvariantCulture), parameters);
+                return;
+            }
+
             if (parameters.Substring(0, 3).Equals("set", StringComparison.InvariantCulture))
             {
                 parameters = parameters.Remove(0, 3);
             }
             else
             {
-                Console.WriteLine();
+                Console.WriteLine(Source.Resource.GetString("unknownArgument", CultureInfo.InvariantCulture), parameters);
+                return;
             }
 
             var arguments = parameters.Split("where ", 2);
             if (arguments.Length < 2)
             {
-                Console.WriteLine();
+                Console.WriteLine(Source.Resource.GetString("unknownArgument", CultureInfo.InvariantCulture), parameters);
                 return;
             }
             else

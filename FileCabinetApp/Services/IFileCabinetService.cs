@@ -51,7 +51,7 @@ namespace FileCabinetApp.Services
         /// Gets count of records.
         /// </summary>
         /// <returns>Count of records.</returns>
-        int GetStat();
+        Tuple<int, int> GetStat();
 
         /// <summary>
         /// Import records from file.

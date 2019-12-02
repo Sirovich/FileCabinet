@@ -59,9 +59,9 @@ namespace FileCabinetApp.Services
         /// Gets count of records.
         /// </summary>
         /// <returns>Count of records.</returns>
-        public int GetStat()
+        public Tuple<int, int> GetStat()
         {
-            return this.list.Count;
+            return new Tuple<int, int>(this.list.Count, 0);
         }
 
         /// <inheritdoc/>
