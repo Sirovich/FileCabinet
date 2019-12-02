@@ -124,6 +124,7 @@ namespace FileCabinetApp.Services
                 if (this.idсache.ContainsKey(record.Id))
                 {
                     this.WriteToFile(record, this.idсache[record.Id]);
+                    Console.WriteLine(Source.Resource.GetString("importReplaceRecord", CultureInfo.InvariantCulture), record.Id);
                     count++;
                 }
                 else

@@ -136,10 +136,13 @@ namespace FileCabinetApp.CommandHandlers.Handlers
                 var fieldsToFind = parameters.Split(',').Select(x => x.Trim());
                 foreach (var field in fieldsToFind)
                 {
-                    if (!field.Equals("id", StringComparison.InvariantCultureIgnoreCase) || !field.Equals("firstname", StringComparison.InvariantCultureIgnoreCase) ||
-                        !field.Equals("lastname", StringComparison.InvariantCultureIgnoreCase) || !field.Equals("dateofbirth", StringComparison.InvariantCultureIgnoreCase) ||
-                        !field.Equals("sex", StringComparison.InvariantCultureIgnoreCase) || !field.Equals("weight", StringComparison.InvariantCultureIgnoreCase) ||
-                        !field.Equals("height", StringComparison.InvariantCultureIgnoreCase))
+                    if (!field.Equals("id", StringComparison.InvariantCultureIgnoreCase)
+                        && !field.Equals("firstname", StringComparison.InvariantCultureIgnoreCase)
+                        && !field.Equals("lastname", StringComparison.InvariantCultureIgnoreCase)
+                        && !field.Equals("dateofbirth", StringComparison.InvariantCultureIgnoreCase)
+                        && !field.Equals("sex", StringComparison.InvariantCultureIgnoreCase)
+                        && !field.Equals("weight", StringComparison.InvariantCultureIgnoreCase)
+                        && !field.Equals("height", StringComparison.InvariantCultureIgnoreCase))
                     {
                         Console.WriteLine(Source.Resource.GetString("unknownArgument", CultureInfo.InvariantCulture), field);
                         return;

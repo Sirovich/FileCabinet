@@ -261,6 +261,9 @@
   <data name="importFormat" xml:space="preserve">
     <value>Use import *type of import file* *file name*</value>
   </data>
+  <data name="importReplaceRecord" xml:space="preserve">
+    <value>Record with id = '{0}' replaced.</value>
+  </data>
   <data name="importUnknownArgument" xml:space="preserve">
     <value>Unknow argument {0}</value>
   </data>

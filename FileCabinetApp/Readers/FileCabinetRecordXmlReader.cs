@@ -31,14 +31,22 @@ namespace FileCabinetApp.Readers
         public IList<FileCabinetRecord> ReadAll()
         {
             XmlSerializer xmlSerializer = new XmlSerializer(typeof(FileCabinetRecordsXmlModel));
-            this.records = (FileCabinetRecordsXmlModel)xmlSerializer.Deserialize(this.xmlReader);
-
-            if (this.records.Records is null)
+            try
             {
+                this.records = (FileCabinetRecordsXmlModel)xmlSerializer.Deserialize(this.xmlReader);
+
+                if (this.records.Records is null)
+                {
+                    return null;
+                }
+
+                return TransformToBaseModel(new List<FileCabinetRecordXmlModel>(this.records.Records));
+            }
+            catch (InvalidOperationException ex)
+            {
+                Console.WriteLine(ex.Message);
                 return null;
             }
-
-            return TransformToBaseModel(new List<FileCabinetRecordXmlModel>(this.records.Records));
         }
 
         private static IList<FileCabinetRecord> TransformToBaseModel(List<FileCabinetRecordXmlModel> source)
@@ -53,7 +61,15 @@ namespace FileCabinetApp.Readers
                 record.Sex = element.Sex[0];
                 record.Weight = element.Weight;
                 record.Height = element.Height;
-                record.DateOfBirth = DateTime.ParseExact(element.DateOfBirth, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+
+                DateTime temp;
+                if (!DateTime.TryParse(element.DateOfBirth, out temp))
+                {
+                    Console.WriteLine(Source.Resource.GetString("dateOfBirthException", CultureInfo.InvariantCulture));
+                    continue;
+                }
+
+                record.DateOfBirth = temp;
                 list.Add(record);
             }
 
