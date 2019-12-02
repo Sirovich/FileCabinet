@@ -741,6 +741,11 @@
               Ищет локализованную строку, похожую на Use import *type of import file* *file name*.
             </summary>
         </member>
+        <member name="P:FileCabinetApp.res.importReplaceRecord">
+            <summary>
+              Ищет локализованную строку, похожую на Record with id = &apos;{0}&apos; replaced..
+            </summary>
+        </member>
         <member name="P:FileCabinetApp.res.importUnknownArgument">
             <summary>
               Ищет локализованную строку, похожую на Unknow argument {0}.

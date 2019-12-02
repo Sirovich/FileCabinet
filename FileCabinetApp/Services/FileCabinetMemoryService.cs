@@ -92,6 +92,7 @@ namespace FileCabinetApp.Services
                     temp.Sex = record.Sex;
                     temp.Weight = record.Weight;
                     temp.Height = record.Height;
+                    Console.WriteLine(Source.Resource.GetString("importReplaceRecord", CultureInfo.InvariantCulture), record.Id);
                     count++;
                 }
                 else

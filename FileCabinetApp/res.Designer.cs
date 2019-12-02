@@ -493,6 +493,15 @@ namespace FileCabinetApp {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Record with id = &apos;{0}&apos; replaced..
+        /// </summary>
+        internal static string importReplaceRecord {
+            get {
+                return ResourceManager.GetString("importReplaceRecord", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Unknow argument {0}.
         /// </summary>
         internal static string importUnknownArgument {
