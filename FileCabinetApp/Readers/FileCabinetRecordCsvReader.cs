@@ -68,7 +68,12 @@ namespace FileCabinetApp.Readers
                 catch (IndexOutOfRangeException)
                 {
                     Console.WriteLine(Source.Resource.GetString("badCsvFile", CultureInfo.InvariantCulture));
-                    return null;
+                    continue;
+                }
+                catch (FormatException ex)
+                {
+                    Console.WriteLine(ex.Message);
+                    continue;
                 }
             }
 
